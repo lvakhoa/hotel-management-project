@@ -8,4 +8,26 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="WPF-UI" Version="2.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\Icons\hotel.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\Icons\hotel_icon.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Assets\Images\hotel_icon.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Models\" />
+      <Folder Include="ViewModels\" />
+      <Folder Include="Views\" />
+    </ItemGroup>
+
 </Project>
