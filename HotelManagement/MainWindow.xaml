@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
+        xmlns:vm="clr-namespace:HotelManagement.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" 
         Height="600"
@@ -14,6 +15,11 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None">
+    
+    <Window.DataContext>
+        <vm:NavigationVM />
+    </Window.DataContext>
+    
     <Border CornerRadius="12">
         <!-- Window Border -->
         
@@ -79,7 +85,7 @@
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="228" />
-                        <ColumnDefinition Width="622" />
+                        <ColumnDefinition Width="722" />
                     </Grid.ColumnDefinitions>
                     
                     <Border Grid.Column="0"
@@ -115,7 +121,8 @@
                                     <!-- Home -->
                                     
                                     <RadioButton Style="{StaticResource BtnStyle}"
-                                                 IsChecked="True">
+                                                 IsChecked="True"
+                                                 Command="{Binding HomeCommand}">
                                         <Grid>
                                             
                                             <ui:SymbolIcon Symbol="Home20"
@@ -132,7 +139,8 @@
                                     
                                     <!-- Room Map -->
                                     
-                                    <RadioButton Style="{StaticResource BtnStyle}">
+                                    <RadioButton Style="{StaticResource BtnStyle}"
+                                                 Command="{Binding RoomMapCommand}">
                                         <Grid>
                                             
                                             <ui:SymbolIcon Symbol="Map20"
@@ -149,7 +157,8 @@
                                     
                                     <!-- Management -->
                                     
-                                    <RadioButton Style="{StaticResource BtnStyle}">
+                                    <RadioButton Style="{StaticResource BtnStyle}"
+                                                 Command="{Binding ManagementCommand}">
                                         <Grid>
                                             
                                             <ui:SymbolIcon Symbol="PersonSettings20"
@@ -166,7 +175,8 @@
                                     
                                     <!-- Inbox -->
                                     
-                                    <RadioButton Style="{StaticResource BtnStyle}">
+                                    <RadioButton Style="{StaticResource BtnStyle}"
+                                                 Command="{Binding InboxCommand}">
                                         <Grid>
                                             
                                             <ui:SymbolIcon Symbol="MailInbox28"
@@ -183,7 +193,8 @@
                                     
                                     <!-- Settings -->
                                     
-                                    <RadioButton Style="{StaticResource BtnStyle}">
+                                    <RadioButton Style="{StaticResource BtnStyle}"
+                                                 Command="{Binding SettingsCommand}">
                                         <Grid>
                                             
                                             <ui:SymbolIcon Symbol="Settings20"
@@ -219,7 +230,10 @@
                         </Grid>
                     </Border>
                     
-                    
+                    <Grid Grid.Column="1">
+                        <ContentControl x:Name="Pages"
+                                        Content="{Binding CurrentView}" />
+                    </Grid>
                 </Grid>
             </Grid>
         </Border>
