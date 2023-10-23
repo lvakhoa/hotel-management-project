@@ -8,8 +8,8 @@
         xmlns:vm="clr-namespace:HotelManagement.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" 
-        Height="600"
-        Width="950"
+        Height="680"
+        Width="1240"
         Background="Transparent"
         AllowsTransparency="True"
         ResizeMode="NoResize"
@@ -96,8 +96,8 @@
                         <Grid>
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="100" />
-                                    <RowDefinition Height="380" />
+                                    <RowDefinition Height="120" />
+                                    <RowDefinition />
                                     <RowDefinition Height="80" />
                                 </Grid.RowDefinitions>
                                 
