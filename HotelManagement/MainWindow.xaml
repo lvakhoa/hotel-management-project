@@ -140,6 +140,7 @@
                                     <!-- Room Map -->
                                     
                                     <RadioButton Style="{StaticResource BtnStyle}"
+                                                 
                                                  Command="{Binding RoomMapCommand}">
                                         <Grid>
                                             

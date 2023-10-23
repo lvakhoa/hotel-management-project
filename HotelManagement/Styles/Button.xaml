@@ -23,7 +23,7 @@
                             CornerRadius="8">
                         <Border.Background>
                             <SolidColorBrush x:Name="BorderBackground"
-                                             Color="#E7E7E7" />
+                                             Color="Transparent" />
                         </Border.Background>
                         
                         <ContentPresenter />
@@ -37,7 +37,7 @@
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetName="BorderBackground"
                                                     Storyboard.TargetProperty="Color"
-                                                    From="#E7E7E7"
+                                                    From="Transparent"
                                                     To="#fff"
                                                     Duration="0:0:0.3" />
                                 </Storyboard>
@@ -53,7 +53,7 @@
                                     <ColorAnimation Storyboard.TargetName="BorderBackground"
                                                     Storyboard.TargetProperty="Color"
                                                     From="#fff"
-                                                    To="#E7E7E7"
+                                                    To="Transparent"
                                                     Duration="0:0:0.1" />
                                 </Storyboard>
                             </BeginStoryboard>
