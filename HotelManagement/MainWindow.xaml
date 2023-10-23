@@ -3,10 +3,240 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HotelManagement"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
+        xmlns:vm="clr-namespace:HotelManagement.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" 
+        Height="680"
+        Width="1240"
+        Background="Transparent"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None">
+    
+    <Window.DataContext>
+        <vm:NavigationVM />
+    </Window.DataContext>
+    
+    <Border CornerRadius="12">
+        <!-- Window Border -->
+        
+        <Border BorderBrush="#231F20" 
+                CornerRadius="10"
+                BorderThickness="1"
+                Background="#fff">
+        
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                
+                <Border Grid.Row="0" 
+                        BorderBrush="#000000" 
+                        BorderThickness="0,0,0, 0.5"
+                        CornerRadius="10, 10, 0, 0" 
+                        Background="#fff">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="40" />
+                        </Grid.ColumnDefinitions>
+                
+                        <Grid Grid.Column="0" 
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Margin="10,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            
+                            <Image Grid.Column="0" Source="/HotelManagement;component/Assets/Images/hotel_icon.png" Width="24"/>
+                            <TextBlock Grid.Column="1" Text="Hotel Management" VerticalAlignment="Center" Margin="8, 0,0,0" />
+                        </Grid>
+                        
+                        <customcontrols:Button Grid.Column="1"
+                                               x:Name="btnMinimize"
+                                               Icon="Subtract20"
+                                               HoveredColor="#D4D2D2"
+                                               ClickedColor="#CAC9C9" />
+                        
+                        <customcontrols:Button Grid.Column="2"
+                                               x:Name="btnRestore"
+                                               Icon="SquareMultiple20"
+                                               HoveredColor="#D4D2D2"
+                                               ClickedColor="#CAC9C9" />
+                        
+                        <customcontrols:Button Grid.Column="3"
+                                               x:Name="btnClose"
+                                               Icon="Dismiss28"
+                                               HoveredColor="#EE4242"
+                                               ClickedColor="#FF2525" 
+                                               BorderRadius="0, 10, 0, 0"/>
+                        
+                    </Grid>
+                </Border>
+                
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="228" />
+                        <ColumnDefinition Width="722" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Border Grid.Column="0"
+                            CornerRadius="0,0,0, 10"
+                            Background="#E7E7E7"
+                            HorizontalAlignment="Left"
+                            Width="228">
+                        <Grid>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="120" />
+                                    <RowDefinition />
+                                    <RowDefinition Height="80" />
+                                </Grid.RowDefinitions>
+                                
+                                <!-- Logo -->
+                                <Grid Grid.Row="0"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Top"
+                                      Margin="19,30,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                            
+                                    <Image Grid.Column="0" Source="/HotelManagement;component/Assets/Images/hotel_icon.png" Width="40"/>
+                                    <TextBlock Grid.Column="1" Text="Triple K" FontFamily="Forte" FontSize="28" VerticalAlignment="Center" Margin="10, 0,0,0" />
+                                </Grid>
+                                
+                                <!-- Navigation Panel -->
+                                <StackPanel Grid.Row="1">
+                                    
+                                    <!-- Home -->
+                                    
+                                    <RadioButton Style="{StaticResource BtnStyle}"
+                                                 IsChecked="True"
+                                                 Command="{Binding HomeCommand}">
+                                        <Grid>
+                                            
+                                            <ui:SymbolIcon Symbol="Home20"
+                                                           FontSize="24" 
+                                                           Foreground="#000"
+                                                           Margin="12,0,0,0"
+                                                           HorizontalAlignment="Left"/>
+                            
+                                            <TextBlock Text="Home"
+                                                       Style="{StaticResource TextStyle}"/>
+                            
+                                        </Grid>
+                                    </RadioButton> 
+                                    
+                                    <!-- Room Map -->
+                                    
+                                    <RadioButton Style="{StaticResource BtnStyle}"
+                                                 
+                                                 Command="{Binding RoomMapCommand}">
+                                        <Grid>
+                                            
+                                            <ui:SymbolIcon Symbol="Map20"
+                                                           FontSize="24" 
+                                                           Foreground="#000"
+                                                           Margin="12,0,0,0"
+                                                           HorizontalAlignment="Left"/>
+                            
+                                            <TextBlock Text="Room Map"
+                                                       Style="{StaticResource TextStyle}"/>
+                            
+                                        </Grid>
+                                    </RadioButton> 
+                                    
+                                    <!-- Management -->
+                                    
+                                    <RadioButton Style="{StaticResource BtnStyle}"
+                                                 Command="{Binding ManagementCommand}">
+                                        <Grid>
+                                            
+                                            <ui:SymbolIcon Symbol="PersonSettings20"
+                                                           FontSize="24" 
+                                                           Foreground="#000"
+                                                           Margin="12,0,0,0"
+                                                           HorizontalAlignment="Left"/>
+                            
+                                            <TextBlock Text="Management"
+                                                       Style="{StaticResource TextStyle}"/>
+                            
+                                        </Grid>
+                                    </RadioButton> 
+                                    
+                                    <!-- Inbox -->
+                                    
+                                    <RadioButton Style="{StaticResource BtnStyle}"
+                                                 Command="{Binding InboxCommand}">
+                                        <Grid>
+                                            
+                                            <ui:SymbolIcon Symbol="MailInbox28"
+                                                           FontSize="24" 
+                                                           Foreground="#000"
+                                                           Margin="12,0,0,0"
+                                                           HorizontalAlignment="Left"/>
+                            
+                                            <TextBlock Text="Inbox"
+                                                       Style="{StaticResource TextStyle}"/>
+                            
+                                        </Grid>
+                                    </RadioButton> 
+                                    
+                                    <!-- Settings -->
+                                    
+                                    <RadioButton Style="{StaticResource BtnStyle}"
+                                                 Command="{Binding SettingsCommand}">
+                                        <Grid>
+                                            
+                                            <ui:SymbolIcon Symbol="Settings20"
+                                                           FontSize="24" 
+                                                           Foreground="#000"
+                                                           Margin="12,0,0,0"
+                                                           HorizontalAlignment="Left"/>
+                            
+                                            <TextBlock Text="Settings"
+                                                       Style="{StaticResource TextStyle}"/>
+                            
+                                        </Grid>
+                                    </RadioButton>
+                                </StackPanel>
+                                
+                                <!-- Logout -->
+                                    
+                                <RadioButton Grid.Row="2" Style="{StaticResource BtnStyle}">
+                                    <Grid>
+                                            
+                                        <ui:SymbolIcon Symbol="ArrowExit20"
+                                                       FontSize="24" 
+                                                       Foreground="#000"
+                                                       Margin="12,0,0,0"
+                                                       HorizontalAlignment="Left"/>
+                            
+                                        <TextBlock Text="Logout"
+                                                   Style="{StaticResource TextStyle}"/>
+                            
+                                    </Grid>
+                                </RadioButton> 
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    
+                    <Grid Grid.Column="1">
+                        <ContentControl x:Name="Pages"
+                                        Content="{Binding CurrentView}" />
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+    </Border>
 </Window>

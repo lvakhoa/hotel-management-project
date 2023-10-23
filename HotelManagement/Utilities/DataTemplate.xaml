@@ -1,0 +1,26 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:HotelManagement.ViewModel"
+                    xmlns:view="clr-namespace:HotelManagement.View">
+    
+    <DataTemplate DataType="{x:Type vm:HomeVM}">
+        <view:Home />
+    </DataTemplate>
+    
+    <DataTemplate DataType="{x:Type vm:RoomMapVM}">
+        <view:RoomMap />
+    </DataTemplate>
+    
+    <DataTemplate DataType="{x:Type vm:ManagementVM}">
+        <view:Management />
+    </DataTemplate>
+    
+    <DataTemplate DataType="{x:Type vm:InboxVM}">
+        <view:Inbox />
+    </DataTemplate>
+    
+    <DataTemplate DataType="{x:Type vm:SettingsVM}">
+        <view:Settings />
+    </DataTemplate>
+    
+</ResourceDictionary>
