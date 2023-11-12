@@ -3,19 +3,19 @@
     
     <DropShadowEffect x:Key="DropShadow" ShadowDepth="0" RenderingBias="Quality" 
                       BlurRadius="15" Direction="-90"  Opacity="0.5"/>
-    
+
     <Style x:Key="BtnStyle" 
            TargetType="RadioButton">
-        
+
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Margin" Value="0,5,0,0 " />
         <Setter Property="Cursor" Value="Hand"></Setter>
-        
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
-                    
+
                     <Border x:Name="Border"
                             Height="40"
                             Width="190"
@@ -25,12 +25,12 @@
                             <SolidColorBrush x:Name="BorderBackground"
                                              Color="Transparent" />
                         </Border.Background>
-                        
+
                         <ContentPresenter />
                     </Border>
-                    
+
                     <ControlTemplate.Triggers>
-                        
+
                         <EventTrigger RoutedEvent="Border.MouseEnter"
                                       SourceName="Border">
                             <BeginStoryboard>
@@ -42,12 +42,12 @@
                                                     Duration="0:0:0.3" />
                                 </Storyboard>
                             </BeginStoryboard>
-                            
+
                         </EventTrigger>
-                        
+
                         <EventTrigger RoutedEvent="Border.MouseLeave"
                                       SourceName="Border">
-                            
+
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetName="BorderBackground"
@@ -57,9 +57,9 @@
                                                     Duration="0:0:0.1" />
                                 </Storyboard>
                             </BeginStoryboard>
-                            
+
                         </EventTrigger>
-                        
+
                         <Trigger Property="IsChecked"
                                  Value="True">
                             <Setter Property="Background"
@@ -69,12 +69,53 @@
                                     TargetName="Border" 
                                     Value="{StaticResource DropShadow}" />
                         </Trigger>
-                        
+
                     </ControlTemplate.Triggers>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style x:Key="primarybutton" 
+           TargetType="Button">
+        <Setter Property="MinWidth" 
+                Value="120"/>
+        <Setter Property="VerticalAlignment" 
+                Value="Center"/>
+        <Setter Property="Height" 
+                Value="60"/>
+        <Setter Property="FontWeight" 
+                Value="Bold"/>
+        <Setter Property="Background" 
+                Value="Black"/>
+        <Setter Property="Foreground" 
+                Value="White"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                            x:Name="bd"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                        <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                TextBlock.FontSize="{TemplateBinding FontSize}"
+                                TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" 
+                                 Value="True">
+                            <Setter TargetName="bd" 
+                                    Property="Background" 
+                                    Value="Gray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
