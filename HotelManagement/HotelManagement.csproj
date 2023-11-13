@@ -10,6 +10,8 @@
 
     <ItemGroup>
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+      <PackageReference Include="MaterialDesignColors" Version="2.1.4" />
+      <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
       <PackageReference Include="WPF-UI" Version="2.1.0" />
     </ItemGroup>
 
@@ -19,10 +21,12 @@
 
     <ItemGroup>
       <None Remove="Assets\Icons\hotel_icon.png" />
+      <None Remove="Assets\Images\login.png" />
     </ItemGroup>
 
     <ItemGroup>
       <Resource Include="Assets\Images\hotel_icon.png" />
+      <Resource Include="Assets\Images\login.png" />
     </ItemGroup>
 
     <ItemGroup>
