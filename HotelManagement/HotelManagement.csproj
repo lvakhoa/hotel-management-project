@@ -34,8 +34,4 @@
       <Resource Include="Assets\Images\login.png" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Model\" />
-    </ItemGroup>
-
 </Project>
