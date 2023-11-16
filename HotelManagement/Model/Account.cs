@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HotelManagement;
+namespace HotelManagement.Model;
 
 public partial class Account
 {
@@ -12,6 +12,8 @@ public partial class Account
     public byte[]? ProfilePicture { get; set; }
 
     public string StaffId { get; set; } = null!;
+
+    public bool? Status { get; set; }
 
     public virtual Staff Staff { get; set; } = null!;
 }

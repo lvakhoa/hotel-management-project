@@ -8,6 +8,8 @@ public partial class HotelManagementContext : DbContext
 {
     public HotelManagementContext()
     {
+        DotNetEnv.Env.Load();
+        DotNetEnv.Env.TraversePath().Load();
     }
 
     public HotelManagementContext(DbContextOptions<HotelManagementContext> options)
@@ -35,7 +37,7 @@ public partial class HotelManagementContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=tcp:lvakhoa.database.windows.net,1433;Initial Catalog=hotel_management;Persist Security Info=False;User ID=lvakhoa;Password=Langlieu@minn234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+        => optionsBuilder.UseSqlServer(DotNetEnv.Env.GetString(("CONNECTION_STRING")));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -59,6 +61,9 @@ public partial class HotelManagementContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("staff_id");
+            entity.Property(e => e.Status)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("status");
 
             entity.HasOne(d => d.Staff).WithOne(p => p.Account)
                 .HasForeignKey<Account>(d => d.StaffId)
@@ -88,6 +93,12 @@ public partial class HotelManagementContext : DbContext
             entity.Property(e => e.CheckOutDate)
                 .HasColumnType("smalldatetime")
                 .HasColumnName("check_out_date");
+            entity.Property(e => e.Deleted)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("deleted");
+            entity.Property(e => e.DeletedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_date");
             entity.Property(e => e.GuestQuantity).HasColumnName("guest_quantity");
             entity.Property(e => e.InvoiceId)
                 .HasMaxLength(5)
@@ -142,6 +153,12 @@ public partial class HotelManagementContext : DbContext
             entity.Property(e => e.CreditCard)
                 .HasMaxLength(45)
                 .HasColumnName("credit_card");
+            entity.Property(e => e.Deleted)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("deleted");
+            entity.Property(e => e.DeletedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_date");
             entity.Property(e => e.Email)
                 .HasMaxLength(45)
                 .HasColumnName("email");
@@ -172,6 +189,12 @@ public partial class HotelManagementContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("customer_id");
+            entity.Property(e => e.Deleted)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("deleted");
+            entity.Property(e => e.DeletedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_date");
             entity.Property(e => e.InvoiceDate)
                 .HasColumnType("smalldatetime")
                 .HasColumnName("invoice_date");
@@ -209,6 +232,12 @@ public partial class HotelManagementContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("room_id");
+            entity.Property(e => e.Deleted)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("deleted");
+            entity.Property(e => e.DeletedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_date");
             entity.Property(e => e.Notes)
                 .HasMaxLength(45)
                 .HasColumnName("notes");
@@ -244,12 +273,19 @@ public partial class HotelManagementContext : DbContext
                 .HasColumnName("room_type_id");
             entity.Property(e => e.BedAmount).HasColumnName("bed_amount");
             entity.Property(e => e.Capacity).HasColumnName("capacity");
+            entity.Property(e => e.Deleted)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("deleted");
+            entity.Property(e => e.DeletedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_date");
             entity.Property(e => e.RoomPrice)
                 .HasColumnType("money")
                 .HasColumnName("room_price");
             entity.Property(e => e.RoomTypeDesc)
                 .HasMaxLength(100)
                 .HasColumnName("room_type_desc");
+            entity.Property(e => e.RoomTypeImg).HasColumnName("room_type_img");
             entity.Property(e => e.RoomTypeName)
                 .HasMaxLength(20)
                 .HasColumnName("room_type_name");
@@ -268,6 +304,12 @@ public partial class HotelManagementContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("service_id");
+            entity.Property(e => e.Deleted)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("deleted");
+            entity.Property(e => e.DeletedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_date");
             entity.Property(e => e.ServiceName)
                 .HasMaxLength(20)
                 .HasColumnName("service_name");
@@ -299,6 +341,12 @@ public partial class HotelManagementContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("service_id");
+            entity.Property(e => e.Deleted)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("deleted");
+            entity.Property(e => e.DeletedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_date");
             entity.Property(e => e.ServiceQuantity).HasColumnName("service_quantity");
             entity.Property(e => e.TotalAmount)
                 .HasColumnType("money")
@@ -339,6 +387,12 @@ public partial class HotelManagementContext : DbContext
             entity.Property(e => e.ContactNumber)
                 .HasMaxLength(10)
                 .HasColumnName("contact_number");
+            entity.Property(e => e.Deleted)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("deleted");
+            entity.Property(e => e.DeletedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_date");
             entity.Property(e => e.Email)
                 .HasMaxLength(45)
                 .HasColumnName("email");

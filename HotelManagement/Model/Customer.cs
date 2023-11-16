@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HotelManagement;
+namespace HotelManagement.Model;
 
 public partial class Customer
 {
@@ -20,6 +20,10 @@ public partial class Customer
     public string? CreditCard { get; set; }
 
     public string IdProof { get; set; } = null!;
+
+    public bool? Deleted { get; set; }
+
+    public DateTime? DeletedDate { get; set; }
 
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
 }

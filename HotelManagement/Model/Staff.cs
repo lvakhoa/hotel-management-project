@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HotelManagement;
+namespace HotelManagement.Model;
 
 public partial class Staff
 {
@@ -22,6 +22,10 @@ public partial class Staff
     public string Gender { get; set; } = null!;
 
     public decimal? Salary { get; set; }
+
+    public bool? Deleted { get; set; }
+
+    public DateTime? DeletedDate { get; set; }
 
     public virtual Account? Account { get; set; }
 
