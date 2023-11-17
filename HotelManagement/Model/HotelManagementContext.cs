@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Model;
@@ -8,8 +11,6 @@ public partial class HotelManagementContext : DbContext
 {
     public HotelManagementContext()
     {
-        DotNetEnv.Env.Load();
-        DotNetEnv.Env.TraversePath().Load();
     }
 
     public HotelManagementContext(DbContextOptions<HotelManagementContext> options)
@@ -36,8 +37,20 @@ public partial class HotelManagementContext : DbContext
     public virtual DbSet<Staff> Staff { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer(DotNetEnv.Env.GetString(("CONNECTION_STRING")));
+    {
+        string keyVaultUrl = ConfigurationManager.AppSettings["keyVaultUrl"];
+        var credential =  new ClientSecretCredential(
+            tenantId: ConfigurationManager.AppSettings["tenantId"],
+            clientId: ConfigurationManager.AppSettings["clientId"],
+            clientSecret: ConfigurationManager.AppSettings["clientSecret"]
+        );
+        var client = new SecretClient(new Uri(keyVaultUrl), credential);
+        KeyVaultSecret secret = client.GetSecret(ConfigurationManager.AppSettings["secretName"]);
+
+        string connectionString = secret.Value;
+
+        optionsBuilder.UseSqlServer(connectionString);
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
