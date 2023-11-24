@@ -5,7 +5,13 @@
     <Compile Update="CustomControls\TextBoxWithPlaceHolder.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\AddStaff.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\LoginView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\SignUpView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Window1.xaml.cs">
@@ -19,7 +25,13 @@
     <Page Update="Styles\Text.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\AddStaff.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\LoginView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\SignUpView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Window1.xaml">
