@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:HotelManagement.View"
-          xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
+        xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
         mc:Ignorable="d"
         Title="AddStaff" Height="850" Width="800"       
         WindowStyle="None"
@@ -13,7 +13,7 @@
         AllowsTransparency="True"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        MouseDown="Window_MouseDown">
+        >
 
     <Border CornerRadius="10"
         Background="#FFF"
