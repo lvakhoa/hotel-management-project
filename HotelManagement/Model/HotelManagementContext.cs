@@ -38,16 +38,8 @@ public partial class HotelManagementContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        string keyVaultUrl = ConfigurationManager.AppSettings["keyVaultUrl"];
-        var credential =  new ClientSecretCredential(
-            tenantId: ConfigurationManager.AppSettings["tenantId"],
-            clientId: ConfigurationManager.AppSettings["clientId"],
-            clientSecret: ConfigurationManager.AppSettings["clientSecret"]
-        );
-        var client = new SecretClient(new Uri(keyVaultUrl), credential);
-        KeyVaultSecret secret = client.GetSecret(ConfigurationManager.AppSettings["secretName"]);
-
-        string connectionString = secret.Value;
+        string connectionString = ConfigurationManager.ConnectionStrings["HotelManagementDB"].ConnectionString ??
+                                  throw new InvalidOperationException();
 
         optionsBuilder.UseSqlServer(connectionString);
     }
@@ -89,11 +81,11 @@ public partial class HotelManagementContext : DbContext
             entity.HasKey(e => e.BookingId).HasName("PK__booking__5DE3A5B13FD7C644");
 
             entity.ToTable("booking", tb =>
-                {
-                    tb.HasTrigger("CheckGuestQuantity");
-                    tb.HasTrigger("InsertAmountBooking");
-                    tb.HasTrigger("UpdateAmountBooking");
-                });
+            {
+                tb.HasTrigger("CheckGuestQuantity");
+                tb.HasTrigger("InsertAmountBooking");
+                tb.HasTrigger("UpdateAmountBooking");
+            });
 
             entity.Property(e => e.BookingId)
                 .HasMaxLength(5)
@@ -339,10 +331,10 @@ public partial class HotelManagementContext : DbContext
             entity.HasKey(e => new { e.InvoiceId, e.ServiceId }).HasName("su_booking_service_pk");
 
             entity.ToTable("service_use", tb =>
-                {
-                    tb.HasTrigger("InsertAmountService");
-                    tb.HasTrigger("UpdateAmountService");
-                });
+            {
+                tb.HasTrigger("InsertAmountService");
+                tb.HasTrigger("UpdateAmountService");
+            });
 
             entity.Property(e => e.InvoiceId)
                 .HasMaxLength(5)
