@@ -11,8 +11,8 @@
         <view:RoomMap />
     </DataTemplate>
     
-    <DataTemplate DataType="{x:Type vm:ManagementVM}">
-        <view:Management />
+    <DataTemplate DataType="{x:Type vm:StaffVM}">
+        <view:Staff />
     </DataTemplate>
     
     <DataTemplate DataType="{x:Type vm:InboxVM}">
