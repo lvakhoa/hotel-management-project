@@ -15,7 +15,7 @@ public partial class NavigationVM : ObservableObject
     private void RoomMap() => CurrentView = new RoomMapVM();
     
     [RelayCommand]
-    private void Management() => CurrentView = new ManagementVM();
+    private void Management() => CurrentView = new StaffVM();
     
     [RelayCommand]
     private void Inbox() => CurrentView = new InboxVM();
