@@ -38,7 +38,7 @@ public partial class HotelManagementContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["HotelManagementDB"].ToString() ??
+        string connectionString = ConfigurationManager.ConnectionStrings["HotelManagementDB"].ConnectionString ??
                                   throw new InvalidOperationException();
 
         optionsBuilder.UseSqlServer(connectionString);
