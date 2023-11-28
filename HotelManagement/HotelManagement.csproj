@@ -27,11 +27,15 @@
     <ItemGroup>
       <None Remove="Assets\Icons\hotel_icon.png" />
       <None Remove="Assets\Images\login.png" />
+      <None Remove="View\edit.png" />
+      <None Remove="View\lighttheme.png" />
     </ItemGroup>
 
     <ItemGroup>
       <Resource Include="Assets\Images\hotel_icon.png" />
       <Resource Include="Assets\Images\login.png" />
+      <Resource Include="View\edit.png" />
+      <Resource Include="View\lighttheme.png" />
     </ItemGroup>
 
     <ItemGroup>
