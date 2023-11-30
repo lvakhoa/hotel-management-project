@@ -47,12 +47,14 @@
          
             <customcontrols:Button Grid.Column="1"
                                    x:Name="btnMinimize"
-                                   Icon="Subtract20"
+                                   Type="Icon"
+                                   ButtonContent="Subtract20"
                                    HoveredColor="#D4D2D2"
                                    ClickedColor="#CAC9C9"/>
             <customcontrols:Button Grid.Column="2"
                                    x:Name="btnClose"
-                                   Icon="Dismiss28"
+                                   Type="Icon"
+                                   ButtonContent="Dismiss28"
                                    HoveredColor="#EE4242"
                                    ClickedColor="#FF2525" 
                                    BorderRadius="0, 10, 0, 0"/>

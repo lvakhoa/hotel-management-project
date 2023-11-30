@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-        xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
         xmlns:vm="clr-namespace:HotelManagement.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" 
@@ -60,24 +59,35 @@
                             <TextBlock Grid.Column="1" Text="Hotel Management" VerticalAlignment="Center" Margin="8, 0,0,0" />
                         </Grid>
                         
-                        <customcontrols:Button Grid.Column="1"
-                                               x:Name="btnMinimize"
-                                               Icon="Subtract20"
-                                               HoveredColor="#D4D2D2"
-                                               ClickedColor="#CAC9C9" />
+                        <ui:Button Grid.Column="1"
+                                   Width="40"
+                                   Height="40"
+                                   Icon="Subtract20"
+                                   Appearance="Transparent"
+                                   BorderThickness="0"
+                                   MouseOverBackground="#D4D2D2"
+                                   PressedBackground="#CAC9C9"
+                                   CornerRadius="0"/>
                         
-                        <customcontrols:Button Grid.Column="2"
-                                               x:Name="btnRestore"
-                                               Icon="SquareMultiple20"
-                                               HoveredColor="#D4D2D2"
-                                               ClickedColor="#CAC9C9" />
+                        <ui:Button Grid.Column="2"
+                                   Width="40"
+                                   Height="40"
+                                   Icon="SquareMultiple20"
+                                   Appearance="Transparent"
+                                   BorderThickness="0"
+                                   MouseOverBackground="#D4D2D2"
+                                   PressedBackground="#CAC9C9"
+                                   CornerRadius="0"/>
                         
-                        <customcontrols:Button Grid.Column="3"
-                                               x:Name="btnClose"
-                                               Icon="Dismiss28"
-                                               HoveredColor="#EE4242"
-                                               ClickedColor="#FF2525" 
-                                               BorderRadius="0, 10, 0, 0"/>
+                        <ui:Button Grid.Column="3"
+                                   Width="40"
+                                   Height="40"
+                                   Icon="Dismiss28"
+                                   Appearance="Transparent"
+                                   BorderThickness="0"
+                                   MouseOverBackground="#EE4242"
+                                   PressedBackground="#FF2525" 
+                                   CornerRadius="0, 10, 0, 0" />
                         
                     </Grid>
                 </Border>

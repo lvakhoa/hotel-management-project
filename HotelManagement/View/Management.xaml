@@ -3,10 +3,131 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:HotelManagement.View"
+             xmlns:custom="clr-namespace:HotelManagement.CustomControls"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="1012"
+             Loaded="Management_OnLoaded">
     <Grid>
-        <TextBlock>Management</TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <StackPanel x:Name="NavStack" Orientation="Horizontal" VerticalAlignment="Top">
+            <ui:Button Appearance="Dark" 
+                       Padding="20, 10"
+                       Foreground="#fff"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Background="#C0C0C0"
+                       Content="Staff"
+                       MouseOverBackground="#4F4A4A"
+                       PressedBackground="#4F4A4A"
+                       CornerRadius="0,0,10,10"
+                       BorderThickness="0"
+                       Margin="20,0,0,0"
+                       Click="StaffBtn_OnClick"/>
+        
+            <ui:Button Appearance="Dark" 
+                       Padding="20, 10"
+                       Foreground="#fff"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Background="#C0C0C0"
+                       Content="Customer"
+                       MouseOverBackground="#4F4A4A"
+                       PressedBackground="#4F4A4A"
+                       CornerRadius="0,0,10,10"
+                       BorderThickness="0"
+                       Margin="10,0,0,0"
+                       Click="CustomerBtn_OnClick"/>
+        
+            <ui:Button Appearance="Dark" 
+                       Padding="20, 10"
+                       Foreground="#fff"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Background="#C0C0C0"
+                       Content="Room"
+                       MouseOverBackground="#4F4A4A"
+                       PressedBackground="#4F4A4A"
+                       CornerRadius="0,0,10,10"
+                       BorderThickness="0"
+                       Margin="10,0,0,0"
+                       Click="RoomBtn_OnClick"/>
+        
+            <ui:Button Appearance="Dark" 
+                       Padding="20, 10"
+                       Foreground="#fff"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Background="#C0C0C0"
+                       Content="Service"
+                       MouseOverBackground="#4F4A4A"
+                       PressedBackground="#4F4A4A"
+                       CornerRadius="0,0,10,10"
+                       BorderThickness="0"
+                       Margin="10,0,0,0"
+                       Click="ServiceBtn_OnClick"/>
+        
+            <ui:Button Appearance="Dark" 
+                       Padding="20, 10"
+                       Foreground="#fff"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Background="#C0C0C0"
+                       Content="Invoice"
+                       MouseOverBackground="#4F4A4A"
+                       PressedBackground="#4F4A4A"
+                       CornerRadius="0,0,10,10"
+                       BorderThickness="0"
+                       Margin="10,0,0,0"
+                       Click="InvoiceBtn_OnClick"/>
+        
+            <ui:Button Appearance="Dark" 
+                       Padding="20, 10"
+                       Foreground="#fff"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Background="#C0C0C0"
+                       Content="Booking"
+                       MouseOverBackground="#4F4A4A"
+                       PressedBackground="#4F4A4A"
+                       CornerRadius="0,0,10,10"
+                       BorderThickness="0"
+                       Margin="10,0,0,0"
+                       Click="BookingBtn_OnClick"/>
+        
+            <ui:Button Appearance="Dark" 
+                       Padding="20, 10"
+                       Foreground="#fff"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Background="#C0C0C0"
+                       Content="Room Type"
+                       MouseOverBackground="#4F4A4A"
+                       PressedBackground="#4F4A4A"
+                       CornerRadius="0,0,10,10"
+                       BorderThickness="0"
+                       Margin="10,0,0,0"
+                       Click="RoomTypeBtn_OnClick"/>
+        
+            <ui:Button Appearance="Dark" 
+                       Padding="20, 10"
+                       Foreground="#fff"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Background="#C0C0C0"
+                       Content="Service Use"
+                       MouseOverBackground="#4F4A4A"
+                       PressedBackground="#4F4A4A"
+                       CornerRadius="0,0,10,10"
+                       BorderThickness="0"
+                       Margin="10,0,0,0"
+                       Click="ServiceUseBtn_OnClick"/>
+        </StackPanel>
+        
+        <custom:DataGrid Grid.Row="1" />
     </Grid>
 </UserControl>

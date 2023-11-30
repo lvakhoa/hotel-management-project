@@ -3,23 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:HotelManagement.CustomControls"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
+    
     <Button FontSize="16">
                             
-            <Button.Content>
-                <ui:SymbolIcon Symbol="{Binding Icon}" Foreground="#000"/>
-            </Button.Content>
-                            
             <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="Transparent" />
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="{Binding BackgroundColor}" />
+                    
+                    <Setter Property="Foreground" Value="{Binding ForegroundColor}" />
                     
                     <Setter Property="HorizontalAlignment" Value="Center" />
                     
+                    <Setter Property="Content" Value="{Binding ButtonContent}" />
+                    
                     <Style.Triggers>
+                        <DataTrigger Binding="{Binding Type}" Value="Icon">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <ui:SymbolIcon Symbol="{Binding ButtonContent}" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="{Binding HoveredColor}" />
                         </Trigger>
@@ -33,7 +41,8 @@
             
             <Button.Template>
                 <ControlTemplate TargetType="Button">
-                    <Border Width="40" Height="40"
+                    <Border Width="{Binding WidthButton}" 
+                            Height="{Binding HeightButton}"
                             CornerRadius="{Binding BorderRadius}"
                             Background="{TemplateBinding Background}">
                         <ContentPresenter VerticalAlignment="Center"
@@ -41,5 +50,6 @@
                     </Border>
                 </ControlTemplate>
             </Button.Template>
+        
     </Button>
 </UserControl>
