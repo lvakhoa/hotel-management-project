@@ -12,11 +12,7 @@
     </DataTemplate>
     
     <DataTemplate DataType="{x:Type vm:ManagementVM}">
-        <view:Management>
-            <view:Management.DataContext>
-                <vm:StaffList />
-            </view:Management.DataContext>
-        </view:Management>
+        <view:Management />
     </DataTemplate>
     
     <DataTemplate DataType="{x:Type vm:InboxVM}">

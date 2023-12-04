@@ -5,9 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:custom="clr-namespace:HotelManagement.CustomControls"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:vm="clr-namespace:HotelManagement.ViewModel"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="1012"
              Loaded="Management_OnLoaded">
+    
+    <UserControl.DataContext>
+        <vm:ManagementVM />
+    </UserControl.DataContext>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -27,7 +33,8 @@
                        CornerRadius="0,0,10,10"
                        BorderThickness="0"
                        Margin="20,0,0,0"
-                       Click="StaffBtn_OnClick"/>
+                       Click="StaffBtn_OnClick"
+                       Command="{Binding StaffCommand}"/>
         
             <ui:Button Appearance="Dark" 
                        Padding="20, 10"
@@ -41,7 +48,8 @@
                        CornerRadius="0,0,10,10"
                        BorderThickness="0"
                        Margin="10,0,0,0"
-                       Click="CustomerBtn_OnClick"/>
+                       Click="CustomerBtn_OnClick"
+                       Command="{Binding CustomerCommand}"/>
         
             <ui:Button Appearance="Dark" 
                        Padding="20, 10"
@@ -128,6 +136,6 @@
                        Click="ServiceUseBtn_OnClick"/>
         </StackPanel>
         
-        <custom:DataGrid Grid.Row="1" />
+        <custom:DataGrid Grid.Row="1" DataContext="{Binding CurrentManagement}" />
     </Grid>
 </UserControl>
