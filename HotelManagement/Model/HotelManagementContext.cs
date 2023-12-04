@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Configuration;
 using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Model;
