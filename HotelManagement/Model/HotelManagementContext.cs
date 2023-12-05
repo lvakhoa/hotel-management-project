@@ -10,6 +10,8 @@ public partial class HotelManagementContext : DbContext
 {
     public HotelManagementContext()
     {
+        DotNetEnv.Env.Load();
+        DotNetEnv.Env.TraversePath().Load();
     }
 
     public HotelManagementContext(DbContextOptions<HotelManagementContext> options)
@@ -37,9 +39,7 @@ public partial class HotelManagementContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["HotelManagementDB"].ConnectionString ??
-                                  throw new InvalidOperationException();
-
+        string connectionString = DotNetEnv.Env.GetString("CONNECTION_STRING");
         optionsBuilder.UseSqlServer(connectionString);
     }
 
