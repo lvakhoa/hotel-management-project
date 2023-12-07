@@ -11,12 +11,6 @@
     <Compile Update="View\LoginView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\SignUpView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\Window1.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="CustomControls\TextBoxWithPlaceHolder.xaml">
@@ -25,16 +19,22 @@
     <Page Update="Styles\Text.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\MenuButtonTheme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Addbooking.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Addcustomer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Addservice.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\AddStaff.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\LoginView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\SignUpView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\Window1.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

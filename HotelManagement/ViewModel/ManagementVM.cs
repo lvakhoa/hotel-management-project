@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-using System.Windows.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -12,10 +10,23 @@ internal partial class ManagementVM : ObservableObject
     {
         CurrentManagement = new StaffList();
     }
-    
+
     [RelayCommand]
     private void Staff() => CurrentManagement = new StaffList();
-    
+
     [RelayCommand]
     private void Customer() => CurrentManagement = new CustomerList();
+    [RelayCommand]
+    private void Account() => CurrentManagement = new AccountList();
+    [RelayCommand]
+    private void Booking() => CurrentManagement = new BookingList();
+    [RelayCommand]
+    private void Room() => CurrentManagement = new RoomList();
+    [RelayCommand]
+    private void Roomtype() => CurrentManagement = new RoomtypeList();
+    [RelayCommand]
+    private void Service() => CurrentManagement = new ServiceList();
+    [RelayCommand]
+    private void ServiceUse() => CurrentManagement = new ServiceUseList();
+
 }

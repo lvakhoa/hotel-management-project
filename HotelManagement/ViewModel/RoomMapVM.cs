@@ -1,6 +1,7 @@
-namespace HotelManagement.ViewModel;
-
-internal class RoomMapVM
+﻿namespace HotelManagement.ViewModel
 {
-    
+    class RoomMapVM
+    {
+
+    }
 }
