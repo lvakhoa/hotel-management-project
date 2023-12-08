@@ -21,6 +21,7 @@ internal partial class ManagementVM : ObservableObject
     [RelayCommand]
     private void Booking() => CurrentManagement = new BookingList();
     [RelayCommand]
+    private void Invoice() => CurrentManagement = new InvoiceList();
     private void Room() => CurrentManagement = new RoomList();
     [RelayCommand]
     private void Roomtype() => CurrentManagement = new RoomtypeList();
