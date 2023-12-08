@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="HotelManagement.CustomControls.UsernameBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HotelManagement.CustomControls"
+             mc:Ignorable="d" 
+             x:Name="_usernamebox"
+             d:DesignHeight="70" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="usernametitlestyle" 
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" 
+                    Value="Left"/>
+            <Setter Property="VerticalAlignment" 
+                    Value="Center"/>
+            <Setter Property="Foreground" 
+                    Value="#a3a3a4"/>
+            <Setter Property="FontSize" 
+                    Value="20"/>
+            <Setter Property="Text"
+                    Value="Username"/>
+            <Setter Property="Padding" 
+                    Value="2,0"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Text, ElementName=userbox}" 
+                             Value="">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard SpeedRatio="10">
+                                <DoubleAnimation Storyboard.TargetProperty="FontSize" To="20"/>
+                                <ThicknessAnimation Storyboard.TargetProperty="Margin" To="0"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard SpeedRatio="10">
+                                <DoubleAnimation Storyboard.TargetProperty="FontSize" To="15"/>
+                                <ThicknessAnimation Storyboard.TargetProperty="Margin" To="0 0 0 30"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="usernametxtboxstyle" TargetType="{x:Type TextBox}">
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding FontSize, ElementName=titleusername}" 
+                             Value="15">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard SpeedRatio="10">
+                                <DoubleAnimation Storyboard.TargetProperty="FontSize" To="20"/>
+                                <ThicknessAnimation Storyboard.TargetProperty="Margin" To="0 20 0 0"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard SpeedRatio="10">
+                                <DoubleAnimation Storyboard.TargetProperty="FontSize" To="15"/>
+                                <ThicknessAnimation Storyboard.TargetProperty="Margin" To="0"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Border CornerRadius="20"
+            Background="White"
+            Height="70">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" 
+                              ShadowDepth="5" 
+                              Direction="270"
+                              Color="whitesmoke"/>
+        </Border.Effect>
+        <Grid Margin="20,6">
+            <TextBlock x:Name="titleusername"
+                       Style="{StaticResource usernametitlestyle}"/>
+            <TextBox x:Name="userbox"
+                     Style="{StaticResource usernametxtboxstyle}"/>
+        </Grid>
+    </Border>
+</UserControl>

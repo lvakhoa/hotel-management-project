@@ -72,17 +72,12 @@
                            FontSize="40"
                            HorizontalAlignment="Center"
                            FontWeight="Bold"/>
+
+                    <customcontrols:UsernameBox Margin="25 30 25 10"/>
                     
-                    <!--Custom Username Textbox-->
-                    <customcontrols:TextBoxWithPlaceHolder PlaceHolder="Username"
-                                                           Margin="10,30,10,10"/>
+                    <customcontrols:PasswordBox Margin="25 10 25 10"/>
 
-                    <!--Custom Passwordbox-->
-                    <customcontrols:TextBoxWithPlaceHolder PlaceHolder="Password"
-                                                           IsPassword="True"
-                                                           Margin="10,10,10,10"/>
-
-                    <Button Margin="80,10,80,10"
+                    <Button Margin="120,10,120,10"
                             Content="Login"
                             FontSize="25"
                             Style="{StaticResource primarybutton}" />
