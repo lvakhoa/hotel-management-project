@@ -45,7 +45,7 @@ public partial class RoomtypeList : ObservableObject
                 RoomTypeImg = item.RoomTypeImg
             });
         }
-
+        IsLoading = false;
 
     }
     public class RoomtypeVM

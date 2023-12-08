@@ -40,7 +40,7 @@ public partial class ServiceUseList : ObservableObject
             });
         }
 
-
+        IsLoading = false;
     }
     public class ServiceUseVM
     {

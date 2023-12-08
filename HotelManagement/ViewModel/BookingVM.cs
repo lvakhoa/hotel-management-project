@@ -13,6 +13,7 @@ public partial class BookingList : ObservableObject
     public BookingList()
     {
         List = new ObservableCollection<BookingVM>();
+        GetBookingList();
 
     }
     private async void GetBookingList()
