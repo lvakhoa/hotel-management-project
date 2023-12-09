@@ -7,19 +7,20 @@
              xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d"
-             d:DesignHeight="680" d:DesignWidth="1000"
-               Background="Transparent"
+             d:DesignHeight="638" d:DesignWidth="1010"
+               Background="Transparent" Width="1010" Height="638"
              
             >
 
-    <Border CornerRadius="10"
+    <Border 
         Background="#FFF"
         BorderBrush="#231F20"
         BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="20"/>
                 <RowDefinition  Height="60"/>
+
                 <RowDefinition   Height="60"/>
                 <RowDefinition   Height="100"/>
                 <RowDefinition   Height="60"/>
@@ -38,10 +39,7 @@
 
                 <StackPanel Grid.Column="0"
                         Orientation="Horizontal">
-                    <TextBlock Text="settings" 
-                           VerticalAlignment="Center" 
-                           Margin="15,0,0,0" 
-                           FontSize="18"/>
+                  
                 </StackPanel>
                 <customcontrols:Button Grid.Column="1"
                                    x:Name="btnMinimize"
@@ -62,6 +60,11 @@
                            HorizontalAlignment="Left"
                            FontWeight="Bold"/>
             </Grid>
+            <GridSplitter  Grid.Row="2"  Height="1" HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top" Background="Gray"/>
+            <GridSplitter  Grid.Row="4"  Height="1" HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top" Background="Gray"/>
+            
             <Grid Grid.Row="2">
                 <TextBlock Text="Account"
                            Margin="50,10,0,0"
@@ -70,7 +73,7 @@
                            FontWeight="Bold"/>
             </Grid>
             <StackPanel Grid.Row="3" Orientation="Horizontal">
-                <Ellipse  Width="100" Height="100"
+                <Ellipse  Width="80" Height="80"
                          Margin="100,0,0,0"
                          >
                     <Ellipse.Stroke>
@@ -96,7 +99,7 @@
 
                     </TextBlock>
                 </StackPanel>
-                <ui:SymbolIcon Symbol="Edit24" Margin="500,0,10,0"/>
+                <ui:SymbolIcon Symbol="Edit24" Margin="350,0,10,0"/>
                 
                 <TextBlock Text="Edit Profile"   
                     FontSize="17"
@@ -124,7 +127,7 @@
                              >
 
                 </TextBlock>
-                <StackPanel Margin="100,0,0,0">
+                <StackPanel Margin="150,0,0,0">
                     <RadioButton 
                                  Style="{StaticResource LightButtonTheme}"
                                  Height="80"
@@ -140,7 +143,7 @@
 
                     </TextBlock>
                 </StackPanel>
-                <StackPanel Margin="100,0,0,0">
+                <StackPanel Margin="150,0,0,0">
                     <RadioButton 
               Style="{StaticResource DarkButtonTheme}"
                         Name="btnDark"
@@ -192,7 +195,7 @@
   Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                 <TextBlock  VerticalAlignment="Center" FontSize="17"
                              Text="24 hours"
-                            Margin="60,0,0,0"
+                            Margin="170,0,0,0"
                            FontWeight="Bold">
 
                 </TextBlock>
@@ -202,14 +205,19 @@
 
 
             </StackPanel>
-            <Border Grid.Row="8" 
+            <Grid Grid.Row="8"
+                  Background="#d9d9d9">
+                
+            </Grid>
+            <Border Grid.Row="8"
+ 
                     VerticalAlignment="Top"
                     HorizontalAlignment="Right"
                     Height="50"
-                    Width="150"
+                    Width="130"
                          Margin="0,0,70,0"
                     CornerRadius="10"
-        Background="Gray"
+        Background="Black"
         BorderBrush="#231F20"
         BorderThickness="1">
                 <RadioButton 
@@ -224,6 +232,7 @@
 
                         <TextBlock Text="Logout"
                                    Foreground="White"
+                                   FontWeight="Medium"
                                                    Style="{StaticResource TextStyle}"/>
 
                     </Grid>

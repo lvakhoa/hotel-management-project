@@ -81,6 +81,7 @@
                                    CornerRadius="0"/>
                         
                         <ui:Button Grid.Column="3"
+                                   Name="btnClose"
                                    Width="40"
                                    Height="40"
                                    Icon="Dismiss28"
@@ -89,7 +90,7 @@
                                    BorderThickness="0"
                                    MouseOverBackground="#EE4242"
                                    PressedBackground="#FF2525" 
-                                   CornerRadius="0, 10, 0, 0" />
+                                   CornerRadius="0, 10, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="btnClose_Click" />
                         
                     </Grid>
                 </Border>
