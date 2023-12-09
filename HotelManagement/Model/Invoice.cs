@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HotelManagement.Model;
+﻿namespace HotelManagement.Model;
 
 public partial class Invoice
 {

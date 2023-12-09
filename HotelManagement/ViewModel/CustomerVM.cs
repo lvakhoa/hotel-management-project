@@ -1,7 +1,7 @@
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using HotelManagement.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 
 namespace HotelManagement.ViewModel;
 
@@ -25,18 +25,29 @@ public partial class CustomerList : ObservableObject
         await using var context = new HotelManagementContext();
 
         var customers = await (from customer in context.Customers
-            select new
-            {
-                customer.CustomerId, customer.FullName, customer.ContactNumber, customer.Email, customer.Address,
-                customer.Gender, customer.CreditCard, customer.IdProof
-            }).ToListAsync();
+                               select new
+                               {
+                                   customer.CustomerId,
+                                   customer.FullName,
+                                   customer.ContactNumber,
+                                   customer.Email,
+                                   customer.Address,
+                                   customer.Gender,
+                                   customer.CreditCard,
+                                   customer.IdProof
+                               }).ToListAsync();
 
         foreach (var item in customers)
         {
             List.Add(new CustomerVM()
             {
-                CustomerID = item.CustomerId, FullName = item.FullName, ContactNumber = item.ContactNumber,
-                Email = item.Email, Address = item.Address, Gender = item.Gender, CreditCard = item.CreditCard,
+                CustomerID = item.CustomerId,
+                FullName = item.FullName,
+                ContactNumber = item.ContactNumber,
+                Email = item.Email,
+                Address = item.Address,
+                Gender = item.Gender,
+                CreditCard = item.CreditCard,
                 ProofID = item.IdProof
             });
         }

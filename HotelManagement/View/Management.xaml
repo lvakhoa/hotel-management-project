@@ -63,7 +63,8 @@
                        CornerRadius="0,0,10,10"
                        BorderThickness="0"
                        Margin="10,0,0,0"
-                       Click="RoomBtn_OnClick"/>
+                       Click="RoomBtn_OnClick"
+                       Command="{Binding RoomCommand}"/>
         
             <ui:Button Appearance="Dark" 
                        Padding="20, 10"
@@ -77,7 +78,8 @@
                        CornerRadius="0,0,10,10"
                        BorderThickness="0"
                        Margin="10,0,0,0"
-                       Click="ServiceBtn_OnClick"/>
+                       Click="ServiceBtn_OnClick"
+                       Command="{Binding ServiceCommand}"/>
         
             <ui:Button Appearance="Dark" 
                        Padding="20, 10"
@@ -91,7 +93,8 @@
                        CornerRadius="0,0,10,10"
                        BorderThickness="0"
                        Margin="10,0,0,0"
-                       Click="InvoiceBtn_OnClick"/>
+                       Click="InvoiceBtn_OnClick"
+                       Command="{Binding InvoiceCommand}"/>
         
             <ui:Button Appearance="Dark" 
                        Padding="20, 10"
@@ -105,7 +108,8 @@
                        CornerRadius="0,0,10,10"
                        BorderThickness="0"
                        Margin="10,0,0,0"
-                       Click="BookingBtn_OnClick"/>
+                       Click="BookingBtn_OnClick"
+                       Command="{Binding BookingCommand}"/>
         
             <ui:Button Appearance="Dark" 
                        Padding="20, 10"
@@ -119,7 +123,8 @@
                        CornerRadius="0,0,10,10"
                        BorderThickness="0"
                        Margin="10,0,0,0"
-                       Click="RoomTypeBtn_OnClick"/>
+                       Click="RoomTypeBtn_OnClick"
+                       Command="{Binding RoomtypeCommand}"/>
         
             <ui:Button Appearance="Dark" 
                        Padding="20, 10"
@@ -133,7 +138,8 @@
                        CornerRadius="0,0,10,10"
                        BorderThickness="0"
                        Margin="10,0,0,0"
-                       Click="ServiceUseBtn_OnClick"/>
+                       Click="ServiceUseBtn_OnClick"
+                        Command="{Binding ServiceUseCommand}"/>
         </StackPanel>
         
         <custom:DataGrid Grid.Row="1" DataContext="{Binding CurrentManagement}" />
