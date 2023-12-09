@@ -4,7 +4,7 @@ public partial class Invoice
 {
     public string InvoiceId { get; set; } = null!;
 
-    public string? CustomerId { get; set; } = null!;
+    public string CustomerId { get; set; } = null!;
 
     public string StaffId { get; set; } = null!;
 
