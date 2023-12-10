@@ -10,14 +10,18 @@
                     <ControlTemplate TargetType="RadioButton">
                         <Border Background="#747474" CornerRadius="10"
                              BorderThickness="{TemplateBinding BorderThickness}"
-                             BorderBrush="{TemplateBinding Foreground}">
-                            <Border Background="#373434" Height="60" Width="90"
-                             CornerRadius="10" Margin="29,30,0,0">
+                             BorderBrush="{TemplateBinding Foreground}"
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}">
+                            <Border Background="#373434" Height="60" Width="89"
+                             CornerRadius="10" Margin="29,18,0,0">
                                 <Grid Height="50" >
                                     <TextBlock Text="Aa" 
                                         FontSize="20"
+                                              Foreground="{TemplateBinding OpacityMask}"
+                                               
                                                FontWeight="Medium"
-                                       Foreground=" White"
+                                      
                                         VerticalAlignment="Center"
                                         Margin="10,-20,0,0"/>
 
@@ -35,10 +39,38 @@
             <Setter Property="BorderThickness" Value="1">
 
             </Setter>
+            <Setter Property="Width" Value="120">
+
+            </Setter>
+            <Setter Property="Height" Value="80">
+
+            </Setter>
+            <Setter Property="OpacityMask" Value="White">
+
+            </Setter>
+
 
 
         </Style.Setters>
         <Style.Triggers>
+          
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#22202f">
+
+                </Setter>
+                <Setter Property="Foreground" Value="Gray" >
+
+                </Setter>
+                <Setter Property="BorderThickness" Value="3">
+
+                </Setter>
+                <Setter Property="Width" Value="123">
+
+                </Setter>
+                <Setter Property="Height" Value="82">
+
+                </Setter>
+            </Trigger>
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Background" Value="#22202f">
 
@@ -49,15 +81,13 @@
                 <Setter Property="BorderThickness" Value="3">
 
                 </Setter>
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#22202f">
+                <Setter Property="Width" Value="123">
 
                 </Setter>
-                <Setter Property="Foreground" Value="Gray" >
+                <Setter Property="Height" Value="82">
 
                 </Setter>
-                <Setter Property="BorderThickness" Value="3">
+                <Setter Property="OpacityMask" Value="#2e74c6">
 
                 </Setter>
             </Trigger>
@@ -73,12 +103,13 @@
                         <Border Background="#C3c3c3" CornerRadius="10"
                              BorderThickness="{TemplateBinding BorderThickness}"
                              BorderBrush="{TemplateBinding Foreground}">
-                            <Border Background="White" Height="60" Width="90"
-                             CornerRadius="10" Margin="29,28,0,0">
+                            <Border Background="White" Height="60" Width="89"
+                             CornerRadius="10" Margin="29,18,0,0">
                                 <Grid Height="50" >
                                     <TextBlock Text="Aa" 
                                         FontSize="20"
-                                       Foreground="Black"
+                                                 Foreground="{TemplateBinding OpacityMask}"
+                                      
                                                FontWeight="Medium"
                                         VerticalAlignment="Center"
                                         Margin="10,-20,0,0"/>
@@ -97,10 +128,39 @@
             <Setter Property="BorderThickness" Value="1">
 
             </Setter>
+            <Setter Property="Width" Value="120">
+
+            </Setter>
+            <Setter Property="Height" Value="80">
+
+            </Setter>
+            <Setter Property="OpacityMask" Value="Black">
+
+            </Setter>
 
 
         </Style.Setters>
         <Style.Triggers>
+          
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#22202f">
+
+                </Setter>
+                <Setter Property="Foreground" Value="Gray" >
+
+                </Setter>
+                <Setter Property="BorderThickness" Value="3">
+
+                </Setter>
+              
+                <Setter Property="Width" Value="123">
+
+                </Setter>
+                <Setter Property="Height" Value="82">
+
+                </Setter>
+               
+            </Trigger>
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Background" Value="#22202f">
 
@@ -111,15 +171,13 @@
                 <Setter Property="BorderThickness" Value="3">
 
                 </Setter>
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#22202f">
+                <Setter Property="Width" Value="123">
 
                 </Setter>
-                <Setter Property="Foreground" Value="Gray" >
+                <Setter Property="Height" Value="82">
 
                 </Setter>
-                <Setter Property="BorderThickness" Value="3">
+                <Setter Property="OpacityMask" Value="#2e74c6">
 
                 </Setter>
             </Trigger>

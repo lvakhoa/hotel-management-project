@@ -1,4 +1,4 @@
-<UserControl x:Class="HotelManagement.View.Settings"
+﻿<UserControl x:Class="HotelManagement.View.Settings"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -22,11 +22,11 @@
                 <RowDefinition  Height="60"/>
 
                 <RowDefinition   Height="60"/>
-                <RowDefinition   Height="100"/>
-                <RowDefinition   Height="60"/>
+                <RowDefinition   Height="95"/>
+                <RowDefinition   Height="50"/>
                 <RowDefinition Height="150"/>
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition  Height="80"/>
+                <RowDefinition  />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
@@ -60,10 +60,7 @@
                            HorizontalAlignment="Left"
                            FontWeight="Bold"/>
             </Grid>
-            <GridSplitter  Grid.Row="2"  Height="1" HorizontalAlignment="Stretch"
-                            VerticalAlignment="Top" Background="Gray"/>
-            <GridSplitter  Grid.Row="4"  Height="1" HorizontalAlignment="Stretch"
-                            VerticalAlignment="Top" Background="Gray"/>
+          
             
             <Grid Grid.Row="2">
                 <TextBlock Text="Account"
@@ -101,11 +98,20 @@
                 </StackPanel>
                 <ui:SymbolIcon Symbol="Edit24" Margin="350,0,10,0"/>
                 
-                <TextBlock Text="Edit Profile"   
+                <TextBlock x:Name="editTb" Text="Edit Profile" 
                     FontSize="17"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center"
                            FontWeight="Bold">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="TextDecorations" Value="Underline" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
 
                 </TextBlock>
 
@@ -117,8 +123,9 @@
                            FontSize="30"
                            HorizontalAlignment="Left"
                            FontWeight="Bold"/>
-            <StackPanel Grid.Row="5" Orientation="Horizontal"
+            <Grid  Grid.Row="5" 
                         Margin="100,20,0,0">
+                
                 <TextBlock   FontSize="17"
                              Height="40"
                              Text="Theme"
@@ -127,12 +134,12 @@
                              >
 
                 </TextBlock>
-                <StackPanel Margin="150,0,0,0">
+                <StackPanel Margin="-360,0,0,0">
                     <RadioButton 
                                  Style="{StaticResource LightButtonTheme}"
-                                 Height="80"
+                               
                                  Name="btnLight"
-                                 Width="120">
+                                Checked="btnLight_Checked">
 
                     </RadioButton>
                     <TextBlock  Margin="20" Text="Light" HorizontalAlignment="Center"
@@ -143,12 +150,12 @@
 
                     </TextBlock>
                 </StackPanel>
-                <StackPanel Margin="150,0,0,0">
+                <StackPanel HorizontalAlignment="Right" Margin="0,0,300,0">
                     <RadioButton 
               Style="{StaticResource DarkButtonTheme}"
                         Name="btnDark"
-              Height="80"
-              Width="120">
+            
+              Checked="btnDark_Checked">
 
                     </RadioButton>
                     <TextBlock  Margin="20,20,20,0" Text="Dark" HorizontalAlignment="Center"
@@ -161,7 +168,7 @@
                 </StackPanel>
 
 
-            </StackPanel>
+            </Grid>
             <StackPanel  Grid.Row="6" Orientation="Horizontal"
                         Margin="100,0,0,0" VerticalAlignment="Center" >
                 <TextBlock  VerticalAlignment="Center" FontSize="17"
@@ -169,14 +176,14 @@
                            FontWeight="Bold">
 
                 </TextBlock>
-                <ComboBox FontSize="17" Margin="135,0,0,18" VerticalAlignment="Center"
-  materialDesign:HintAssist.Hint="English"
-  Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                <ComboBox x:Name="cbboxLanguage" FontSize="20"   Margin="135,0,0,18" VerticalAlignment="Center"
+  
+  Style="{StaticResource MaterialDesignFloatingHintComboBox}" >
                     <ComboBoxItem>
                         English
                     </ComboBoxItem>
                     <ComboBoxItem>
-                        Ti?ng Vi?t
+                        Tiếng Việt
                     </ComboBoxItem>
 
                 </ComboBox>
