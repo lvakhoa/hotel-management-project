@@ -2,7 +2,13 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="CustomControls\PasswordBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="CustomControls\TextBoxWithPlaceHolder.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CustomControls\UsernameBox.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\AddStaff.xaml.cs">
@@ -13,7 +19,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="CustomControls\PasswordBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="CustomControls\TextBoxWithPlaceHolder.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CustomControls\UsernameBox.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\Text.xaml">
