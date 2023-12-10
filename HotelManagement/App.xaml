@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:HotelManagement"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-             StartupUri="MainWindow.xaml">
+             StartupUri="/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <PathGeometry x:Key="showPass"
@@ -22,7 +22,8 @@
                 <ui:ControlsDictionary />
                 <ResourceDictionary Source="Styles/Button.xaml" />
                 <ResourceDictionary Source="Styles/Text.xaml" />
-                <ResourceDictionary Source="Themes/MenuButtonTheme.xaml"/>
+                <ResourceDictionary Source="Themes/LightDarkTheme.xaml"/>
+                <ResourceDictionary Source="Themes/Logoutbutton.xaml"/>
                 <ResourceDictionary Source="Utilities/DataTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

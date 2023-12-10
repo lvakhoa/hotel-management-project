@@ -12,7 +12,7 @@
         <Style x:Key="credentialTxTtitleStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Foreground" Value="#a3a3a4"/>
+            <Setter Property="Foreground" Value="#FF91919B"/>
             <Setter Property="FontSize" Value="20"/>
 
             <!--Since we want to reuse this control we will use property binding for our placeholder-->
@@ -175,7 +175,7 @@
         <!--Border Shadow Effect-->
         <Border.Effect>
             <DropShadowEffect BlurRadius="20" ShadowDepth="5" Direction="270"
-                              Color="whitesmoke"/>
+                              Color="#FFE9E2E2"/>
         </Border.Effect>
         <Grid Margin="20,6">
             <!--Title-->

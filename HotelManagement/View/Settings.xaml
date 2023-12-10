@@ -12,21 +12,21 @@
              
             >
 
-    <Border 
+    <Grid
         Background="#FFF"
-        BorderBrush="#231F20"
-        BorderThickness="1">
+        
+        >
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition  Height="60"/>
+                <RowDefinition Height="0"/>
+                <RowDefinition  Height="56"/>
 
-                <RowDefinition   Height="60"/>
+                <RowDefinition   Height="58"/>
                 <RowDefinition   Height="95"/>
-                <RowDefinition   Height="50"/>
+                <RowDefinition   Height="47"/>
                 <RowDefinition Height="150"/>
                 <RowDefinition  Height="80"/>
-                <RowDefinition  />
+                <RowDefinition  Height="75"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
 
@@ -39,29 +39,20 @@
 
                 <StackPanel Grid.Column="0"
                         Orientation="Horizontal">
-                  
+
                 </StackPanel>
-                <customcontrols:Button Grid.Column="1"
-                                   x:Name="btnMinimize"
-                                
-                                   HoveredColor="#D4D2D2"
-                                   ClickedColor="#CAC9C9"/>
-                <customcontrols:Button Grid.Column="2"
-                                   x:Name="btnClose"
-                                 
-                                   HoveredColor="#EE4242"
-                                   ClickedColor="#FF2525" 
-                                   BorderRadius="0, 10, 0, 0"/>
             </Grid>
             <Grid Grid.Row="1">
+              
                 <TextBlock Text="Settings"
-                           Margin="50,0"
+                           Margin="50,0,0,0"
                            FontSize="40"
                            HorizontalAlignment="Left"
                            FontWeight="Bold"/>
             </Grid>
-          
-            
+           
+            <GridSplitter Grid.Row="2" Height="2" IsEnabled="False" HorizontalAlignment="Stretch" Margin="0,-50,0,0"/>
+            <GridSplitter Grid.Row="4" Height="2" IsEnabled="False" HorizontalAlignment="Stretch" Margin="0,-40,0,0"/>
             <Grid Grid.Row="2">
                 <TextBlock Text="Account"
                            Margin="50,10,0,0"
@@ -70,13 +61,13 @@
                            FontWeight="Bold"/>
             </Grid>
             <StackPanel Grid.Row="3" Orientation="Horizontal">
-                <Ellipse  Width="80" Height="80"
+                <Ellipse  Width="70" Height="70"
                          Margin="100,0,0,0"
                          >
                     <Ellipse.Stroke>
                         <SolidColorBrush Color="#FF3B3C32"/>
                     </Ellipse.Stroke>
-                   
+
 
 
                 </Ellipse>
@@ -96,8 +87,8 @@
 
                     </TextBlock>
                 </StackPanel>
-                <ui:SymbolIcon Symbol="Edit24" Margin="350,0,10,0"/>
-                
+                <ui:SymbolIcon Symbol="Edit24" Margin="320,0,10,0"/>
+
                 <TextBlock x:Name="editTb" Text="Edit Profile" 
                     FontSize="17"
                            HorizontalAlignment="Left"
@@ -125,7 +116,7 @@
                            FontWeight="Bold"/>
             <Grid  Grid.Row="5" 
                         Margin="100,20,0,0">
-                
+
                 <TextBlock   FontSize="17"
                              Height="40"
                              Text="Theme"
@@ -196,9 +187,10 @@
                            FontWeight="Bold">
 
                 </TextBlock>
-                <DatePicker FontSize="17" Margin="70,0,0,0"
+                <DatePicker FontSize="17"  Margin="70,0,0,0"
   Width="100"
   materialDesign:HintAssist.Hint="Pick Date"
+                            
   Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                 <TextBlock  VerticalAlignment="Center" FontSize="17"
                              Text="24 hours"
@@ -214,40 +206,28 @@
             </StackPanel>
             <Grid Grid.Row="8"
                   Background="#d9d9d9">
-                
+
             </Grid>
             <Border Grid.Row="8"
  
                     VerticalAlignment="Top"
                     HorizontalAlignment="Right"
-                    Height="50"
-                    Width="130"
+                  
                          Margin="0,0,70,0"
                     CornerRadius="10"
-        Background="Black"
-        BorderBrush="#231F20"
-        BorderThickness="1">
+      
+      >
                 <RadioButton 
-                         Style="{StaticResource BtnStyle}">
-                    <Grid>
-
-                        <ui:SymbolIcon Symbol="ArrowExit20"
-                                                       FontSize="24" 
-                                                       Foreground="White"
-                                                       Margin="12,0,0,0"
-                                                       HorizontalAlignment="Left"/>
-
-                        <TextBlock Text="Logout"
-                                   Foreground="White"
-                                   FontWeight="Medium"
-                                                   Style="{StaticResource TextStyle}"/>
-
-                    </Grid>
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Margin="0,15,0,0"
+                         Style="{StaticResource Logoutbutton}">
+                   
                 </RadioButton>
             </Border>
 
 
         </Grid>
-    </Border>
+    </Grid>
 
 </UserControl>

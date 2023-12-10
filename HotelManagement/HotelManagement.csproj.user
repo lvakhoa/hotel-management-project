@@ -19,7 +19,10 @@
     <Page Update="Styles\Text.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Themes\MenuButtonTheme.xaml">
+    <Page Update="Themes\LightDarkTheme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\Logoutbutton.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Addbooking.xaml">
