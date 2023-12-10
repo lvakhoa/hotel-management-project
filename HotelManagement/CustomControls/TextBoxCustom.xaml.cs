@@ -18,9 +18,9 @@ namespace HotelManagement.CustomControls
     /// <summary>
     /// Interaction logic for UsernameBox.xaml
     /// </summary>
-    public partial class UsernameBox : UserControl
+    public partial class TextBoxCustom : UserControl
     {
-        public UsernameBox()
+        public TextBoxCustom()
         {
             InitializeComponent();
         }
@@ -34,7 +34,7 @@ namespace HotelManagement.CustomControls
 
         // Using a DependencyProperty as the backing store for Text.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(UsernameBox));
+            DependencyProperty.Register("Text", typeof(string), typeof(TextBoxCustom));
 
 
     }

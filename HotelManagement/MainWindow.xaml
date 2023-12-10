@@ -89,7 +89,19 @@
                                    BorderThickness="0"
                                    MouseOverBackground="#EE4242"
                                    PressedBackground="#FF2525" 
-                                   CornerRadius="0, 10, 0, 0" />
+                                   CornerRadius="0, 10, 0, 0">
+                            
+                            <ui:Button.Style>
+                                <Style TargetType="{x:Type ui:Button}" BasedOn="{StaticResource {x:Type ui:Button}}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground" Value="#fff"></Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ui:Button.Style>
+                            
+                        </ui:Button>
                         
                     </Grid>
                 </Border>

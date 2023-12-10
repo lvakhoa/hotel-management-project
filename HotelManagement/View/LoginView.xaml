@@ -6,80 +6,130 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:HotelManagement.View"
         xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
         Title="LoginView" Height="680" Width="1240"
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen"
-        MouseDown="Window_MouseDown">
+        WindowStartupLocation="CenterScreen">
+
     <Border CornerRadius="10"
-        Background="#FFF"
-        BorderBrush="#231F20"
-        BorderThickness="1">
+            Background="#FFF"
+            BorderBrush="#231F20"
+            BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="40" />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="40"/>
-                    <ColumnDefinition Width="40"/>
-                </Grid.ColumnDefinitions>
+            <Border Grid.Row="0"
+                    BorderBrush="#000000"
+                    BorderThickness="0,0,0, 0.5"
+                    CornerRadius="10, 10, 0, 0"
+                    Background="#fff">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="40" />
+                    </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0"
-                        Orientation="Horizontal">
-                    <TextBlock Text="LOG IN" 
-                           VerticalAlignment="Center" 
-                           Margin="15,0,0,0" 
-                           FontSize="18"/>
-                </StackPanel>
-                <customcontrols:Button Grid.Column="1"
-                                   x:Name="btnMinimize"
-                                   Type="Icon"
-                                   ButtonContent="Subtract20"
-                                   HoveredColor="#D4D2D2"
-                                   ClickedColor="#CAC9C9"/>
-                <customcontrols:Button Grid.Column="2"
-                                   x:Name="btnClose"
-                                   Type="Icon"
-                                   ButtonContent="Dismiss28"
-                                   HoveredColor="#EE4242"
-                                   ClickedColor="#FF2525" 
-                                   BorderRadius="0, 10, 0, 0"/>
-            </Grid>
+                    <StackPanel Grid.Column="0"
+                                Orientation="Horizontal">
+                        <TextBlock Text="LOG IN"
+                                   Foreground="#1E1E1E"
+                                   VerticalAlignment="Center"
+                                   Margin="15,0,0,0"
+                                   FontSize="18" />
+                    </StackPanel>
+
+                    <ui:Button Grid.Column="1"
+                               Width="40"
+                               Height="40"
+                               Icon="Subtract20"
+                               IconFilled="True"
+                               Appearance="Transparent"
+                               BorderThickness="0"
+                               MouseOverBackground="#D4D2D2"
+                               PressedBackground="#CAC9C9"
+                               CornerRadius="0" />
+
+                    <ui:Button Grid.Column="2"
+                               Width="40"
+                               Height="40"
+                               Icon="SquareMultiple24"
+                               Appearance="Transparent"
+                               BorderThickness="0"
+                               MouseOverBackground="#D4D2D2"
+                               PressedBackground="#CAC9C9"
+                               CornerRadius="0" />
+
+                    <ui:Button Grid.Column="3"
+                               Width="40"
+                               Height="40"
+                               Icon="Dismiss28"
+                               IconFilled="True"
+                               Appearance="Transparent"
+                               BorderThickness="0"
+                               MouseOverBackground="#EE4242"
+                               PressedBackground="#FF2525"
+                               CornerRadius="0, 10, 0, 0">
+                        <ui:Button.Style>
+                            <Style TargetType="{x:Type ui:Button}" BasedOn="{StaticResource {x:Type ui:Button}}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="#fff"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ui:Button.Style>
+                    </ui:Button>
+
+                </Grid>
+            </Border>
+
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*"/>
-                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="0.5*" />
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    <Image Source="/HotelManagement;component/Assets/Images/login.png" 
-                       Width="500"
-                       Margin="40,40,40,40"/>
+                    <Image Source="/HotelManagement;component/Assets/Images/hotel_img.png"
+                           Width="500"
+                           Margin="70,40,40,40" />
                 </Grid>
 
                 <StackPanel Grid.Column="1"
                             VerticalAlignment="Center"
                             Orientation="Vertical"
                             Margin="50,50,50,50">
-                    <TextBlock Text="Login"
-                           FontSize="40"
-                           HorizontalAlignment="Center"
-                           FontWeight="Bold"/>
+                    <TextBlock Text="Log In"
+                               Foreground="#1E1E1E"
+                               FontSize="36"
+                               FontWeight="Bold"
+                               Margin="25 0 0 0" />
 
-                    <customcontrols:UsernameBox Margin="25 30 25 10"/>
-                    
-                    <customcontrols:PasswordBox Margin="25 10 25 10"/>
+                    <TextBlock FontSize="14"
+                               Foreground="#1E1E1E"
+                               Opacity="0.7"
+                               Margin="25 5 0 0">
+                        Fill your information below to continue
+                    </TextBlock>
+
+                    <customcontrols:TextBoxCustom Text="Username" Margin="25 30 25 10" />
+
+                    <customcontrols:PasswordBox Margin="25 10 25 10" />
 
                     <Button Margin="120,10,120,10"
-                            Content="Login"
+                            Background="#1E1E1E"
+                            Content="Log In"
                             FontSize="25"
+                            Cursor="Hand"
                             Style="{StaticResource primarybutton}" />
 
                 </StackPanel>

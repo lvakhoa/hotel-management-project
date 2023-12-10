@@ -36,6 +36,8 @@
     <ItemGroup>
       <Resource Include="Assets\Images\hotel_icon.png" />
       <Resource Include="Assets\Images\login.png" />
+      <None Remove="Assets\Images\hotel_img.png" />
+      <Resource Include="Assets\Images\hotel_img.png" />
     </ItemGroup>
 
 </Project>
