@@ -20,6 +20,7 @@ namespace HotelManagement.CustomControls
     /// </summary>
     public partial class PasswordBox : UserControl
     {
+        private bool PasswordChanging;
         public PasswordBox()
         {
             InitializeComponent();
@@ -33,11 +34,29 @@ namespace HotelManagement.CustomControls
 
         // Using a DependencyProperty as the backing store for Password.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PasswordProperty =
-            DependencyProperty.Register("Password", typeof(string), typeof(PasswordBox), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("Password", typeof(string), typeof(PasswordBox), new PropertyMetadata(string.Empty, PasswordPropertyChanged));
+
+        private static void PasswordPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is PasswordBox passbox)
+            {
+                passbox.UpdatePassword();
+            }
+        }
+
+        private void UpdatePassword()
+        {
+            if (!PasswordChanging)
+            {
+                passbox.Password = Password;
+            }
+        }
 
         private void passbox_PasswordChanged(object sender, RoutedEventArgs e)
         {
+            PasswordChanging = true;
             Password = passbox.Password;
+            PasswordChanging = false;
         }
     }
 }
