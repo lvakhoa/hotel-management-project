@@ -1,3 +1,4 @@
+using HotelManagement.ViewModel;
 using System.Windows.Controls;
 
 namespace HotelManagement.View;

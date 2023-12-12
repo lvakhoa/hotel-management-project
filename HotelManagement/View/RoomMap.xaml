@@ -3,10 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
              xmlns:local="clr-namespace:HotelManagement.View"
+             xmlns:vm="clr-namespace:HotelManagement.ViewModel"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <TextBlock>Room Map</TextBlock>
-    </Grid>
+    <StackPanel>
+        <TextBlock Text="Room Map"
+                   Style="{StaticResource Title}"/>
+        <ItemsControl ItemsSource="{Binding List}"
+                      Margin="10"
+                      HorizontalAlignment="Center">
+            <ItemsControl.DataContext>
+                <vm:RoomList />
+            </ItemsControl.DataContext>
+            
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel>
+                    </WrapPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <customcontrols:RoomCard Status="{Binding Status}"
+                                             RoomNumber="{Binding RoomNumber}"
+                                             Margin="10"
+                                             Width="200"
+                                             Height="120"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
 </UserControl>

@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="HotelManagement.CustomControls.RoomCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:local="clr-namespace:HotelManagement.CustomControls"
+             mc:Ignorable="d" 
+             x:Name="_RoomCard"
+             Loaded="_RoomCard_Loaded"
+             d:DesignHeight="120" d:DesignWidth="200">
+    <UserControl.Resources>
+        <Style x:Key="RoomNumberStyle"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="Text"
+                    Value="{Binding RoomNumber, ElementName=_RoomCard}"/>
+        </Style>
+
+        <Style x:Key="StatusStyle"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="Text"
+                    Value="{Binding Status, ElementName=_RoomCard}"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <Border x:Name="BorderCardStyle"
+            CornerRadius="5"
+            Background="#C2FCC1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="0.2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0"
+                      VerticalAlignment="Bottom">
+                    <TextBlock x:Name="RoomNumberTxt"
+                               Padding="5"
+                               FontSize="25"
+                               FontWeight="SemiBold"
+                               Margin="5 5 0 0"
+                               Style="{StaticResource RoomNumberStyle}"/>
+                </Grid>
+
+                <ui:Button x:Name="moreOptionButton"
+                           Icon="MoreVertical48"
+                           Grid.Column="1"
+                           Background="Transparent"
+                           BorderThickness="0"
+                           FontSize="30"
+                           Click="Button_Click"/>
+
+            </Grid>
+
+            <Grid Grid.Row="1"
+                  VerticalAlignment="Top">
+                <TextBlock x:Name="StatusTxt"
+                           Padding="5"
+                           FontSize="20"
+                           Margin="5 0 5 0"
+                           Style="{StaticResource StatusStyle}"/>
+            </Grid>
+            
+        </Grid>    
+    </Border>
+    
+</UserControl>
