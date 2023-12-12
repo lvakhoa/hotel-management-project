@@ -40,4 +40,12 @@
       <Resource Include="Assets\Images\hotel_img.png" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Page Update="Styles\LightDarkTheme.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
 </Project>

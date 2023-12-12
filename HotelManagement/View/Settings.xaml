@@ -3,10 +3,234 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:HotelManagement.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <TextBlock>Settings</TextBlock>
+             d:DesignHeight="638" d:DesignWidth="1010"
+             Background="Transparent" Width="1010" Height="638">
+
+    <Grid
+        Background="#FFF">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="56" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="153" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Title section -->
+            <Grid Grid.Row="0" Margin="50 10 0 0">
+
+                <TextBlock Text="Settings"
+                           FontSize="32"
+                           Foreground="#373434"
+                           HorizontalAlignment="Left"
+                           FontWeight="Bold" />
+            </Grid>
+
+            <GridSplitter Grid.Row="1" Height="2" IsEnabled="False" VerticalAlignment="Top"
+                          Width="910"
+                          HorizontalAlignment="Left" Margin="50,10,0,0" />
+
+            <!-- Account section -->
+            <Grid Grid.Row="2" VerticalAlignment="Top" Margin="0 10 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="52" />
+                    <RowDefinition Height="86" />
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <TextBlock Text="Account"
+                               Margin="50,0,0,0"
+                               FontSize="24"
+                               Foreground="#373434"
+                               HorizontalAlignment="Left"
+                               FontWeight="Bold" />
+                </Grid>
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top">
+                    <Ellipse Width="70" Height="70"
+                             Margin="100,0,0,0">
+                        <Ellipse.Stroke>
+                            <SolidColorBrush Color="#FF3B3C32" />
+                        </Ellipse.Stroke>
+                    </Ellipse>
+                    <StackPanel HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Margin="10,0,0,0">
+                        <TextBlock FontSize="20"
+                                   Foreground="#373434"
+                                   HorizontalAlignment="Left"
+                                   FontWeight="Bold">
+                            Le Khoa
+                        </TextBlock>
+                        <TextBlock Text="Manager"
+                                   FontSize="17"
+                                   HorizontalAlignment="Left"
+                                   FontWeight="Medium"
+                                   Foreground="Gray">
+
+                        </TextBlock>
+                    </StackPanel>
+                    <ui:SymbolIcon Symbol="Edit24" Margin="320,0,10,0" />
+                    
+                        <TextBlock x:Name="EditTb" Text="Edit Profile"
+                                   FontSize="17"
+                                   LineHeight="20"
+                                   Foreground="#373434"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   MouseEnter="EditTb_OnMouseEnter"
+                                   MouseLeave="EditTb_OnMouseLeave" />
+
+                </StackPanel>
+            </Grid>
+
+            <GridSplitter Grid.Row="3" Height="2" IsEnabled="False" 
+                          VerticalAlignment="Top" Width="910"
+                          HorizontalAlignment="Left" Margin="50,10,0,0" />
+
+            <!-- Preferences section -->
+            <Grid Grid.Row="4">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="56" />
+                    <RowDefinition Height="138" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Preferences"
+                           Margin="50,10,0,0"
+                           FontSize="24"
+                           Foreground="#373434"
+                           HorizontalAlignment="Left"
+                           FontWeight="Bold" />
+
+                <Grid Grid.Row="1"
+                      Margin="100,0,0,0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="280" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock FontSize="17"
+                               Text="Theme"
+                               Foreground="#373434"
+                               FontWeight="Bold"
+                               Margin="0 10 0 0" />
+
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Left" Width="160" Height="150">
+                        <RadioButton
+                            Style="{StaticResource LightButtonTheme}"
+                            Name="btnLight"
+                            Checked="btnLight_Checked"
+                            Margin="0 10 0 0">
+
+                        </RadioButton>
+                        <TextBlock Margin="20" Text="Light"
+                                   TextAlignment="Center"
+                                   FontWeight="Bold"
+                                   FontSize="17"
+                                   Foreground="{Binding ElementName=btnLight, Path=Foreground ,Mode=TwoWay}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Left" Width="160" Height="140"
+                                VerticalAlignment="Center">
+                        <RadioButton
+                            Style="{StaticResource DarkButtonTheme}"
+                            Name="btnDark"
+                            Checked="btnDark_Checked"
+                            Margin="0 10 0 0">
+
+                        </RadioButton>
+                        <TextBlock Margin="20,20,20,0" Text="Dark"
+                                   TextAlignment="Center"
+                                   FontWeight="Bold"
+                                   FontSize="17"
+                                   Foreground="{Binding ElementName=btnDark, Path=Foreground,Mode=TwoWay}" />
+                    </StackPanel>
+
+                </Grid>
+
+                <Grid Grid.Row="2"
+                      Margin="100,20,0,0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock VerticalAlignment="Top" FontSize="17"
+                               Foreground="#373434"
+                               Text="Language"
+                               FontWeight="Bold" />
+
+                    <ComboBox Grid.Column="1" x:Name="CbboxLanguage"
+                              Width="160" Height="42" FontSize="14"
+                              HorizontalAlignment="Left" VerticalAlignment="Center"
+                              SelectedIndex="0"
+                              Foreground="#373434">
+
+                        <ComboBoxItem>
+                            English
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Tiếng Việt
+                        </ComboBoxItem>
+
+                    </ComboBox>
+
+                </Grid>
+
+                <Grid Grid.Row="3"
+                      Margin="100,30,0,0" VerticalAlignment="Top">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="280" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock VerticalAlignment="Center" FontSize="17"
+                               Text="Date-time Format"
+                               FontWeight="Bold"
+                               Foreground="#373434"/>
+
+                    <ComboBox Grid.Column="1" x:Name="CbboxDateFormat"
+                              Width="160" Height="42" FontSize="14"
+                              HorizontalAlignment="Left" VerticalAlignment="Center"
+                              SelectedIndex="0"
+                              Foreground="#373434">
+
+                        <ComboBoxItem>
+                            MM/DD/YYYY
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            DD/MM/YYYY
+                        </ComboBoxItem>
+
+                    </ComboBox>
+
+                    <TextBlock Grid.Column="2" VerticalAlignment="Center"
+                               FontSize="17" Text="24 hours" Foreground="#373434"
+                               FontWeight="Bold" />
+
+                    <ui:ToggleSwitch Grid.Column="3" HorizontalAlignment="Left"
+                                     Background="#373434"
+                                     ToolTip="Enable 24 hours format">
+                    </ui:ToggleSwitch>
+                </Grid>
+            </Grid>
+
+
+        </Grid>
     </Grid>
+
 </UserControl>
