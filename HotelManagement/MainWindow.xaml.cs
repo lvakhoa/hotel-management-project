@@ -19,5 +19,14 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        this.PreviewKeyDown += MainWindowPreviewKeyDown;
+    }
+    
+    static void MainWindowPreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if(e.Key == Key.Tab)
+        {
+            e.Handled = true;
+        }
     }
 }
