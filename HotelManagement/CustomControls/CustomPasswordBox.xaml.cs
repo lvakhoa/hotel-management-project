@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,10 +19,11 @@ namespace HotelManagement.CustomControls
     /// <summary>
     /// Interaction logic for PasswordBox.xaml
     /// </summary>
-    public partial class PasswordBox : UserControl
+    public partial class CustomPasswordBox : UserControl
     {
         private bool PasswordChanging;
-        public PasswordBox()
+
+        public CustomPasswordBox()
         {
             InitializeComponent();
         }
@@ -34,11 +36,12 @@ namespace HotelManagement.CustomControls
 
         // Using a DependencyProperty as the backing store for Password.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PasswordProperty =
-            DependencyProperty.Register("Password", typeof(string), typeof(PasswordBox), new PropertyMetadata(string.Empty, PasswordPropertyChanged));
+            DependencyProperty.Register("Password", typeof(string), typeof(CustomPasswordBox),
+                new PropertyMetadata(string.Empty, PasswordPropertyChanged));
 
         private static void PasswordPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is PasswordBox passbox)
+            if (d is CustomPasswordBox passbox)
             {
                 passbox.UpdatePassword();
             }
@@ -57,6 +60,20 @@ namespace HotelManagement.CustomControls
             PasswordChanging = true;
             Password = passbox.Password;
             PasswordChanging = false;
+        }
+
+        private void SetSelection(PasswordBox passwordBox, int start, int length)
+        {
+            passwordBox.GetType().GetMethod("Select", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .Invoke(passwordBox, new object[] { start, length });
+        }
+
+        private void Showpass_OnClicked(object sender, RoutedEventArgs e)
+        {
+            showpasstxtbox.Focus();
+            showpasstxtbox.SelectionStart = showpasstxtbox.Text.Length;
+            passbox.Focus();
+            SetSelection(passbox, passbox.Password.Length, 0);
         }
     }
 }

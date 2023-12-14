@@ -123,7 +123,7 @@
 
                     <customcontrols:TextBoxCustom Text="Username" Margin="25 30 25 10" />
 
-                    <customcontrols:PasswordBox Margin="25 10 25 10" />
+                    <customcontrols:CustomPasswordBox Margin="25 10 25 10" />
 
                     <Button Margin="120,10,120,10"
                             Background="#1E1E1E"
