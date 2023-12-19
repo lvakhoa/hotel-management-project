@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:local="clr-namespace:HotelManagement.View"
+        xmlns:vm="clr-namespace:HotelManagement.ViewModel"
         xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
@@ -14,6 +13,18 @@
         AllowsTransparency="True"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <vm:LoginVM />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+    </Window.Resources>
+
+    <Window.Visibility>
+        <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}" />
+    </Window.Visibility>
 
     <Border CornerRadius="10"
             Background="#FFF"
@@ -114,23 +125,51 @@
                                FontWeight="Bold"
                                Margin="25 0 0 0" />
 
-                    <TextBlock FontSize="14"
+                    <TextBlock FontSize="22"
                                Foreground="#1E1E1E"
                                Opacity="0.7"
                                Margin="25 5 0 0">
                         Fill your information below to continue
                     </TextBlock>
 
-                    <customcontrols:TextBoxCustom Text="Username" Margin="25 30 25 10" />
+                    <customcontrols:TextBoxCustom x:Name="UsernameBox"
+                        Text="{Binding Username, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="25 30 25 10">
+                        
+                        <customcontrols:TextBoxCustom.InputBindings>
+                            <KeyBinding Command="{Binding LoginCommand}" Key="Enter"/>
+                        </customcontrols:TextBoxCustom.InputBindings>
+                        
+                    </customcontrols:TextBoxCustom>
 
-                    <customcontrols:CustomPasswordBox Margin="25 10 25 10" />
+                    <customcontrols:CustomPasswordBox x:Name="PasswordBox"
+                        Password="{Binding Password, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="25 10 25 10" >
+                        
+                        <customcontrols:CustomPasswordBox.InputBindings>
+                            <KeyBinding Command="{Binding LoginCommand}" Key="Enter"/>
+                        </customcontrols:CustomPasswordBox.InputBindings>
+                        
+                    </customcontrols:CustomPasswordBox>
 
-                    <Button Margin="120,10,120,10"
-                            Background="#1E1E1E"
+                    <ui:Button Margin="120,10,120,10"
+                            Background="#373434"
+                            MouseOverBackground="#2D2B2B"
+                            PressedBackground="#2D2B2B"
+                            Foreground="#FFF"
+                            PressedForeground="#FFF"
                             Content="Log In"
                             FontSize="25"
+                            FontWeight="Bold"
                             Cursor="Hand"
-                            Style="{StaticResource primarybutton}" />
+                            Height="60"
+                            Width="274"
+                            VerticalAlignment="Center"
+                            CornerRadius="10"
+                            Command="{Binding LoginCommand}" />
+                    
+                    <TextBlock FontSize="20" Foreground="Red" Margin="40 0 0 0"
+                               Text="{Binding ErrorMessage}" />
 
                 </StackPanel>
 

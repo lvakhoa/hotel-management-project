@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HotelManagement.View;
 
 namespace HotelManagement;
 
@@ -28,5 +29,21 @@ public partial class MainWindow : Window
         {
             e.Handled = true;
         }
+    }
+
+    private void LogoutBtn_OnChecked(object sender, RoutedEventArgs e)
+    {
+        var loginView = new LoginView();
+        loginView.Show();
+        loginView.IsVisibleChanged += (s, ev) =>
+        {
+            if (loginView.IsVisible == false && loginView.IsLoaded)
+            {
+                var mainView = new MainWindow();
+                mainView.Show();
+                loginView.Close();
+            }
+        };
+        this.Close();
     }
 }

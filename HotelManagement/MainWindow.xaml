@@ -237,7 +237,9 @@
                                 
                                 <!-- Logout -->
                                     
-                                <RadioButton Grid.Row="2" Style="{StaticResource BtnStyle}">
+                                <RadioButton Grid.Row="2" Style="{StaticResource BtnStyle}"
+                                             Checked="LogoutBtn_OnChecked">
+                                    
                                     <Grid>
                                             
                                         <ui:SymbolIcon Symbol="ArrowExit20"
