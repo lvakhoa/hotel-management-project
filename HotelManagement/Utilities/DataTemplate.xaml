@@ -20,7 +20,7 @@
     </DataTemplate>
     
     <DataTemplate DataType="{x:Type vm:SettingsVM}">
-        <view:Settings />
+        <view:Settings DataContext="{Binding}" />
     </DataTemplate>
     
 </ResourceDictionary>

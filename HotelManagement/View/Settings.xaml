@@ -3,14 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d"
              d:DesignHeight="638" d:DesignWidth="1010"
              Background="Transparent" Width="1010" Height="638">
-
-    <Grid
-        Background="#FFF">
+    
+    <Grid Background="#FFF">
+        
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="56" />
@@ -63,16 +62,14 @@
                         <TextBlock FontSize="20"
                                    Foreground="#373434"
                                    HorizontalAlignment="Left"
-                                   FontWeight="Bold">
-                            Le Khoa
-                        </TextBlock>
-                        <TextBlock Text="Manager"
+                                   FontWeight="Bold"
+                                   Text="{Binding FullName}" />
+                        
+                        <TextBlock Text="{Binding Position}"
                                    FontSize="17"
                                    HorizontalAlignment="Left"
                                    FontWeight="Medium"
-                                   Foreground="Gray">
-
-                        </TextBlock>
+                                   Foreground="Gray" />
                     </StackPanel>
                     <ui:SymbolIcon Symbol="Edit24" Margin="320,0,10,0" />
                     
