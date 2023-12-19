@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HotelManagement.Model;
+using HotelManagement.ViewModel.ManagementList;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.ViewModel;

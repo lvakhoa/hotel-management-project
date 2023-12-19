@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using HotelManagement.ViewModel.ManagementList;
 
 namespace HotelManagement.ViewModel;
 
