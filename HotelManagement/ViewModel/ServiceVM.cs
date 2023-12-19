@@ -8,12 +8,15 @@ namespace HotelManagement.ViewModel;
 public partial class ServiceList : ObservableObject
 {
     public ObservableCollection<ServiceVM> List { get; set; }
+
+    [ObservableProperty] private List<string> _serviceTypeList;
+    
     [ObservableProperty]
     private bool _isLoading;
     public ServiceList()
     {
         List = new ObservableCollection<ServiceVM>();
-
+        ServiceTypeList = new List<string>();
         GetServiceList();
     }
     private async void GetServiceList()
@@ -40,6 +43,13 @@ public partial class ServiceList : ObservableObject
 
             });
         }
+        
+        var serviceTypes = await context.Services.Select(x => x.ServiceType).Distinct().ToListAsync();
+        foreach (var item in serviceTypes)
+        {
+            ServiceTypeList.Add(item);
+        }
+        
         IsLoading = false;
     }
     public class ServiceVM
@@ -48,10 +58,6 @@ public partial class ServiceList : ObservableObject
         public string? ServiceName { get; set; }
         public string? ServiceType { get; set; }
         public decimal ServicePrice { get; set; }
-
-
     }
-
-
 }
 

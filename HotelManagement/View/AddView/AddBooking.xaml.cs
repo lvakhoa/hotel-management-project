@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace HotelManagement.View
+namespace HotelManagement.View.AddView
 {
     /// <summary>
-    /// Interaction logic for AddStaff.xaml
+    /// Interaction logic for Addbooking.xaml
     /// </summary>
-    public partial class AddStaff : Window
+    public partial class AddBooking : Window
     {
-        public AddStaff()
+        public AddBooking()
         {
             InitializeComponent();
         }
