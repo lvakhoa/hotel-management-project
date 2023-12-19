@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using HotelManagement.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace HotelManagement.ViewModel;
+namespace HotelManagement.ViewModel.ManagementList;
 
 public partial class StaffList : ObservableObject
 {

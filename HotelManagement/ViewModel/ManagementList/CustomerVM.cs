@@ -3,7 +3,7 @@ using HotelManagement.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 
-namespace HotelManagement.ViewModel;
+namespace HotelManagement.ViewModel.ManagementList;
 
 public partial class CustomerList : ObservableObject
 {

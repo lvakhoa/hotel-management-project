@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace HotelManagement.View
+namespace HotelManagement.View.AddView
 {
     /// <summary>
     /// Interaction logic for Addroom_Editroom.xaml
