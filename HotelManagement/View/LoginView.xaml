@@ -132,7 +132,7 @@
                         Fill your information below to continue
                     </TextBlock>
 
-                    <customcontrols:TextBoxCustom x:Name="UsernameBox"
+                    <customcontrols:TextBoxCustom x:Name="UsernameBox" Placeholder="Username"
                         Text="{Binding Username, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                         Margin="25 30 25 10">
                         

@@ -24,7 +24,7 @@
                 <RowDefinition Height="7*" />
                 <RowDefinition Height="1.5*" />
             </Grid.RowDefinitions>
-            
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -60,13 +60,13 @@
                 </ui:Button>
 
             </Grid>
-            
+
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                
+
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -76,26 +76,26 @@
 
                     </Grid.RowDefinitions>
                     <StackPanel Margin="30,0">
-                        <customcontrols:TextBoxWithPlaceHolder PlaceHolder="Enter Name"
-                                                               Margin="5"
-                                                               FontSize="20" />
+                        <customcontrols:TextBoxCustom Placeholder="Enter Name"
+                                                      Margin="5"
+                                                      FontSize="20" />
                     </StackPanel>
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        
+
                         <StackPanel Margin="30,0">
-                            <customcontrols:TextBoxWithPlaceHolder PlaceHolder="Enter floor"
-                                                                   Margin="5"
-                                                                   FontSize="20" />
+                            <customcontrols:TextBoxCustom Placeholder="Enter floor"
+                                                          Margin="5"
+                                                          FontSize="20" />
                         </StackPanel>
-                        
+
                         <StackPanel Grid.Column="1" Margin="30,0">
-                            <customcontrols:TextBoxWithPlaceHolder PlaceHolder="Guest max quantity"
-                                                                   Margin="5"
-                                                                   FontSize="20" />
+                            <customcontrols:TextBoxCustom Placeholder="Guest max quantity"
+                                                          Margin="5"
+                                                          FontSize="20" />
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="2">

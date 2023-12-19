@@ -14,7 +14,7 @@
         AllowsTransparency="True"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
-    
+
     <Window.DataContext>
         <vm:ServiceList />
     </Window.DataContext>
@@ -68,23 +68,23 @@
 
             <Grid Grid.Row="1">
                 <StackPanel Margin="30,0">
-                    <customcontrols:TextBoxWithPlaceHolder PlaceHolder="Enter Name"
-                                                           Margin="5 0 0 20"
-                                                           FontSize="20"
-                                                           Width="600"
-                                                           HorizontalAlignment="Left"/>
+                    <customcontrols:TextBoxCustom Placeholder="Enter Name"
+                                                  Margin="5 0 0 20"
+                                                  FontSize="20"
+                                                  Width="600"
+                                                  HorizontalAlignment="Left" />
 
-                    <customcontrols:TextBoxWithPlaceHolder PlaceHolder="Enter ID"
-                                                           Margin="5 0 0 20"
-                                                           FontSize="20" 
-                                                           Width="300"
-                                                           HorizontalAlignment="Left"/>
-                    
-                    <customcontrols:TextBoxWithPlaceHolder PlaceHolder="Enter price"
-                                                           Margin="5 0 0 20"
-                                                           FontSize="20"
-                                                           Width="300"
-                                                           HorizontalAlignment="Left"/>
+                    <customcontrols:TextBoxCustom Placeholder="Enter ID"
+                                                  Margin="5 0 0 20"
+                                                  FontSize="20"
+                                                  Width="300"
+                                                  HorizontalAlignment="Left" />
+
+                    <customcontrols:TextBoxCustom Placeholder="Enter price"
+                                                  Margin="5 0 0 20"
+                                                  FontSize="20"
+                                                  Width="300"
+                                                  HorizontalAlignment="Left" />
 
                     <ComboBox FontSize="20"
                               Width="300"
@@ -93,7 +93,7 @@
                               materialDesign:HintAssist.Hint="Select type"
                               ItemsSource="{Binding ServiceTypeList}"
                               Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
-                    
+
                 </StackPanel>
             </Grid>
 

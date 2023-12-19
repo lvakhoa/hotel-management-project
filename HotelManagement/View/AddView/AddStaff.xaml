@@ -68,23 +68,23 @@
 
                 <StackPanel Width="350" HorizontalAlignment="Left">
 
-                    <customcontrols:TextBoxCustom Text="Enter ID"
+                    <customcontrols:TextBoxCustom Placeholder="Enter ID"
                                                   Margin="0,0,0,10"
                                                   FontSize="20" />
 
-                    <customcontrols:TextBoxCustom Text="Enter Birthday"
+                    <customcontrols:TextBoxCustom Placeholder="Enter Birthday"
                                                   Margin="0,0,0,10"
                                                   FontSize="20" />
 
-                    <customcontrols:TextBoxCustom Text="Enter Phone Number"
+                    <customcontrols:TextBoxCustom Placeholder="Enter Phone Number"
                                                   Margin="0,0,0,10"
                                                   FontSize="20" />
 
-                    <customcontrols:TextBoxCustom Text="Enter Position"
+                    <customcontrols:TextBoxCustom Placeholder="Enter Position"
                                                   Margin="0,0,0,10"
                                                   FontSize="20" />
 
-                    <customcontrols:TextBoxCustom Text="Enter Address"
+                    <customcontrols:TextBoxCustom Placeholder="Enter Address"
                                                   Margin="0,0,0,0"
                                                   FontSize="20" />
 
@@ -92,19 +92,19 @@
 
                 <StackPanel Grid.Column="1" Width="350" HorizontalAlignment="Right">
 
-                    <customcontrols:TextBoxCustom Text="Enter Full Name"
+                    <customcontrols:TextBoxCustom Placeholder="Enter Full Name"
                                                   Margin="0,0,0,10"
                                                   FontSize="20" />
 
-                    <customcontrols:TextBoxCustom Text="Enter Gender"
+                    <customcontrols:TextBoxCustom Placeholder="Enter Gender"
                                                   Margin="0,0,0,10"
                                                   FontSize="20" />
 
-                    <customcontrols:TextBoxCustom Text="Enter Email"
+                    <customcontrols:TextBoxCustom Placeholder="Enter Email"
                                                   Margin="0,0,0,10"
                                                   FontSize="20" />
 
-                    <customcontrols:TextBoxCustom Text="Enter Salary"
+                    <customcontrols:TextBoxCustom Placeholder="Enter Salary"
                                                   Margin="0,0,0,10"
                                                   FontSize="20" />
 

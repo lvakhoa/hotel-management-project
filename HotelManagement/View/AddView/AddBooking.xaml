@@ -83,10 +83,9 @@
                                        Foreground="#767676">
                                 Booking ID
                             </TextBlock>
-                            <customcontrols:TextBoxWithPlaceHolder PlaceHolder="Enter ID"
+                            <customcontrols:TextBoxCustom Placeholder="Enter ID"
                                                                    Margin="5"
-                                                                   FontSize="20">
-                            </customcontrols:TextBoxWithPlaceHolder>
+                                                                   FontSize="20" />
                         </StackPanel>
                         <StackPanel Grid.Column="1" Margin="30,0">
                             <TextBlock Margin="5"
@@ -94,10 +93,9 @@
                                        Foreground="#767676">
                                 Room ID
                             </TextBlock>
-                            <customcontrols:TextBoxWithPlaceHolder PlaceHolder="Enter room ID"
+                            <customcontrols:TextBoxCustom Placeholder="Enter room ID"
                                                                    Margin="5"
-                                                                   FontSize="20">
-                            </customcontrols:TextBoxWithPlaceHolder>
+                                                                   FontSize="20" />
                         </StackPanel>
 
                     </Grid>
@@ -112,10 +110,9 @@
                                        Foreground="#767676">
                                 Customer ID
                             </TextBlock>
-                            <customcontrols:TextBoxWithPlaceHolder PlaceHolder="Enter customer ID"
+                            <customcontrols:TextBoxCustom Placeholder="Enter customer ID"
                                                                    Margin="5"
-                                                                   FontSize="20">
-                            </customcontrols:TextBoxWithPlaceHolder>
+                                                                   FontSize="20" />
                         </StackPanel>
                         <StackPanel Grid.Column="1" Margin="30,0">
                             <TextBlock Margin="5"
@@ -123,10 +120,9 @@
                                        Foreground="#767676">
                                 Quest quanity
                             </TextBlock>
-                            <customcontrols:TextBoxWithPlaceHolder PlaceHolder="0"
+                            <customcontrols:TextBoxCustom Placeholder="0"
                                                                    Margin="5"
-                                                                   FontSize="20">
-                            </customcontrols:TextBoxWithPlaceHolder>
+                                                                   FontSize="20" />
                         </StackPanel>
 
 

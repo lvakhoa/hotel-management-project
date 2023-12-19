@@ -36,6 +36,15 @@ namespace HotelManagement.CustomControls
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(TextBoxCustom));
 
+        public string Placeholder
+        {
+            get { return (string)GetValue(PlaceholderProperty); }
+            set { SetValue(PlaceholderProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Placeholder.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PlaceholderProperty =
+            DependencyProperty.Register("Placeholder", typeof(string), typeof(TextBoxCustom));
 
     }
 }
