@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace HotelManagement.View
 {
     /// <summary>
-    /// Interaction logic for Addroom_Editroom.xaml
+    /// Interaction logic for Addservice.xaml
     /// </summary>
-    public partial class Addroom_Editroom : Window
+    public partial class AddService : Window
     {
-        public Addroom_Editroom()
+        public AddService()
         {
             InitializeComponent();
         }
