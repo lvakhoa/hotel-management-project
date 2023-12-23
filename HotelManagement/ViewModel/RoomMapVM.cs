@@ -29,14 +29,13 @@ public partial class RoomMapVM : ObservableObject
         GroupFloor.Source = List;
         GroupFloor.GroupDescriptions.Add(new PropertyGroupDescription("Floor"));
         RoomView = GroupFloor.View;
-        //RoomView = CollectionViewSource.GetDefaultView(List);
         Floors.Insert(0, "Show All");
     }
 
     private async void GetRoomList()
     {
         IsLoading = true;
-        await Task.Delay(10);
+        await Task.Delay(1000);
         await using var context = new HotelManagementContext();
         var rooms = await (from room in context.Rooms
                            join type in context.RoomTypes on room.RoomTypeId equals type.RoomTypeId

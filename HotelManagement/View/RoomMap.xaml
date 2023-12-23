@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:uti="clr-namespace:HotelManagement.Utilities"
              xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
              xmlns:local="clr-namespace:HotelManagement.View"
              xmlns:vm="clr-namespace:HotelManagement.ViewModel"
@@ -12,6 +14,13 @@
     <UserControl.DataContext>
         <vm:RoomMapVM/>
     </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <uti:BooleanToVisibilityConverter x:Key="InvertVisibilityConverter"
+                                      True="Hidden"
+                                      False="Visible" />
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -50,6 +59,10 @@
                       x:Name="ScrollListRoom"
                       VerticalScrollBarVisibility="Visible">
             <Grid Grid.Row="2">
+                <fa:ImageAwesome Icon="Spinner" Spin="{Binding IsLoading}"
+                                 Visibility="{Binding Path=IsLoading, Converter={StaticResource VisibilityConverter}}"
+                                 Height="48" Width="48" />
+
                 <ItemsControl ItemsSource="{Binding RoomView}"
                               Margin="40 0 25 0"
                               x:Name="RoomMapList"
