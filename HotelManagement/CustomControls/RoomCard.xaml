@@ -8,8 +8,19 @@
              mc:Ignorable="d" 
              x:Name="_RoomCard"
              Loaded="_RoomCard_Loaded"
-             d:DesignHeight="120" d:DesignWidth="200">
+             d:DesignHeight="120" d:DesignWidth="300">
     <UserControl.Resources>
+        <Style x:Key="TextStyle"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize"
+                    Value="16"/>
+            <Setter Property="FontWeight"
+                    Value="SemiBold"/>
+            <Setter Property="Foreground"
+                    Value="#3AC291"/>
+            <Setter Property="Margin"
+                    Value="0 0 0 5"/>
+        </Style>
         <Style x:Key="RoomNumberStyle"
                TargetType="{x:Type TextBlock}">
             <Setter Property="Text"
@@ -22,50 +33,59 @@
                     Value="{Binding Status, ElementName=_RoomCard}"/>
         </Style>
     </UserControl.Resources>
-    
     <Border x:Name="BorderCardStyle"
             CornerRadius="5"
             Background="#C2FCC1">
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="0.2*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0"
-                      VerticalAlignment="Bottom">
-                    <TextBlock x:Name="RoomNumberTxt"
-                               Padding="5"
-                               FontSize="25"
-                               FontWeight="SemiBold"
-                               Margin="5 5 0 0"
-                               Style="{StaticResource RoomNumberStyle}"/>
-                </Grid>
-
-                <ui:Button x:Name="moreOptionButton"
-                           Icon="MoreVertical48"
-                           Grid.Column="1"
-                           Background="Transparent"
-                           BorderThickness="0"
-                           FontSize="30"
-                           Click="Button_Click"/>
-
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.9*" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Margin="10">
+                    <Border CornerRadius="30"
+                            Height="45"
+                            Width="45"
+                            HorizontalAlignment="Left"
+                            Background="LightBlue"
+                            Margin="0 0 0 15">
+                        <TextBlock x:Name="RoomNumberTxt"
+                                   Text="{Binding RoomNumber, ElementName=_RoomCard}"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="White"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
+                    </Border>
+                    <TextBlock x:Name="FloorTxt"
+                               Text="{Binding Floor, StringFormat='Floor {0}', ElementName=_RoomCard}"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               Style="{StaticResource TextStyle}"/>
+                    
+                </StackPanel>
             </Grid>
 
-            <Grid Grid.Row="1"
-                  VerticalAlignment="Top">
-                <TextBlock x:Name="StatusTxt"
-                           Padding="5"
-                           FontSize="20"
-                           Margin="5 0 5 0"
-                           Style="{StaticResource StatusStyle}"/>
+            <Grid Grid.Column="1">
+                <StackPanel HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Margin="10">
+                    <TextBlock Text="{Binding RoomType, ElementName=_RoomCard}"
+                               HorizontalAlignment="Right"
+                               x:Name="TypeTxt"
+                               Style="{StaticResource TextStyle}"/>
+                    <TextBlock Text="{Binding Capacity, StringFormat='Capacity: {0}', ElementName=_RoomCard}"
+                               HorizontalAlignment="Right"
+                               x:Name="CapacityTxt"
+                               Style="{StaticResource TextStyle}"/>
+                    <TextBlock Text="{Binding Status, ElementName=_RoomCard}"
+                               HorizontalAlignment="Right"
+                               x:Name="StatusTxt"
+                               Style="{StaticResource TextStyle}"/>
+                </StackPanel>
             </Grid>
-            
         </Grid>    
     </Border>
     
