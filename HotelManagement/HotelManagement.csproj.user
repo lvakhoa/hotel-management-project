@@ -2,16 +2,10 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="CustomControls\PasswordBox.xaml.cs">
+    <Compile Update="CustomControls\RoomCard.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="CustomControls\TextBoxWithPlaceHolder.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="CustomControls\UsernameBox.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\AddStaff.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\LoginView.xaml.cs">
@@ -19,31 +13,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="CustomControls\PasswordBox.xaml">
+    <Page Update="CustomControls\RoomCard.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CustomControls\TextBoxWithPlaceHolder.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="CustomControls\UsernameBox.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Styles\Text.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Themes\MenuButtonTheme.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\Addbooking.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\Addcustomer.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\Addservice.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\AddStaff.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\LoginView.xaml">
