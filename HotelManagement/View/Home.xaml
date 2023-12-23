@@ -4,11 +4,29 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-  mc:Ignorable="d"
+xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel="clr-namespace:HotelManagement.ViewModel"
+             xmlns:uti="clr-namespace:HotelManagement.Utilities" xmlns:fa="http://schemas.fontawesome.io/icons/"
+             mc:Ignorable="d"
   d:DesignHeight="638" d:DesignWidth="1010"
   Background="Transparent" Width="1010" Height="638" >
-    <Grid Background="#FFF" Margin="0,-4,0,4">
+
+    <UserControl.DataContext>
+        <viewmodel:HomeVM/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <uti:BooleanToVisibilityConverter x:Key="InvertVisibilityConverter"
+                                       True="Hidden"
+                                       False="Visible" />
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+    </UserControl.Resources>
+
+
+    <Grid>
+        <fa:ImageAwesome Icon="Spinner" Spin="{Binding IsLoading}"
+                 Visibility="{Binding Path=IsLoading, Converter={StaticResource VisibilityConverter}}"
+                 Height="48" Width="48" />
+        <Grid Background="#FFF" Margin="0,-4,0,4" Visibility="{Binding Path=IsLoading, Converter={StaticResource InvertVisibilityConverter}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="56" />
             <RowDefinition Height="100*" />
@@ -39,7 +57,7 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
                     <!--<TextBlock Foreground="#747474">
                         Today's revenue
                     </TextBlock>-->
-                    <TextBox Text="{Binding HomeData.TotalStaff, StringFormat=N0}" IsReadOnly="True"/>
+                        <TextBox Text="hh" IsReadOnly="True"/>
                 </StackPanel>
 
             </Grid >
@@ -85,36 +103,11 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         <Grid Grid.Row="2"/>
 
         <Grid Grid.Row="2" Grid.Column="1">
-            <wpf:PieChart LegendLocation="Bottom" Height="220" Margin="0,20,0,0"
+            <wpf:PieChart 
+LegendLocation="Bottom" Height="220" Margin="0,20,0,0"
                           Hoverable="False"  DataClick="PieChart_DataClick_1"
-                          Foreground="Black">
-                <wpf:PieChart.Series>
-                    <wpf:PieSeries Values="3"
-                                   Foreground="Black"
-                                   Title="Available"
-                                   Fill="#E4FFE0"
-                                   DataLabels="True"
-                                   LabelPoint="{Binding Pointlabel}">
-
-                    </wpf:PieSeries>
-                    <wpf:PieSeries Values="3"
-                                   Fill="#FFE0FC"
-               Title="Blocked"
-               DataLabels="True"
-                                   Foreground="Black"
-                                    LabelPoint="{Binding Pointlabel}"
-                                   >
-
-                    </wpf:PieSeries>
-                    <wpf:PieSeries Values="3"
-               Title="Occupied"
-                                   Fill="#F8EFE2"
-               DataLabels="True"
-               LabelPoint="{Binding Pointlabel}"
-                                   Foreground="Black">
-
-                    </wpf:PieSeries>
-                </wpf:PieChart.Series>
+                          Foreground="Black"
+                Series="{Binding PieSeriesCollection}">
 
             </wpf:PieChart>
         </Grid>
@@ -153,7 +146,7 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1"
                    >
-                <TextBlock Text="Number"
+                    <TextBlock Text="{Binding HomeData.TotalCustomer}"
                          HorizontalAlignment="Center"
 FontSize="22"
 Foreground="#373434"
@@ -167,7 +160,7 @@ FontWeight="Bold" />
             </StackPanel>
             <StackPanel Grid.Row="1" Margin="-4,60,4,60" Grid.RowSpan="3"
                    >
-                <TextBlock Text="{Binding RoomCount}"
+                <TextBlock Text="{Binding HomeData.TotalRoom}"
                          HorizontalAlignment="Center"
 FontSize="22"
 Foreground="#373434"
@@ -181,7 +174,7 @@ FontWeight="Bold" />
             </StackPanel>
             <StackPanel Grid.Row="2" Grid.Column="2"
                    >
-                <TextBlock Text="Number"
+                <TextBlock Text=""
                          HorizontalAlignment="Center"
 FontSize="22"
 Foreground="#373434"
@@ -227,4 +220,6 @@ FontWeight="Bold" />
 
 
     </Grid>
+    </Grid>
+
 </UserControl>

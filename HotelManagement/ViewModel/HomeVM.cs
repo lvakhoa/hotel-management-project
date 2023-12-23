@@ -8,14 +8,14 @@ public partial class HomeVM : ObservableObject
 {
     // Property to hold the data. Renamed for clarity.
     [ObservableProperty]
-    private HomeProperty homeData;
+    private HomeItemProperty _homeData;
 
     [ObservableProperty]
-    private bool isLoading;
+    private bool _isLoading;
 
     public HomeVM()
     {
-        HomeData = new HomeProperty(); // Initialize HomeData
+        HomeData = new HomeItemProperty(); // Initialize HomeData
         LoadHomeDataAsync(); // Call method to load data
     }
 
@@ -32,9 +32,11 @@ public partial class HomeVM : ObservableObject
         HomeData.TotalBooking = await GetTotalBookingThisYear(context);
         HomeData.TotalStaff = await GetTotalStaff(context);
         HomeData.TotalRoom = await GetTotalRoom(context);
+        HomeData.TotalCustomer = await GetTotalCustomer(context);
 
         IsLoading = false;
     }
+
     private async Task<decimal> GetTotalRevenueThisMonth(HotelManagementContext context)
     {
         return (decimal)await context.Invoices
@@ -57,8 +59,9 @@ public partial class HomeVM : ObservableObject
 
     private async Task<int> GetTotalBookingThisYear(HotelManagementContext context)
     {
-        return await context.Bookings
-            .CountAsync(b => b.CheckInDate.Year == DateTime.Now.Year);
+        var temp = await context.Bookings
+             .CountAsync(b => b.CheckInDate.Year == DateTime.Now.Year);
+        return temp;
     }
 
     // Define methods for total staff, total customers, total transactions, and total rooms
@@ -73,21 +76,33 @@ public partial class HomeVM : ObservableObject
         return await context.Customers.CountAsync();
     }
 
-
-
     private async Task<int> GetTotalRoom(HotelManagementContext context)
     {
         return await context.Rooms.CountAsync();
     }
 
 
-    public class HomeProperty
+
+    public partial class HomeItemProperty : ObservableObject
     {
-        public decimal TotalRevenueMonth { get; set; }
-        public decimal TotalRevenue { get; set; }
-        public int TotalBookingMonth { get; set; }
-        public int TotalBooking { get; set; }
-        public int TotalStaff { get; set; }
-        public int TotalRoom { get; set; }
+        [ObservableProperty]
+        private decimal _totalRevenueMonth;
+
+        [ObservableProperty]
+        private decimal _totalRevenue;
+
+        [ObservableProperty]
+        private int _totalBookingMonth;
+
+        [ObservableProperty]
+        private int _totalBooking;
+
+        [ObservableProperty]
+        private int _totalStaff;
+
+        [ObservableProperty]
+        private int _totalRoom;
+        [ObservableProperty]
+        private int _totalCustomer;
     }
 }
