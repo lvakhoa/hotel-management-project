@@ -10,9 +10,13 @@ public partial class Home : UserControl
     public string[] Labels { get; set; }
 
     public Func<ChartPoint, string> Pointlabel { get; set; }
+    public SeriesCollection PieSeriesCollection { get; set; }
+
     public Home()
     {
+        Pointlabel = chartpoint => string.Format("{0}({1:p})", chartpoint.Y, chartpoint.Participation);
         InitializeComponent();
+        //DataContext = new HomeVM();
         SeriesCollection = new SeriesCollection
         {
             new ColumnSeries
@@ -30,14 +34,37 @@ public partial class Home : UserControl
             }
         };
         Labels = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+        PieSeriesCollection = new SeriesCollection
+            {
+                new PieSeries
+                {
+                    Values = new ChartValues<int> { 3 },
+                    Title = "Available",
+                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#E4FFE0")),
+                    DataLabels = true,
+                    LabelPoint = Pointlabel
+                },
+                new PieSeries
+                {
+                    Values = new ChartValues<int> { 3 },
+                    Title = "Blocked",
+                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFE0FC")),
+                    DataLabels = true,
+                    LabelPoint = Pointlabel
+                },
+                new PieSeries
+                {
+                    Values = new ChartValues<int> { 3 },
+                    Title = "Occupied",
+                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#F8EFE2")),
+                    DataLabels = true,
+                    LabelPoint = Pointlabel
+                }
+            };
 
-        Pointlabel = chartpoint => string.Format("{0}({1:p})", chartpoint.Y, chartpoint.Participation);
 
-        DataContext = this;
 
     }
-
-
 
     private void PieChart_DataClick_1(object sender, ChartPoint chartPoint)
     {
