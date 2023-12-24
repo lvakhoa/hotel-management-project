@@ -19,6 +19,7 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
                                        True="Hidden"
                                        False="Visible" />
         <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+
     </UserControl.Resources>
 
 
@@ -27,166 +28,212 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
                  Visibility="{Binding Path=IsLoading, Converter={StaticResource VisibilityConverter}}"
                  Height="48" Width="48" />
         <Grid Background="#FFF" Margin="0,-4,0,4" Visibility="{Binding Path=IsLoading, Converter={StaticResource InvertVisibilityConverter}}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="56" />
-            <RowDefinition Height="100*" />
-            <RowDefinition Height="241*" />
-            <RowDefinition Height="241*" />
-        </Grid.RowDefinitions>
-        
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        
-        <Grid Grid.Row="0" Margin="50 10 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="291*" />
+                <RowDefinition Height="241*" />
+            </Grid.RowDefinitions>
 
-            <TextBlock Text="Overview"
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0" Margin="50 10 0 0">
+
+                <TextBlock Text="Overview"
                FontSize="32"
                Foreground="#373434"
                HorizontalAlignment="Left"
                FontWeight="Bold" />
-        </Grid>
-        
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="3">
-            <Grid Height="100" Width="160" Margin="40,0,0,0"
+            </Grid>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="3">
+                <Grid Height="100" Width="160" Margin="40,0,0,0"
                   Background="#E8EFFF">
-                <StackPanel HorizontalAlignment="Left" Margin="10,0,0,0">
-                    <ui:SymbolIcon Symbol="Money16" FontSize="45" HorizontalAlignment="Left"/>
-                    <!--<TextBlock Foreground="#747474">
+                    <StackPanel HorizontalAlignment="Left" Margin="10,0,0,0">
+                        <ui:SymbolIcon Symbol="Money16" FontSize="45" HorizontalAlignment="Left"/>
+                        <TextBlock Foreground="#747474">
                         Today's revenue
-                    </TextBlock>-->
-                        <TextBox Text="hh" IsReadOnly="True"/>
-                </StackPanel>
+                        </TextBlock>
+                        <TextBox Text="{Binding HomeData.TotalRevenueToday}" IsReadOnly="True"/>
+                    </StackPanel>
 
-            </Grid >
-            <!--2-->
-            <Grid Height="100" Width="160" Margin="40,0,0,0"
+                </Grid >
+                <!--2-->
+                <Grid Height="100" Width="160" Margin="40,0,0,0"
         Background="#E4ffe0">
-                <StackPanel HorizontalAlignment="Left" Margin="10,0,0,0">
-                    <ui:SymbolIcon Symbol="CalendarRtl12" FontSize="40" HorizontalAlignment="Left"/>
-                    <TextBlock Foreground="#747474">
+                    <StackPanel HorizontalAlignment="Left" Margin="10,0,0,0">
+                        <ui:SymbolIcon Symbol="CalendarRtl12" FontSize="40" HorizontalAlignment="Left"/>
+                        <TextBlock Foreground="#747474">
               Today's booking
-                    </TextBlock>
-                    <TextBlock> booking value</TextBlock>
-                </StackPanel>
+                        </TextBlock>
+                        <TextBox Text="{Binding HomeData.TotalBookingToday}" IsReadOnly="True"/>
+                    </StackPanel>
 
-            </Grid >
-            <!--3-->
-            <Grid Height="100" Width="160" Margin="40,0,0,0"
+                </Grid >
+                <!--3-->
+                <Grid Height="100" Width="160" Margin="40,0,0,0"
         Background="#FFFCE0">
-                <StackPanel HorizontalAlignment="Left" Margin="10,0,0,0">
-                    <ui:SymbolIcon Symbol="Money16" FontSize="45" HorizontalAlignment="Left"/>
-                    <TextBlock Foreground="#747474">
+                    <StackPanel HorizontalAlignment="Left" Margin="10,0,0,0">
+                        <ui:SymbolIcon Symbol="Money16" FontSize="45" HorizontalAlignment="Left"/>
+                        <TextBlock Foreground="#747474">
             Check-in
-                    </TextBlock>
-                    <TextBlock> revenue value</TextBlock>
-                </StackPanel>
+                        </TextBlock>
+                        <TextBlock> revenue value</TextBlock>
+                    </StackPanel>
 
-            </Grid >
-            <!--4-->
-            <Grid Height="100" Width="160" Margin="40,0,0,0"
+                </Grid >
+                <!--4-->
+                <Grid Height="100" Width="160" Margin="40,0,0,0"
         Background="#E8EFFF">
-                <StackPanel HorizontalAlignment="Left" Margin="10,0,0,0">
-                    <ui:SymbolIcon Symbol="Money16" FontSize="45" HorizontalAlignment="Left"/>
-                    <TextBlock Foreground="#747474">
+                    <StackPanel HorizontalAlignment="Left" Margin="10,0,0,0">
+                        <ui:SymbolIcon Symbol="Money16" FontSize="45" HorizontalAlignment="Left"/>
+                        <TextBlock Foreground="#747474">
               Check-out
-                    </TextBlock>
-                    <TextBlock> revenue value</TextBlock>
-                </StackPanel>
+                        </TextBlock>
+                        <TextBlock> revenue value</TextBlock>
+                    </StackPanel>
 
-            </Grid >
+                </Grid >
 
-        </StackPanel>
+            </StackPanel>
 
-        <Grid Grid.Row="2"/>
+            <StackPanel Margin="22,0,0,0" Grid.Row="2">
+                <Border Background="#FFF" CornerRadius="10">
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Recent Booking" FontSize="22" FontWeight="Bold" />
 
-        <Grid Grid.Row="2" Grid.Column="1">
-            <wpf:PieChart 
+                        <!-- Item 1 -->
+                        <Border Background="#E6E6E6" CornerRadius="8" Margin="0,0,0,0" Padding="5">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="50" Height="50"></Image>
+                                <StackPanel>
+                                    <TextBlock Text="Deluxe Room - B2.16" FontWeight="Bold" />
+                                    <TextBlock Text="Le Van Anh Khoa" FontStyle="Italic" Margin="0,5,0,0" />
+                                    <TextBlock Text="26/11/2023 - 5:45 PM" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        <!-- Item 1 -->
+                        <Border Background="#E6E6E6" CornerRadius="8" Margin="0,10,0,0" Padding="5">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="50" Height="50"></Image>
+                                <StackPanel>
+                                    <TextBlock Text="Deluxe Room - B2.16" FontWeight="Bold" />
+                                    <TextBlock Text="Le Van Anh Khoa" FontStyle="Italic" Margin="0,5,0,0" />
+                                    <TextBlock Text="26/11/2023 - 5:45 PM" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        <!-- Item 1 -->
+                        <Border Background="#E6E6E6" CornerRadius="8" Margin="0,10,0,0" Padding="10">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="50" Height="50"></Image>
+                                <StackPanel>
+                                    <TextBlock Text="Deluxe Room - B2.16" FontWeight="Bold" />
+                                    <TextBlock Text="Le Van Anh Khoa" FontStyle="Italic" Margin="0,5,0,0" />
+                                    <TextBlock Text="26/11/2023 - 5:45 PM" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Repeat the above block for each item you want to display -->
+                        <!-- Item 2 -->
+                        <!-- Item 3 -->
+                        <!-- ... -->
+
+                    </StackPanel>
+                </Border>
+
+
+            </StackPanel>
+
+            <Grid Grid.Row="2" Grid.Column="1">
+                <wpf:PieChart 
 LegendLocation="Bottom" Height="220" Margin="0,20,0,0"
                           Hoverable="False"  DataClick="PieChart_DataClick_1"
                           Foreground="Black"
-                Series="{Binding PieSeriesCollection}">
+                Series="{Binding PieSeriesCollection}"/>
+            </Grid>
+            <Grid Grid.Row="3" Margin="40,30,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
 
-            </wpf:PieChart>
-        </Grid>
-        <Grid Grid.Row="3" Margin="40,0,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                </Grid.RowDefinitions>
 
-            </Grid.RowDefinitions>
-
-            <TextBlock Text="Total"
+                <TextBlock Text="Total"
                FontSize="22"
                Foreground="#373434"
                HorizontalAlignment="Left"
                      
                FontWeight="Bold" />
-            <StackPanel Margin="-2,60,2,0" Grid.RowSpan="2"
+                <StackPanel Grid.Row="1" Margin="0,0,0,0" Grid.RowSpan="2"
                        >
-                <TextBlock Text="Number"
+                    <TextBlock Text="{Binding HomeData.TotalRevenue}"
                              HorizontalAlignment="Center"
     FontSize="22"
     Foreground="#373434"
     FontWeight="Bold" />
-                <TextBlock Foreground="#747474"
+                    <TextBlock Foreground="#747474"
                            FontSize="16"
                              HorizontalAlignment="Center">
-     Total Concierge
-                </TextBlock>
+     Revenue
+                    </TextBlock>
 
-            </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="1"
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1"
                    >
-                    <TextBlock Text="{Binding HomeData.TotalCustomer}"
+                    <TextBlock Text="{Binding HomeData.TotalBooking}"
                          HorizontalAlignment="Center"
 FontSize="22"
 Foreground="#373434"
 FontWeight="Bold" />
-                <TextBlock Foreground="#747474"
+                    <TextBlock Foreground="#747474"
                        FontSize="16"
                          HorizontalAlignment="Center">
- Total Customer
-                </TextBlock>
+  Booking
+                    </TextBlock>
 
-            </StackPanel>
-            <StackPanel Grid.Row="1" Margin="-4,60,4,60" Grid.RowSpan="3"
+                </StackPanel>
+                <StackPanel Grid.Row="1" Margin="0,50,4,50" Grid.RowSpan="3"
                    >
-                <TextBlock Text="{Binding HomeData.TotalRoom}"
+                    <TextBlock Text="{Binding HomeData.TotalRoom}"
                          HorizontalAlignment="Center"
 FontSize="22"
 Foreground="#373434"
 FontWeight="Bold" />
-                <TextBlock Foreground="#747474"
+                    <TextBlock Foreground="#747474"
                        FontSize="16"
                          HorizontalAlignment="Center">
- Total Room
-                </TextBlock>
+             Room
+                    </TextBlock>
 
-            </StackPanel>
-            <StackPanel Grid.Row="2" Grid.Column="2"
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="2"
                    >
-                <TextBlock Text=""
+                    <TextBlock Text="{Binding HomeData.TotalStaff}"
                          HorizontalAlignment="Center"
 FontSize="22"
 Foreground="#373434"
 FontWeight="Bold" />
-                <TextBlock Foreground="#747474"
+                    <TextBlock Foreground="#747474"
                        FontSize="16"
                          HorizontalAlignment="Center">
- Total Transaction
-                </TextBlock>
+  Staff
+                    </TextBlock>
 
-            </StackPanel>
-            <ui:Button Grid.Row="3" Grid.Column="2"
+                </StackPanel>
+                <ui:Button Grid.Row="3" Grid.Column="2"
                 Appearance="Dark"
                Background="#4F4A4A"
                PressedBackground="#4F4A4A"
@@ -202,24 +249,24 @@ FontWeight="Bold" />
 
 
 
-        </Grid>
-        <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
-            <wpf:CartesianChart  Height="200" Series="{Binding SeriesCollection}"
+            </Grid>
+            <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+                <wpf:CartesianChart  Height="200" Series="{Binding SeriesCollection}"
                                 >
-                <wpf:CartesianChart.AxisX>
-                    <wpf:Axis  Labels="{Binding Labels}"></wpf:Axis>
+                    <wpf:CartesianChart.AxisX>
+                        <wpf:Axis  Labels="{Binding Labels}"></wpf:Axis>
 
 
-                </wpf:CartesianChart.AxisX>
-                <wpf:CartesianChart.AxisY>
-                    <wpf:Axis Title="Number booking"/>
-                </wpf:CartesianChart.AxisY>
+                    </wpf:CartesianChart.AxisX>
+                    <wpf:CartesianChart.AxisY>
+                        <wpf:Axis Title="Number booking"/>
+                    </wpf:CartesianChart.AxisY>
 
-            </wpf:CartesianChart>
+                </wpf:CartesianChart>
+            </Grid>
+
+
         </Grid>
-
-
-    </Grid>
     </Grid>
 
 </UserControl>
