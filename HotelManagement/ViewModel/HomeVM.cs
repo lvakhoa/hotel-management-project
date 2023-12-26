@@ -24,16 +24,25 @@ public partial class HomeVM : ObservableObject
             {
                 new ColumnSeries
                 {
-                    Title = "Checkin",
-                    Values = new ChartValues<int> { 10, 50, 39, 50, 12, 30, 20 },
+                    Title = "Total booking",
+                    Values = new ChartValues<int>
+                    {
+                HomeData.TotalBookingMonday,
+                HomeData.TotalBookingTuesday,
+                HomeData.TotalBookingWednesday,
+                HomeData.TotalBookingThursday,
+                HomeData.TotalBookingFriday,
+                HomeData.TotalBookingSaturday,
+                HomeData.TotalBookingSunday
+            },
                     Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#66CDAA"))
                 },
-                new ColumnSeries
-                {
-                    Title = "Checkout",
-                    Values = new ChartValues<int> { 7, 6, 9, 10, 11, 5, 8 },
-                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFCCCC"))
-                }
+                //new ColumnSeries
+                //{
+                //    Title = "Checkout",
+                //    Values = new ChartValues<int> { 7, 6, 9, 10, 11, 5, 8 },
+                //    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFCCCC"))
+                //}
             };
 
         Labels = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
@@ -75,6 +84,24 @@ public partial class HomeVM : ObservableObject
         LoadHomeDataAsync(); // Call method to load data
         InitializeCharts();
     }
+    private (DateTime, DateTime) GetLastWeekRange()
+    {
+        var today = DateTime.Today;
+        var endOfLastWeek = today.AddDays(-(int)today.DayOfWeek);
+        var startOfLastWeek = endOfLastWeek.AddDays(-6); // Assuming week starts on Monday
+
+        return (startOfLastWeek, endOfLastWeek);
+    }
+
+    private async Task<int> GetTotalBookingsForDay(DayOfWeek day, DateTime startDate, DateTime endDate, HotelManagementContext context)
+    {
+        var bookings = await context.Bookings
+                                    .Where(b => b.CheckInDate.Date >= startDate &&
+                                                b.CheckInDate.Date <= endDate)
+                                    .ToListAsync();
+
+        return bookings.Count(b => b.CheckInDate.DayOfWeek == day);
+    }
 
     private async void LoadHomeDataAsync()
     {
@@ -82,7 +109,14 @@ public partial class HomeVM : ObservableObject
         await Task.Delay(1000); // Simulated delay
 
         await using var context = new HotelManagementContext();
-
+        var (startOfLastWeek, endOfLastWeek) = GetLastWeekRange();
+        HomeData.TotalBookingMonday = await GetTotalBookingsForDay(DayOfWeek.Monday, startOfLastWeek, endOfLastWeek, context);
+        HomeData.TotalBookingTuesday = await GetTotalBookingsForDay(DayOfWeek.Tuesday, startOfLastWeek, endOfLastWeek, context);
+        HomeData.TotalBookingWednesday = await GetTotalBookingsForDay(DayOfWeek.Wednesday, startOfLastWeek, endOfLastWeek, context);
+        HomeData.TotalBookingThursday = await GetTotalBookingsForDay(DayOfWeek.Thursday, startOfLastWeek, endOfLastWeek, context);
+        HomeData.TotalBookingFriday = await GetTotalBookingsForDay(DayOfWeek.Friday, startOfLastWeek, endOfLastWeek, context);
+        HomeData.TotalBookingSaturday = await GetTotalBookingsForDay(DayOfWeek.Saturday, startOfLastWeek, endOfLastWeek, context);
+        HomeData.TotalBookingSunday = await GetTotalBookingsForDay(DayOfWeek.Sunday, startOfLastWeek, endOfLastWeek, context);
         HomeData.TotalRevenueToday = await GetTotalRevenueToday(context);
         HomeData.TotalRevenue = await GetTotalRevenue(context);
         HomeData.TotalBookingToday = await GetTotalBookingToday(context);
@@ -143,6 +177,25 @@ public partial class HomeVM : ObservableObject
 
     public partial class HomeItemProperty : ObservableObject
     {
+        [ObservableProperty]
+        private int _totalBookingMonday;
+        [ObservableProperty]
+        private int _totalBookingTuesday;
+        [ObservableProperty]
+        private int _totalBookingWednesday;
+        [ObservableProperty]
+        private int _totalBookingThursday;
+        [ObservableProperty]
+        private int _totalBookingFriday;
+        [ObservableProperty]
+        private int _totalBookingSaturday;
+        [ObservableProperty]
+        private int _totalBookingSunday;
+        [ObservableProperty]
+        private int _totalCheckinToday;
+        [ObservableProperty]
+        private int _totalCheckoutToday;
+
         [ObservableProperty]
         private decimal _totalRevenueToday;
 
