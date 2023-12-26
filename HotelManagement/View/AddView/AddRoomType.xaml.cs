@@ -12,35 +12,35 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using HotelManagement.ViewModel.ManagementList;
-using Wpf.Ui.Controls;
 
 namespace HotelManagement.View.AddView
 {
     /// <summary>
-    /// Interaction logic for Addbooking.xaml
+    /// Interaction logic for Addroom_Editroom.xaml
     /// </summary>
-    public partial class AddBooking : Window
+    public partial class AddRoomType : Window
     {
-        public AddBooking(object dataContext)
+        public AddRoomType(object dataContext)
         {
             InitializeComponent();
             
             DataContext = dataContext;
-
-            (DataContext as BookingList).GenerateBookingId();
+            
+            (DataContext as RoomtypeList).GenerateRoomTypeId();
         }
         
-        public AddBooking(string? id, object dataContext)
+        public AddRoomType(string? id, object dataContext)
         {
             InitializeComponent();
             
             DataContext = dataContext;
             
             if(id != null)
-                (DataContext as BookingList).GetBookingById(id);
+                (DataContext as RoomtypeList).GetRoomTypeById(id);
+
         }
 
-        private void AddBooking_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void AddRoomType_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
@@ -54,14 +54,6 @@ namespace HotelManagement.View.AddView
         private void SaveBtn_OnClick(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void AddBooking_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            if(CheckInBox.SelectedDate == null)
-                CheckInBox.SelectedDate = DateTime.Now;
-            if(CheckOutBox.SelectedDate == null)
-                CheckOutBox.SelectedDate = DateTime.Now.AddDays(1);
         }
     }
 }

@@ -3,16 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
-        Title="Add Booking" Height="480" Width="800"
+        Title="Add Booking" Height="610" Width="700"
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        MouseDown="AddBooking_OnMouseDown"
+        Loaded="AddBooking_OnLoaded">
 
     <Border CornerRadius="10"
             Background="#FFF"
@@ -21,10 +21,10 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1.5*" />
-                <RowDefinition Height="7*" />
-                <RowDefinition Height="1.5*" />
+                <RowDefinition Height="12*" />
+                <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
-            
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -32,9 +32,9 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="30,0">
-                    <ui:SymbolIcon Symbol="AddCircle28" FontSize="48" Margin="0,0,10,0" />
+                    <ui:SymbolIcon Symbol="AddCircle28" FontSize="40" Margin="0,0,10,0" />
                     <TextBlock VerticalAlignment="Center"
-                               FontSize="30" FontWeight="Bold" Text="Add booking" />
+                               FontSize="24" FontWeight="Bold" Text="Add/Edit booking" />
                 </StackPanel>
 
                 <ui:Button Grid.Column="1"
@@ -47,7 +47,9 @@
                            BorderThickness="0"
                            MouseOverBackground="#EE4242"
                            PressedBackground="#FF2525"
-                           CornerRadius="0, 10, 0, 0">
+                           PressedForeground="#FFF"
+                           CornerRadius="0, 10, 0, 0"
+                           Click="CloseBtn_OnClick">
                     <ui:Button.Style>
                         <Style TargetType="{x:Type ui:Button}" BasedOn="{StaticResource {x:Type ui:Button}}">
                             <Style.Triggers>
@@ -60,7 +62,7 @@
                 </ui:Button>
 
             </Grid>
-            
+
             <Grid Grid.Row="1">
 
                 <Grid>
@@ -68,8 +70,8 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
-
-
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
@@ -77,25 +79,57 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Margin="30,0">
-                            <TextBlock Margin="5"
-                                       FontSize="20"
-                                       Foreground="#767676">
-                                Booking ID
-                            </TextBlock>
-                            <customcontrols:TextBoxCustom Placeholder="Enter ID"
-                                                                   Margin="5"
-                                                                   FontSize="20" />
+
+                        <StackPanel Margin="30 0 30 0">
+                            <TextBlock Text="Booking ID"
+                                       Foreground="#767676"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ui:TextBox BorderThickness="2"
+                                        BorderBrush="#767676"
+                                        FontSize="16"
+                                        IsEnabled="False"
+                                        Text="{Binding CurrentBooking.BookingID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                                <ui:TextBox.Style>
+                                    <Style TargetType="{x:Type ui:TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsFocused" Value="True">
+                                                <Setter Property="BorderBrush"
+                                                        Value="#767676" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ui:TextBox.Style>
+
+                            </ui:TextBox>
                         </StackPanel>
-                        <StackPanel Grid.Column="1" Margin="30,0">
-                            <TextBlock Margin="5"
-                                       FontSize="20"
-                                       Foreground="#767676">
-                                Room ID
-                            </TextBlock>
-                            <customcontrols:TextBoxCustom Placeholder="Enter room ID"
-                                                                   Margin="5"
-                                                                   FontSize="20" />
+
+                        <StackPanel Grid.Column="1" Margin="30 0 30 0">
+                            <TextBlock Text="Room ID"
+                                       Foreground="#767676"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ComboBox x:Name="RoomIdBox"
+                                      BorderThickness="2"
+                                      BorderBrush="#767676"
+                                      FontSize="16"
+                                      SelectedItem="{Binding CurrentBooking.RoomID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding RoomIdList}">
+
+                                <ComboBox.Style>
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsFocused" Value="True">
+                                                <Setter Property="BorderBrush"
+                                                        Value="#767676" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ComboBox.Style>
+
+                            </ComboBox>
+
                         </StackPanel>
 
                     </Grid>
@@ -104,77 +138,280 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Margin="30,0">
-                            <TextBlock Margin="5"
-                                       FontSize="20"
-                                       Foreground="#767676">
-                                Customer ID
-                            </TextBlock>
-                            <customcontrols:TextBoxCustom Placeholder="Enter customer ID"
-                                                                   Margin="5"
-                                                                   FontSize="20" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Margin="30,0">
-                            <TextBlock Margin="5"
-                                       FontSize="20"
-                                       Foreground="#767676">
-                                Quest quanity
-                            </TextBlock>
-                            <customcontrols:TextBoxCustom Placeholder="0"
-                                                                   Margin="5"
-                                                                   FontSize="20" />
+
+                        <StackPanel Margin="30 0 30 0">
+                            <TextBlock Text="Invoice ID"
+                                       Foreground="#767676"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ComboBox x:Name="InvoiceIdBox"
+                                      BorderThickness="2"
+                                      BorderBrush="#767676"
+                                      FontSize="16"
+                                      SelectedItem="{Binding CurrentBooking.InvoiceID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding InvoiceIdList}">
+
+                                <ComboBox.Style>
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsFocused" Value="True">
+                                                <Setter Property="BorderBrush"
+                                                        Value="#767676" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ComboBox.Style>
+
+                            </ComboBox>
+
                         </StackPanel>
 
+                        <StackPanel Grid.Column="1" Margin="30 0 30 0">
+                            <TextBlock Text="Customer ID"
+                                       Foreground="#767676"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ComboBox x:Name="CustomerIdBox"
+                                      BorderThickness="2"
+                                      BorderBrush="#767676"
+                                      FontSize="16"
+                                      SelectedItem="{Binding CurrentBooking.CustomerID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding CustomerIdList}">
+
+                                <ComboBox.Style>
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsFocused" Value="True">
+                                                <Setter Property="BorderBrush"
+                                                        Value="#767676" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ComboBox.Style>
+
+                            </ComboBox>
+
+                        </StackPanel>
 
                     </Grid>
+
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Margin="30,0">
-                            <TextBlock Margin="5"
-                                       FontSize="20"
-                                       Foreground="#767676">
-                                Check-out
-                            </TextBlock>
-                            <DatePicker HorizontalAlignment="Left"
-                                        Margin="10,0,0,0"
-                                        FontSize="20"
-                                        Width="200"
-                                        materialDesign:HintAssist.Hint="Pick Date"
-                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+                        <StackPanel Margin="30 0 30 0">
+                            <TextBlock Text="Check-in"
+                                       Foreground="#767676"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <DatePicker x:Name="CheckInBox"
+                                        Validation.ErrorTemplate="{x:Null}"
+                                        FontSize="16"
+                                        Focusable="False"
+                                        SelectedDateFormat="Short"
+                                        SelectedDate="{Binding CurrentBooking.CheckInDate, NotifyOnValidationError=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }">
+                                <DatePicker.Style>
+                                    <Style TargetType="{x:Type DatePicker}"
+                                           BasedOn="{StaticResource {x:Type DatePicker}}">
+                                        <Setter Property="BorderThickness" Value="2" />
+                                        <Setter Property="BorderBrush" Value="#EF4040" />
+
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"
+                                                Value="{x:Null}">
+                                                <Setter Property="BorderThickness" Value="2" />
+                                                <Setter Property="BorderBrush" Value="#767676" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DatePicker.Style>
+                            </DatePicker>
+
+                            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=CheckInBox}"
+                                       Foreground="#EF4040" />
                         </StackPanel>
-                        <StackPanel Grid.Column="1" Margin="30,0">
-                            <TextBlock Margin="5"
-                                       FontSize="20"
-                                       Foreground="#767676">
-                                Check-in
-                            </TextBlock>
-                            <DatePicker HorizontalAlignment="Left"
-                                        Margin="10,0,0,0"
-                                        FontSize="20"
-                                        Width="200"
-                                        materialDesign:HintAssist.Hint="Pick Date"
-                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+                        <StackPanel Grid.Column="1" Margin="30 0 30 0">
+                            <TextBlock Text="Check-out"
+                                       Foreground="#767676"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <DatePicker x:Name="CheckOutBox"
+                                        Validation.ErrorTemplate="{x:Null}"
+                                        FontSize="16"
+                                        Focusable="False"
+                                        SelectedDateFormat="Short"
+                                        SelectedDate="{Binding CurrentBooking.CheckOutDate, NotifyOnValidationError=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }">
+                                <DatePicker.Style>
+                                    <Style TargetType="{x:Type DatePicker}"
+                                           BasedOn="{StaticResource {x:Type DatePicker}}">
+                                        <Setter Property="BorderThickness" Value="2" />
+                                        <Setter Property="BorderBrush" Value="#EF4040" />
+
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"
+                                                Value="{x:Null}">
+                                                <Setter Property="BorderThickness" Value="2" />
+                                                <Setter Property="BorderBrush" Value="#767676" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DatePicker.Style>
+                            </DatePicker>
+
+                            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=CheckOutBox}"
+                                       Foreground="#EF4040" />
                         </StackPanel>
                     </Grid>
 
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
+                        <StackPanel Margin="30 0 30 0">
+                            <TextBlock Text="Guest Quantity"
+                                       Foreground="#767676"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" /> 
+                            <ui:NumberBox x:Name="QuantityBox"
+                                          Validation.ErrorTemplate="{x:Null}"
+                                          FontSize="16"
+                                          AcceptsReturn="False"
+                                          AcceptsTab="False"
+                                          Minimum="0"
+                                          Maximum="20"
+                                          Text="{Binding CurrentBooking.GuestQuantity, NotifyOnValidationError=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        
+                                <ui:NumberBox.Style>
+                                    <Style TargetType="{x:Type ui:NumberBox}"
+                                           BasedOn="{StaticResource {x:Type ui:NumberBox}}">
+                                        <Setter Property="BorderThickness" Value="2" />
+                                        <Setter Property="BorderBrush" Value="#EF4040" />
+
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"
+                                                Value="{x:Null}">
+                                                <Setter Property="BorderThickness" Value="2" />
+                                                <Setter Property="BorderBrush" Value="#767676" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ui:NumberBox.Style>
+                            </ui:NumberBox>
+
+                            <TextBlock x:Name="NumberBoxError" Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=QuantityBox}"
+                                       Foreground="#EF4040" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="30 0 30 0">
+                            <TextBlock Text="Payment Method"
+                                       Foreground="#767676"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ComboBox x:Name="PaymentBox"
+                                      BorderThickness="2"
+                                      BorderBrush="#767676"
+                                      FontSize="16"
+                                      ItemsSource="{Binding PaymentTypeList}"
+                                      SelectedItem="{Binding CurrentBooking.PaymentMethod, NotifyOnValidationError=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                                <ComboBox.Style>
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsFocused" Value="True">
+                                                <Setter Property="BorderBrush"
+                                                        Value="#767676" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ComboBox.Style>
+
+                            </ComboBox>
+
+                            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=PaymentBox}"
+                                       Foreground="#EF4040" />
+                        </StackPanel>
+
+                    </Grid>
+
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Margin="30 0 30 0">
+                            <TextBlock Text="Staff ID"
+                                       Foreground="#767676"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ComboBox x:Name="StaffIdBox"
+                                      BorderThickness="2"
+                                      BorderBrush="#767676"
+                                      FontSize="16"
+                                      SelectedItem="{Binding CurrentBooking.StaffID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding StaffIdList}">
+
+                                <ComboBox.Style>
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsFocused" Value="True">
+                                                <Setter Property="BorderBrush"
+                                                        Value="#767676" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ComboBox.Style>
+
+                            </ComboBox>
+
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="1" Margin="30 0 30 0">
+                            <TextBlock Text="Deposit Fee"
+                                       Foreground="#767676"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ui:TextBox BorderThickness="2"
+                                        BorderBrush="#767676"
+                                        FontSize="16"
+                                        IsEnabled="False"
+                                        Text="{Binding CurrentBooking.DepositFee, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="Deposit fee plus $20 every 15 days from invoice date"
+                                       Foreground="#767676" />
+                        </StackPanel>
+
+                    </Grid>
                 </Grid>
 
             </Grid>
-            <Grid Grid.Row="2" Background="#D9D9D9">
-                <Button Style="{StaticResource primarybutton}"
-                        Content="Save"
-                        FontSize="20"
-                        Width="200"
-                        HorizontalAlignment="Right"
-                        Margin="0,0,30,0">
-
-                </Button>
-
-            </Grid>
+            <Border Grid.Row="2" Background="#EEEEEE"
+                    CornerRadius="0 0 10 10">
+                <ui:Button Margin="0,0,30,0"
+                           Background="#373434"
+                           MouseOverBackground="#2D2B2B"
+                           PressedBackground="#2D2B2B"
+                           Foreground="#FFF"
+                           PressedForeground="#FFF"
+                           Content="Save"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Cursor="Hand"
+                           Height="50"
+                           Width="180"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           CornerRadius="10"
+                           Command="{Binding Add_EditBookingCommand}"
+                           Click="SaveBtn_OnClick" />
+            </Border>
         </Grid>
 
     </Border>

@@ -22,10 +22,9 @@
                 <ResourceDictionary Source="Styles/Text.xaml" />
                 <ResourceDictionary Source="Utilities/DataTemplate.xaml" />
                 <ResourceDictionary Source="Styles/LightDarkTheme.xaml"/>
+                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        
-       
         
     </Application.Resources>
     

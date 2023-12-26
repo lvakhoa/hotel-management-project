@@ -25,6 +25,10 @@ namespace HotelManagement.CustomControls
             InitializeComponent();
         }
 
+        private void Box_OnClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Border) userbox.Focus();
+        }
 
         public string Text
         {

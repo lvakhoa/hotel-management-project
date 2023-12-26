@@ -50,7 +50,7 @@ public partial class NavigationVM : ObservableObject
             CurrentStaff.Email = staff.Email;
             CurrentStaff.Birthday = staff.Birthday;
             CurrentStaff.Gender = staff.Gender;
-            CurrentStaff.Salary = staff.Salary;
+            CurrentStaff.Salary = staff.Salary.ToString();
             CurrentStaff.ContactNumber = staff.ContactNumber;
         }
     }

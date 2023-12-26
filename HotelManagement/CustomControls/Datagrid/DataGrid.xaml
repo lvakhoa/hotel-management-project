@@ -7,7 +7,8 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:uti="clr-namespace:HotelManagement.Utilities"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="1012">
+             d:DesignHeight="300" d:DesignWidth="1012"
+             x:Name="DatagridView">
 
     <UserControl.Resources>
         <uti:BooleanToVisibilityConverter x:Key="InvertVisibilityConverter"
@@ -49,12 +50,12 @@
                            PressedBackground="#4F4A4A"
                            MouseOverBackground="#5E5858"
                            CornerRadius="8"
-                           
                            Icon="Add12"
                            IconFilled="True"
                            FontSize="16"
                            FontWeight="Bold"
-                           Margin="10,0,0,0" />
+                           Margin="10,0,0,0" 
+                           Click="ButtonAdd_OnClick"/>
             </Grid>
         </Grid>
 
@@ -100,12 +101,14 @@
                                                Padding="5" Background="#D9D9D9"
                                                MouseOverBackground="#DFDFDF" PressedBackground="#D9D9D9"
                                                Margin="0,0,10,0" 
-                                               Click="ButtonEdit_OnClick"/>
+                                               Click="ButtonEdit_OnClick"
+                                               Tag="{Binding ID}"/>
 
                                     <ui:Button Icon="Delete12" CornerRadius="8"
                                                Padding="5" Background="#D9D9D9"
                                                MouseOverBackground="#DFDFDF" PressedBackground="#D9D9D9" 
-                                               Click="ButtonDelete_OnClick"/>
+                                               Command="{Binding ElementName=DatagridView, Path=DataContext.DeleteCommand}"
+                                               CommandParameter="{Binding ID}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

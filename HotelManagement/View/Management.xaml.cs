@@ -1,6 +1,9 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using HotelManagement.ViewModel;
+using HotelManagement.ViewModel.ManagementList;
+using DefaultDatagrid = HotelManagement.CustomControls.DataGrid;
 using ButtonUI = Wpf.Ui.Controls.Button;
 
 namespace HotelManagement.View;
@@ -39,7 +42,7 @@ public partial class Management : UserControl
         RemoveBackgroundBtn();
         ButtonUI? btn = sender as ButtonUI;
         btn!.Background = (Brush)(new BrushConverter()).ConvertFrom("#4F4A4A")!;
-        btn.Name = "ActiveBtn";
+        btn.Name = "ActiveBtn";   
     }
 
     private void CustomerBtn_OnClick(object sender, RoutedEventArgs e)
@@ -47,7 +50,7 @@ public partial class Management : UserControl
         RemoveBackgroundBtn();
         ButtonUI? btn = sender as ButtonUI;
         btn!.Background = (Brush)(new BrushConverter()).ConvertFrom("#4F4A4A")!;
-        btn.Name = "ActiveBtn";
+        btn.Name = "ActiveBtn";   
     }
 
     private void RoomBtn_OnClick(object sender, RoutedEventArgs e)
@@ -55,7 +58,7 @@ public partial class Management : UserControl
         RemoveBackgroundBtn();
         ButtonUI? btn = sender as ButtonUI;
         btn!.Background = (Brush)(new BrushConverter()).ConvertFrom("#4F4A4A")!;
-        btn.Name = "ActiveBtn";
+        btn.Name = "ActiveBtn";   
     }
 
     private void ServiceBtn_OnClick(object sender, RoutedEventArgs e)
@@ -63,7 +66,7 @@ public partial class Management : UserControl
         RemoveBackgroundBtn();
         ButtonUI? btn = sender as ButtonUI;
         btn!.Background = (Brush)(new BrushConverter()).ConvertFrom("#4F4A4A")!;
-        btn.Name = "ActiveBtn";
+        btn.Name = "ActiveBtn";   
     }
 
     private void InvoiceBtn_OnClick(object sender, RoutedEventArgs e)
@@ -71,7 +74,7 @@ public partial class Management : UserControl
         RemoveBackgroundBtn();
         ButtonUI? btn = sender as ButtonUI;
         btn!.Background = (Brush)(new BrushConverter()).ConvertFrom("#4F4A4A")!;
-        btn.Name = "ActiveBtn";
+        btn.Name = "ActiveBtn";   
     }
 
     private void BookingBtn_OnClick(object sender, RoutedEventArgs e)
@@ -79,7 +82,7 @@ public partial class Management : UserControl
         RemoveBackgroundBtn();
         ButtonUI? btn = sender as ButtonUI;
         btn!.Background = (Brush)(new BrushConverter()).ConvertFrom("#4F4A4A")!;
-        btn.Name = "ActiveBtn";
+        btn.Name = "ActiveBtn";   
     }
 
     private void RoomTypeBtn_OnClick(object sender, RoutedEventArgs e)
@@ -87,7 +90,7 @@ public partial class Management : UserControl
         RemoveBackgroundBtn();
         ButtonUI? btn = sender as ButtonUI;
         btn!.Background = (Brush)(new BrushConverter()).ConvertFrom("#4F4A4A")!;
-        btn.Name = "ActiveBtn";
+        btn.Name = "ActiveBtn";   
     }
 
     private void ServiceUseBtn_OnClick(object sender, RoutedEventArgs e)
