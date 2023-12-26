@@ -95,19 +95,19 @@ namespace HotelManagement.CustomControls
             {
                 case "Out of Order":
                     {
-                        color = new BrushConverter().ConvertFrom("#FFCDCD") as SolidColorBrush;
+                        color = new BrushConverter().ConvertFrom("#FCB7B7") as SolidColorBrush;
                         textcolor = new BrushConverter().ConvertFrom("#F56F6F") as SolidColorBrush;
                         break;
                     }
                 case "Available":
                     {
-                        color = new BrushConverter().ConvertFrom("#E4FFE0") as SolidColorBrush;
+                        color = new BrushConverter().ConvertFrom("#C2FCC1") as SolidColorBrush;
                         textcolor = new BrushConverter().ConvertFrom("#3AC291") as SolidColorBrush;
                         break;
                     }
                 case "Occupied":
                     {
-                        color = new BrushConverter().ConvertFrom("#F7F990") as SolidColorBrush;
+                        color = new BrushConverter().ConvertFrom("#FCFE7C") as SolidColorBrush;
                         textcolor = new BrushConverter().ConvertFrom("#BEC128") as SolidColorBrush;
                         break;
                     }
