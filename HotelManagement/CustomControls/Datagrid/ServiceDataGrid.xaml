@@ -1,0 +1,146 @@
+<UserControl x:Class="HotelManagement.CustomControls.Datagrid.ServiceDataGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:uti="clr-namespace:HotelManagement.Utilities"
+             xmlns:vm="clr-namespace:HotelManagement.ViewModel.ManagementList"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="1012"
+             x:Name="DatagridView">
+
+    <UserControl.Resources>
+        <uti:BooleanToVisibilityConverter x:Key="InvertVisibilityConverter"
+                                          True="Hidden"
+                                          False="Visible" />
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+        <uti:MultiBindingConverter x:Key="BindingConverter" />
+    </UserControl.Resources>
+
+    <Grid Margin="20,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Margin="0,20,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <ui:TextBox x:Name="SearchBox" Icon="Search12" FontSize="18" PlaceholderText="Search" Width="320"
+                            KeyDown="TextBox_OnSearch" TextChanged="SearchBox_OnTextChanged" />
+
+                <ui:Button Appearance="Dark"
+                           Background="#4F4A4A"
+                           PressedBackground="#4F4A4A"
+                           MouseOverBackground="#5E5858"
+                           CornerRadius="8"
+                           Content="Search"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Margin="10,0,0,0"
+                           Click="SearchBtn_OnClick" />
+            </StackPanel>
+
+            <Grid Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,20,0">
+                <ui:Button x:Name="AddBtn"
+                           Appearance="Dark"
+                           Background="#4F4A4A"
+                           PressedBackground="#4F4A4A"
+                           MouseOverBackground="#5E5858"
+                           CornerRadius="8"
+                           Icon="Add12"
+                           IconFilled="True"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Margin="10,0,0,0"
+                           Click="ButtonAdd_OnClick" 
+                           ToolTip="Click here to add service"
+                           ToolTipService.InitialShowDelay="500"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <fa:ImageAwesome Icon="Spinner" Spin="{Binding IsLoading}"
+                             Visibility="{Binding Path=IsLoading, Converter={StaticResource VisibilityConverter}}"
+                             Height="48" Width="48" />
+
+            <ui:DataGrid x:Name="DataGrid1" Margin="0,10,10,10"
+                         Padding="0,0,0,10" AutoGenerateColumns="False"
+                         ItemsSource="{Binding List}" GridLinesVisibility="Horizontal"
+                         CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False"
+                         IsReadOnly="True" FrozenColumnCount="1"
+                         Visibility="{Binding Path=IsLoading, Converter={StaticResource InvertVisibilityConverter}}">
+
+                <ui:DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <EventSetter Event="MouseLeftButtonDown" Handler="DataGrid_MouseLeftButtonDown" />
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#DFDFDF" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#DFDFDF" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ui:DataGrid.RowStyle>
+
+                <ui:DataGrid.RowHeaderStyle>
+                    <Style TargetType="{x:Type DataGridRowHeader}">
+                        <Setter Property="Background" Value="#F9F9F9" />
+                    </Style>
+                </ui:DataGrid.RowHeaderStyle>
+
+                <ui:DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <ui:Button Icon="Edit24" CornerRadius="8"
+                                               Padding="5" Background="#D9D9D9"
+                                               MouseOverBackground="#DFDFDF" PressedBackground="#D9D9D9"
+                                               Margin="0,0,10,0"
+                                               Click="ButtonEdit_OnClick"
+                                               Tag="{Binding ID}"
+                                               ToolTip="Click here to edit service"
+                                                ToolTipService.InitialShowDelay="500"/>
+
+                                    <ui:Button Icon="Delete12" CornerRadius="8"
+                                               Padding="5" Background="#D9D9D9"
+                                               MouseOverBackground="#DFDFDF" PressedBackground="#D9D9D9"
+                                               Command="{Binding ElementName=DatagridView, Path=DataContext.DeleteCommand}"
+                                               CommandParameter="{Binding ID}"
+                                               ToolTip="Click here to delete service"
+                                                ToolTipService.InitialShowDelay="500"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+
+                        <DataGridTemplateColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                <Setter Property="BorderBrush" Value="#C0C0C0" />
+                                <Setter Property="BorderThickness" Value="0, 0, 1, 0" />
+                            </Style>
+                        </DataGridTemplateColumn.CellStyle>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Header="Service ID" Binding="{Binding ID}" />
+
+                    <DataGridTextColumn Header="Service Name" Binding="{Binding ServiceName}" />
+
+                    <DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType}" />
+
+                    <DataGridTextColumn Header="Price" Binding="{Binding ServicePrice}" />
+
+                </ui:DataGrid.Columns>
+
+            </ui:DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>

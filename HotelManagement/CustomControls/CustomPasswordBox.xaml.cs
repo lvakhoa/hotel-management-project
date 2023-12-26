@@ -27,6 +27,15 @@ namespace HotelManagement.CustomControls
         {
             InitializeComponent();
         }
+        
+        private void Box_OnClick(object sender, MouseButtonEventArgs e)
+        {
+            if(passbox.Visibility == Visibility.Visible)
+                passbox.Focus();
+                
+            if(showpasstxtbox.Visibility == Visibility.Visible)
+                showpasstxtbox.Focus();
+        }
 
         public string Password
         {

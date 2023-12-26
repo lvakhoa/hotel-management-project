@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HotelManagement.Model;
+using HotelManagement.ViewModel.ManagementList;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.ViewModel;
@@ -49,7 +50,7 @@ public partial class NavigationVM : ObservableObject
             CurrentStaff.Email = staff.Email;
             CurrentStaff.Birthday = staff.Birthday;
             CurrentStaff.Gender = staff.Gender;
-            CurrentStaff.Salary = staff.Salary;
+            CurrentStaff.Salary = staff.Salary.ToString();
             CurrentStaff.ContactNumber = staff.ContactNumber;
         }
     }

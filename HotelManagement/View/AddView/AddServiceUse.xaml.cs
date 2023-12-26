@@ -4,40 +4,39 @@ using HotelManagement.ViewModel.ManagementList;
 
 namespace HotelManagement.View.AddView;
 
-public partial class AddRoom : Window
+public partial class AddServiceUse : Window
 {
-    public AddRoom(object dataContext)
+    public AddServiceUse(object dataContext)
     {
         InitializeComponent();
         
         DataContext = dataContext;
-
-        (DataContext as RoomList).GenerateRoomId();
+        
+        (DataContext as ServiceUseList).AddServiceUse();
     }
     
-    public AddRoom(string? id, object dataContext)
+    public AddServiceUse(string serviceId, string invoiceId, object dataContext)
     {
         InitializeComponent();
         
         DataContext = dataContext;
         
-        if(id != null)
-            (DataContext as RoomList).GetRoomById(id);
+        (DataContext as ServiceUseList).GetServiceUseById(serviceId, invoiceId);
 
     }
 
-    private void SaveBtn_OnClick(object sender, RoutedEventArgs e)
-    {
-        this.Close();
-    }
-
-    private void AddRoom_OnMouseDown(object sender, MouseButtonEventArgs e)
+    private void AddServiceUse_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
         if (e.LeftButton == MouseButtonState.Pressed)
             DragMove();
     }
-    
+
     private void CloseBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        this.Close();
+    }
+
+    private void SaveBtn_OnClick(object sender, RoutedEventArgs e)
     {
         this.Close();
     }

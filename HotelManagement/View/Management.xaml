@@ -3,25 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:custom="clr-namespace:HotelManagement.CustomControls"
+             xmlns:custom="clr-namespace:HotelManagement.CustomControls.Datagrid"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:vm="clr-namespace:HotelManagement.ViewModel"
+             xmlns:management="clr-namespace:HotelManagement.ViewModel.ManagementList"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="1012"
              Loaded="Management_OnLoaded">
-    
+
     <UserControl.DataContext>
         <vm:ManagementVM />
     </UserControl.DataContext>
-    
-    <Grid>
+
+    <Grid x:Name="ManageView">
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        
+
         <StackPanel x:Name="NavStack" Orientation="Horizontal" VerticalAlignment="Top">
-            <ui:Button Appearance="Dark" 
+            <ui:Button Appearance="Dark"
                        Padding="20, 10"
                        Foreground="#fff"
                        FontSize="16"
@@ -34,9 +35,9 @@
                        BorderThickness="0"
                        Margin="20,0,0,0"
                        Click="StaffBtn_OnClick"
-                       Command="{Binding StaffCommand}"/>
-        
-            <ui:Button Appearance="Dark" 
+                       Command="{Binding StaffCommand}" />
+
+            <ui:Button Appearance="Dark"
                        Padding="20, 10"
                        Foreground="#fff"
                        FontSize="16"
@@ -49,9 +50,9 @@
                        BorderThickness="0"
                        Margin="10,0,0,0"
                        Click="CustomerBtn_OnClick"
-                       Command="{Binding CustomerCommand}"/>
-        
-            <ui:Button Appearance="Dark" 
+                       Command="{Binding CustomerCommand}" />
+
+            <ui:Button Appearance="Dark"
                        Padding="20, 10"
                        Foreground="#fff"
                        FontSize="16"
@@ -64,9 +65,9 @@
                        BorderThickness="0"
                        Margin="10,0,0,0"
                        Click="RoomBtn_OnClick"
-                       Command="{Binding RoomCommand}"/>
-        
-            <ui:Button Appearance="Dark" 
+                       Command="{Binding RoomCommand}" />
+
+            <ui:Button Appearance="Dark"
                        Padding="20, 10"
                        Foreground="#fff"
                        FontSize="16"
@@ -79,9 +80,9 @@
                        BorderThickness="0"
                        Margin="10,0,0,0"
                        Click="ServiceBtn_OnClick"
-                       Command="{Binding ServiceCommand}"/>
-        
-            <ui:Button Appearance="Dark" 
+                       Command="{Binding ServiceCommand}" />
+
+            <ui:Button Appearance="Dark"
                        Padding="20, 10"
                        Foreground="#fff"
                        FontSize="16"
@@ -94,9 +95,9 @@
                        BorderThickness="0"
                        Margin="10,0,0,0"
                        Click="InvoiceBtn_OnClick"
-                       Command="{Binding InvoiceCommand}"/>
-        
-            <ui:Button Appearance="Dark" 
+                       Command="{Binding InvoiceCommand}" />
+
+            <ui:Button Appearance="Dark"
                        Padding="20, 10"
                        Foreground="#fff"
                        FontSize="16"
@@ -109,9 +110,9 @@
                        BorderThickness="0"
                        Margin="10,0,0,0"
                        Click="BookingBtn_OnClick"
-                       Command="{Binding BookingCommand}"/>
-        
-            <ui:Button Appearance="Dark" 
+                       Command="{Binding BookingCommand}" />
+
+            <ui:Button Appearance="Dark"
                        Padding="20, 10"
                        Foreground="#fff"
                        FontSize="16"
@@ -124,9 +125,9 @@
                        BorderThickness="0"
                        Margin="10,0,0,0"
                        Click="RoomTypeBtn_OnClick"
-                       Command="{Binding RoomtypeCommand}"/>
-        
-            <ui:Button Appearance="Dark" 
+                       Command="{Binding RoomtypeCommand}" />
+
+            <ui:Button Appearance="Dark"
                        Padding="20, 10"
                        Foreground="#fff"
                        FontSize="16"
@@ -139,9 +140,47 @@
                        BorderThickness="0"
                        Margin="10,0,0,0"
                        Click="ServiceUseBtn_OnClick"
-                        Command="{Binding ServiceUseCommand}"/>
+                       Command="{Binding ServiceUseCommand}" />
         </StackPanel>
         
-        <custom:DataGrid Grid.Row="1" DataContext="{Binding CurrentManagement}" />
+        <ContentControl Grid.Row="1" Content="{Binding CurrentManagement}">
+            
+            <ContentControl.Resources>
+                
+                <DataTemplate DataType="{x:Type management:StaffList}">
+                    <custom:StaffDataGrid DataContext="{Binding}" />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type management:CustomerList}">
+                    <custom:CustomerDataGrid DataContext="{Binding}" />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type management:RoomList}">
+                    <custom:RoomDataGrid DataContext="{Binding}" />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type management:ServiceList}">
+                    <custom:ServiceDataGrid DataContext="{Binding}" />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type management:InvoiceList}">
+                    <custom:InvoiceDataGrid DataContext="{Binding}" />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type management:BookingList}">
+                    <custom:BookingDataGrid DataContext="{Binding}" />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type management:RoomtypeList}">
+                    <custom:RoomTypeDataGrid DataContext="{Binding}" />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type management:ServiceUseList}">
+                    <custom:ServiceUseDataGrid DataContext="{Binding}" />
+                </DataTemplate>
+                
+            </ContentControl.Resources>
+            
+        </ContentControl>
     </Grid>
 </UserControl>

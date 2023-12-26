@@ -56,7 +56,7 @@
                             </Grid.ColumnDefinitions>
                             
                             <Image Grid.Column="0" Source="/HotelManagement;component/Assets/Images/hotel_icon.png" Width="24"/>
-                            <TextBlock Grid.Column="1" Text="Hotel Management" VerticalAlignment="Center" Margin="8, 0,0,0" />
+                            <TextBlock FontSize="14" Grid.Column="1" Text="Hotel Management" VerticalAlignment="Center" Margin="8, 0,0,0" />
                         </Grid>
                         
                         <ui:Button Grid.Column="1"
@@ -89,6 +89,7 @@
                                    BorderThickness="0"
                                    MouseOverBackground="#EE4242"
                                    PressedBackground="#FF2525" 
+                                   PressedForeground="#FFF"
                                    CornerRadius="0, 10, 0, 0">
                             
                             <ui:Button.Style>
