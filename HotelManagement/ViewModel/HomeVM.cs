@@ -9,7 +9,7 @@ namespace HotelManagement.ViewModel;
 
 public partial class HomeVM : ObservableObject
 {
-    // Property to hold the data. Renamed for clarity.
+
     [ObservableProperty]
     private HomeItemProperty _homeData;
     public SeriesCollection SeriesCollection { get; private set; }
@@ -17,7 +17,12 @@ public partial class HomeVM : ObservableObject
     public string[] Labels { get; private set; }
     [ObservableProperty]
     private bool _isLoading;
-
+    public HomeVM()
+    {
+        HomeData = new HomeItemProperty();
+        LoadHomeDataAsync();
+        InitializeCharts();
+    }
     private void InitializeCharts()
     {
         SeriesCollection = new SeriesCollection
@@ -26,14 +31,14 @@ public partial class HomeVM : ObservableObject
                 {
                     Title = "Total booking",
                     Values = new ChartValues<int>
-                    {
-                HomeData.TotalBookingMonday,
-                HomeData.TotalBookingTuesday,
-                HomeData.TotalBookingWednesday,
-                HomeData.TotalBookingThursday,
-                HomeData.TotalBookingFriday,
-                HomeData.TotalBookingSaturday,
-                HomeData.TotalBookingSunday
+                    {//10, 50, 39, 50, 12, 30, 20
+               (int) HomeData.TotalBookingMonday,
+               (int) HomeData.TotalBookingTuesday,
+                (int)HomeData.TotalBookingWednesday,
+                (int)HomeData.TotalBookingThursday,
+               (int) HomeData.TotalBookingFriday,
+                (int)HomeData.TotalBookingSaturday,
+                (int)HomeData.TotalBookingSunday
             },
                     Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#66CDAA"))
                 },
@@ -45,7 +50,7 @@ public partial class HomeVM : ObservableObject
                 //}
             };
 
-        Labels = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+        //Labels = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
 
         PieSeriesCollection = new SeriesCollection
             {
@@ -78,30 +83,10 @@ public partial class HomeVM : ObservableObject
                 // Other PieSeries follow...
             };
     }
-    public HomeVM()
-    {
-        HomeData = new HomeItemProperty(); // Initialize HomeData
-        LoadHomeDataAsync(); // Call method to load data
-        InitializeCharts();
-    }
-    private (DateTime, DateTime) GetLastWeekRange()
-    {
-        var today = DateTime.Today;
-        var endOfLastWeek = today.AddDays(-(int)today.DayOfWeek);
-        var startOfLastWeek = endOfLastWeek.AddDays(-6); // Assuming week starts on Monday
 
-        return (startOfLastWeek, endOfLastWeek);
-    }
 
-    private async Task<int> GetTotalBookingsForDay(DayOfWeek day, DateTime startDate, DateTime endDate, HotelManagementContext context)
-    {
-        var bookings = await context.Bookings
-                                    .Where(b => b.CheckInDate.Date >= startDate &&
-                                                b.CheckInDate.Date <= endDate)
-                                    .ToListAsync();
 
-        return bookings.Count(b => b.CheckInDate.DayOfWeek == day);
-    }
+
 
     private async void LoadHomeDataAsync()
     {
@@ -109,30 +94,43 @@ public partial class HomeVM : ObservableObject
         await Task.Delay(1000); // Simulated delay
 
         await using var context = new HotelManagementContext();
-        var (startOfLastWeek, endOfLastWeek) = GetLastWeekRange();
-        HomeData.TotalBookingMonday = await GetTotalBookingsForDay(DayOfWeek.Monday, startOfLastWeek, endOfLastWeek, context);
-        HomeData.TotalBookingTuesday = await GetTotalBookingsForDay(DayOfWeek.Tuesday, startOfLastWeek, endOfLastWeek, context);
-        HomeData.TotalBookingWednesday = await GetTotalBookingsForDay(DayOfWeek.Wednesday, startOfLastWeek, endOfLastWeek, context);
-        HomeData.TotalBookingThursday = await GetTotalBookingsForDay(DayOfWeek.Thursday, startOfLastWeek, endOfLastWeek, context);
-        HomeData.TotalBookingFriday = await GetTotalBookingsForDay(DayOfWeek.Friday, startOfLastWeek, endOfLastWeek, context);
-        HomeData.TotalBookingSaturday = await GetTotalBookingsForDay(DayOfWeek.Saturday, startOfLastWeek, endOfLastWeek, context);
-        HomeData.TotalBookingSunday = await GetTotalBookingsForDay(DayOfWeek.Sunday, startOfLastWeek, endOfLastWeek, context);
+
+
+        var labels = new string[7];
+        for (int i = -6; i <= 0; i++)
+        {
+            var date1 = DateTime.Today.AddDays(i);
+            labels[i + 6] = date1.ToString("dd/MM"); // Format the date as you prefer
+        }
+
+        var date = DateTime.Today;
+        HomeData.TotalBookingMonday = await GetTotalBookingsForDate(context, -6);
+        HomeData.TotalBookingTuesday = await GetTotalBookingsForDate(context, -5);
+        HomeData.TotalBookingWednesday = await GetTotalBookingsForDate(context, -4);
+        HomeData.TotalBookingThursday = await GetTotalBookingsForDate(context, -3);
+        HomeData.TotalBookingFriday = await GetTotalBookingsForDate(context, -2);
+        HomeData.TotalBookingSaturday = await GetTotalBookingsForDate(context, -1);
+        HomeData.TotalBookingSunday = await GetTotalBookingsForDate(context, 0);
+
         HomeData.TotalRevenueToday = await GetTotalRevenueToday(context);
         HomeData.TotalRevenue = await GetTotalRevenue(context);
-        HomeData.TotalBookingToday = await GetTotalBookingToday(context);
+        HomeData.TotalBookingToday = await GetTotalBookingsForDate(context, 0);
         HomeData.TotalBooking = await GetTotalBooking(context);
+        HomeData.TotalCheckinToday = await GetTotalCheckInToday(context);
+        HomeData.TotalCheckoutToday = await GetTotalCheckOutToday(context);
         HomeData.TotalStaff = await GetTotalStaff(context);
         HomeData.TotalRoom = await GetTotalRoom(context);
         HomeData.TotalCustomer = await GetTotalCustomer(context);
-
+        Labels = labels;
 
         IsLoading = false;
+        InitializeCharts();
     }
 
     private async Task<decimal> GetTotalRevenueToday(HotelManagementContext context)
     {
         return (decimal)await context.Invoices
-            .Where(i => i.InvoiceDate.Month == DateTime.Now.Day)
+            .Where(i => i.InvoiceDate.Day == DateTime.Now.Day)
             .SumAsync(i => i.TotalAmount);
     }
 
@@ -145,9 +143,22 @@ public partial class HomeVM : ObservableObject
 
     private async Task<int> GetTotalBookingToday(HotelManagementContext context)
     {
-        return await context.Bookings
-            .CountAsync(b => b.CheckInDate.Month == DateTime.Now.Day);
+        var today = DateTime.Today;
+        var temp = await context.Bookings
+            .CountAsync(b => b.CheckInDate.Value.Date == today);
+        return temp;
+
     }
+
+    private async Task<int> GetTotalBookingsForDate(HotelManagementContext context, int x)
+    {
+        var today = DateTime.Today.AddDays(x);
+        var temp = await context.Bookings
+
+                            .CountAsync(b => b.CheckInDate.Value.Date == today);
+        return temp;
+    }
+
 
     private async Task<int> GetTotalBooking(HotelManagementContext context)
     {
@@ -155,9 +166,40 @@ public partial class HomeVM : ObservableObject
              .CountAsync();
         return temp;
     }
+    //private async Task<int> GetTotalAvailableRoom(HotelManagementContext context)
+    //{
+    //    var temp = await context.Bookings
+    //         .CountAsync();
+    //    return temp;
+    //}
+    //private async Task<int> GetTotalBlockedRoom(HotelManagementContext context)
+    //{
+    //    var temp = await context.Bookings
+    //         .CountAsync();
+    //    return temp;
+    //}
+    //private async Task<int> GetTotalOccupiedRoom(HotelManagementContext context)
+    //{
+    //    var temp = await context.Roô
+    //         .CountAsync(b=>b.);
+    //    return temp;
+    //}
+    private async Task<int> GetTotalCheckInToday(HotelManagementContext context)
+    {
+        var today = DateTime.Today;
+        var temp = await context.Bookings
+            .CountAsync(b => b.CheckInDate.Value.Date == today);
+        return temp;
+    }
+    private async Task<int> GetTotalCheckOutToday(HotelManagementContext context)
+    {
+        var today = DateTime.Today;
+        var temp = await context.Bookings
+            .CountAsync(b => b.CheckOutDate.Value.Date == today);
+        return temp;
+    }
 
-    // Define methods for total staff, total customers, total transactions, and total rooms
-    // Replace these methods with the correct logic based on your database schema
+
     private async Task<int> GetTotalStaff(HotelManagementContext context)
     {
         return await context.Staff.CountAsync();
@@ -192,6 +234,13 @@ public partial class HomeVM : ObservableObject
         [ObservableProperty]
         private int _totalBookingSunday;
         [ObservableProperty]
+        private decimal _totalOccupiedRoom;
+        [ObservableProperty]
+        private decimal _totalAvailableRoom;
+        [ObservableProperty]
+        private decimal _totalBlockedRoom;
+        [ObservableProperty]
+
         private int _totalCheckinToday;
         [ObservableProperty]
         private int _totalCheckoutToday;
