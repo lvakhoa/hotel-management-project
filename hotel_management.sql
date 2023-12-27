@@ -1,4 +1,5 @@
 create database hotel_management
+drop database hotel_management
 go
 use hotel_management
 go
@@ -398,6 +399,8 @@ values
 --booking--
 insert into booking (booking_id, invoice_id, room_id, guest_quantity, check_in_date, check_out_date, total_amount)
 values
+('B0021', 'I0001', 'R0001', 1, '26-12-2023', '30-12-2023', null),
+('B0022', 'I0001', 'R0001', 1, '24-12-2023', '30-12-2023', null),
 ('B0001', 'I0001', 'R0001', 1, '01-08-2023', '07-08-2023', null),
 ('B0002', 'I0001', 'R0002', 2, '01-08-2023', '07-08-2023', null),
 ('B0003', 'I0002', 'R0003', 2, '02-08-2023', '05-08-2023', null),

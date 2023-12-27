@@ -1,4 +1,4 @@
-<UserControl x:Class="HotelManagement.View.Home"
+﻿<UserControl x:Class="HotelManagement.View.Home"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -24,33 +24,47 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
 
 
     <Grid>
-        <fa:ImageAwesome Icon="Spinner" Spin="{Binding IsLoading}"
-                 Visibility="{Binding Path=IsLoading, Converter={StaticResource VisibilityConverter}}"
-                 Height="48" Width="48" />
-        <Grid Background="#FFF" Margin="0,-4,0,4" Visibility="{Binding Path=IsLoading, Converter={StaticResource InvertVisibilityConverter}}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="100" />
-                <RowDefinition Height="291*" />
-                <RowDefinition Height="241*" />
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Độ cao tự động cho phần Overview -->
+            <RowDefinition Height="*"/>
+           
+        </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+        
+        <Grid Background="#FFF" Margin="0,-4,0,4" Grid.Row="0">
+            <fa:ImageAwesome Icon="Spinner" Spin="{Binding IsLoading}"
+                             Visibility="{Binding Path=IsLoading, Converter={StaticResource VisibilityConverter}}"
+                             Height="48" Width="48" />
 
-            <Grid Grid.Row="0" Margin="50 10 0 0">
+            <TextBlock
+                       Margin="40,10,0,10"
+                Text="Overview"
+                       FontSize="32"
+                       Foreground="#373434"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold" />
+        </Grid>
 
-                <TextBlock Text="Overview"
-               FontSize="32"
-               Foreground="#373434"
-               HorizontalAlignment="Left"
-               FontWeight="Bold" />
-            </Grid>
+   
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
+                <Grid Background="#FFF" Margin="0,-4,0,4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="291*" />
+                        <RowDefinition Height="241*" />
+                    </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+
+
+
+                    <StackPanel  Orientation="Horizontal" Grid.ColumnSpan="3">
                 <Grid Height="100" Width="160" Margin="40,0,0,0"
                   Background="#E8EFFF">
                     <StackPanel HorizontalAlignment="Left" Margin="10,0,0,0">
@@ -58,11 +72,11 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
                         <TextBlock Foreground="#747474">
                         Today's revenue
                         </TextBlock>
-                        <TextBox Text="{Binding HomeData.TotalRevenueToday}" IsReadOnly="True"/>
+                        <TextBlock Text="{Binding HomeData.TotalRevenueToday}" />
                     </StackPanel>
 
                 </Grid >
-                <!--2-->
+            
                 <Grid Height="100" Width="160" Margin="40,0,0,0"
         Background="#E4ffe0">
                     <StackPanel HorizontalAlignment="Left" Margin="10,0,0,0">
@@ -70,11 +84,11 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
                         <TextBlock Foreground="#747474">
               Today's booking
                         </TextBlock>
-                        <TextBox Text="{Binding HomeData.TotalBookingToday}" IsReadOnly="True"/>
+                        <TextBlock Text="{Binding HomeData.TotalBookingToday}" />
                     </StackPanel>
 
                 </Grid >
-                <!--3-->
+
                 <Grid Height="100" Width="160" Margin="40,0,0,0"
         Background="#FFFCE0">
                     <StackPanel HorizontalAlignment="Left" Margin="10,0,0,0">
@@ -82,11 +96,11 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
                         <TextBlock Foreground="#747474">
             Check-in
                         </TextBlock>
-                        <TextBlock> revenue value</TextBlock>
-                    </StackPanel>
+                            <TextBlock Text="{Binding HomeData.TotalCheckinToday}" />
+                        </StackPanel>
 
                 </Grid >
-                <!--4-->
+           
                 <Grid Height="100" Width="160" Margin="40,0,0,0"
         Background="#E8EFFF">
                     <StackPanel HorizontalAlignment="Left" Margin="10,0,0,0">
@@ -94,19 +108,19 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
                         <TextBlock Foreground="#747474">
               Check-out
                         </TextBlock>
-                        <TextBlock> revenue value</TextBlock>
-                    </StackPanel>
+                            <TextBlock Text="{Binding HomeData.TotalCheckoutToday}" />
+                        </StackPanel>
 
                 </Grid >
 
             </StackPanel>
 
-            <StackPanel Margin="22,0,0,0" Grid.Row="2">
+            <StackPanel Margin="22,0,0,0" Grid.Row="1">
                 <Border Background="#FFF" CornerRadius="10">
                     <StackPanel Margin="20">
                         <TextBlock Text="Recent Booking" FontSize="22" FontWeight="Bold" />
 
-                        <!-- Item 1 -->
+
                         <Border Background="#E6E6E6" CornerRadius="8" Margin="0,0,0,0" Padding="5">
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="50" Height="50"></Image>
@@ -117,7 +131,7 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
                                 </StackPanel>
                             </StackPanel>
                         </Border>
-                        <!-- Item 1 -->
+                    
                         <Border Background="#E6E6E6" CornerRadius="8" Margin="0,10,0,0" Padding="5">
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="50" Height="50"></Image>
@@ -128,7 +142,7 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
                                 </StackPanel>
                             </StackPanel>
                         </Border>
-                        <!-- Item 1 -->
+                        
                         <Border Background="#E6E6E6" CornerRadius="8" Margin="0,10,0,0" Padding="10">
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="50" Height="50"></Image>
@@ -140,10 +154,7 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
                             </StackPanel>
                         </Border>
 
-                        <!-- Repeat the above block for each item you want to display -->
-                        <!-- Item 2 -->
-                        <!-- Item 3 -->
-                        <!-- ... -->
+                     
 
                     </StackPanel>
                 </Border>
@@ -151,7 +162,7 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
 
             </StackPanel>
 
-            <Grid Grid.Row="2" Grid.Column="1">
+            <Grid Grid.Row="1" Grid.Column="1">
                 <wpf:PieChart 
 LegendLocation="Bottom" Height="220" Margin="0,20,0,0"
                           Hoverable="False"  DataClick="PieChart_DataClick_1"
@@ -177,14 +188,18 @@ LegendLocation="Bottom" Height="220" Margin="0,20,0,0"
                HorizontalAlignment="Left"
                      
                FontWeight="Bold" />
-                <StackPanel Grid.Row="1" Margin="0,0,0,0" Grid.RowSpan="2"
+                    <GridSplitter Grid.Row="0" Height="2" IsEnabled="False" VerticalAlignment="Top"
+      Width="910"
+      HorizontalAlignment="Left" Margin="0,0,0,0" />
+                    <StackPanel Grid.Row="1" Margin="0,0,0,0" Grid.RowSpan="2"
                        >
-                    <TextBlock Text="{Binding HomeData.TotalRevenue}"
-                             HorizontalAlignment="Center"
-    FontSize="22"
-    Foreground="#373434"
-    FontWeight="Bold" />
-                    <TextBlock Foreground="#747474"
+                        <TextBlock Text="{Binding HomeData.TotalRevenue, StringFormat='{}{0:0}$'}"
+           HorizontalAlignment="Center"
+           FontSize="22"
+           Foreground="#373434"
+           FontWeight="Bold" />
+
+                        <TextBlock Foreground="#747474"
                            FontSize="16"
                              HorizontalAlignment="Center">
      Revenue
@@ -250,7 +265,7 @@ FontWeight="Bold" />
 
 
             </Grid>
-            <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+            <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
                 <wpf:CartesianChart  Height="200" Series="{Binding SeriesCollection}"
                                 >
                     <wpf:CartesianChart.AxisX>
@@ -264,9 +279,11 @@ FontWeight="Bold" />
 
                 </wpf:CartesianChart>
             </Grid>
+            
 
 
         </Grid>
-    </Grid>
+            </ScrollViewer>
+        </Grid>
 
 </UserControl>
