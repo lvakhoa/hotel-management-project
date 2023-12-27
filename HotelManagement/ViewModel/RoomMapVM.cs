@@ -2,8 +2,8 @@
 using HotelManagement.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
-using System.Windows.Data;
 using System.ComponentModel;
+using System.Windows.Data;
 
 namespace HotelManagement.ViewModel;
 
@@ -12,7 +12,7 @@ public partial class RoomMapVM : ObservableObject
     public ObservableCollection<RoomMap> List { get; set; }
     public ObservableCollection<string> Floors { get; set; }
     public ICollectionView RoomView { get; set; }
-    public CollectionViewSource GroupFloor {  get; set; }
+    public CollectionViewSource GroupFloor { get; set; }
     [ObservableProperty]
     private bool _isLoading;
     public RoomMapVM()
@@ -20,14 +20,13 @@ public partial class RoomMapVM : ObservableObject
         List = new ObservableCollection<RoomMap>();
         Floors = new ObservableCollection<string>();
         GroupFloor = new CollectionViewSource();
-        GetRoomList();
         GroupFloor.Source = List;
         GroupFloor.GroupDescriptions.Add(new PropertyGroupDescription("Floor"));
         RoomView = GroupFloor.View;
         Floors.Insert(0, "Show All");
     }
 
-    private async void GetRoomList()
+    public async Task GetRoomList()
     {
         IsLoading = true;
         await Task.Delay(1000);
@@ -110,7 +109,7 @@ public partial class RoomMapVM : ObservableObject
             {
                 RoomView.Filter = null;
             }
-            
+
         }
     }
     public class RoomMap

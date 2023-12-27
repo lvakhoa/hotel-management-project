@@ -3,7 +3,9 @@ using HotelManagement.Model;
 using LiveCharts;
 using LiveCharts.Wpf;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 using System.Windows.Media;
+using RoomMap = HotelManagement.ViewModel.RoomMapVM;
 
 namespace HotelManagement.ViewModel;
 
@@ -12,77 +14,56 @@ public partial class HomeVM : ObservableObject
 
     [ObservableProperty]
     private HomeItemProperty _homeData;
-    public SeriesCollection SeriesCollection { get; private set; }
-    public SeriesCollection PieSeriesCollection { get; private set; }
+
+    [ObservableProperty]
+    private SeriesCollection _seriesCollection;
+    [ObservableProperty]
+    private SeriesCollection _pieSeriesCollection;
     public string[] Labels { get; private set; }
+    public int[] Values { get; private set; }
     [ObservableProperty]
     private bool _isLoading;
+    [ObservableProperty]
+    private ObservableCollection<BookingDisplay> _recentBookings;
+
+    // Define a data structure for display
+    public class BookingDisplay
+    {
+        public string RoomType { get; set; }
+        public string RoomNumber { get; set; }
+        public string CustomerName { get; set; }
+        public DateTime BookingDate { get; set; }
+    }
+    private async Task LoadRecentBookingsAsync()
+    {
+        await using var context = new HotelManagementContext();
+        var recentBookings = await
+            (from b in context.Bookings
+             join r in context.Rooms on b.RoomId equals r.RoomId
+             join i in context.Invoices on b.InvoiceId equals i.InvoiceId
+             join c in context.Customers on i.CustomerId equals c.CustomerId
+             join rt in context.RoomTypes on r.RoomTypeId equals rt.RoomTypeId
+
+             orderby i.InvoiceDate descending
+             select new BookingDisplay
+             {
+                 RoomType = rt.RoomTypeName, // Replace with actual property name for room type name
+                 RoomNumber = r.RoomNumber, // Replace with actual property name for room number
+                 CustomerName = c.FullName, // Replace with actual property name for customer name
+                 BookingDate = (DateTime)i.InvoiceDate
+             }).Take(3).ToListAsync();
+
+        RecentBookings = new ObservableCollection<BookingDisplay>(recentBookings);
+    }
+
     public HomeVM()
     {
         HomeData = new HomeItemProperty();
         LoadHomeDataAsync();
-        InitializeCharts();
+        LoadRecentBookingsAsync();
+        //InitializeCharts();
     }
-    private void InitializeCharts()
-    {
-        SeriesCollection = new SeriesCollection
-            {
-                new ColumnSeries
-                {
-                    Title = "Total booking",
-                    Values = new ChartValues<int>
-                    {//10, 50, 39, 50, 12, 30, 20
-               (int) HomeData.TotalBookingMonday,
-               (int) HomeData.TotalBookingTuesday,
-                (int)HomeData.TotalBookingWednesday,
-                (int)HomeData.TotalBookingThursday,
-               (int) HomeData.TotalBookingFriday,
-                (int)HomeData.TotalBookingSaturday,
-                (int)HomeData.TotalBookingSunday
-            },
-                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#66CDAA"))
-                },
-                //new ColumnSeries
-                //{
-                //    Title = "Checkout",
-                //    Values = new ChartValues<int> { 7, 6, 9, 10, 11, 5, 8 },
-                //    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFCCCC"))
-                //}
-            };
 
-        //Labels = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
-
-        PieSeriesCollection = new SeriesCollection
-            {
-                new PieSeries
-                {
-                    Values = new ChartValues<int> { 3 },
-                    Title = "Available",
-                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#E4FFE0")),
-                    DataLabels = true,
-                    LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
-                },
-            // Other PieSeries follow...new PieSeries
-              new PieSeries
-                {
-                    Values = new ChartValues<int> { 3 },
-                    Title = "Occupied",
-                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFE0FC")),
-                    DataLabels = true,
-                    LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
-                },
-                new PieSeries
-                // Other PieSeries follow...new PieSeries
-                {
-                    Values = new ChartValues<int> { 3 },
-                    Title = "Blocked",
-                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#F8EFE2")),
-                    DataLabels = true,
-                    LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
-                },
-                // Other PieSeries follow...
-            };
-    }
 
 
 
@@ -96,14 +77,19 @@ public partial class HomeVM : ObservableObject
         await using var context = new HotelManagementContext();
 
 
+
         var labels = new string[7];
         for (int i = -6; i <= 0; i++)
         {
             var date1 = DateTime.Today.AddDays(i);
             labels[i + 6] = date1.ToString("dd/MM"); // Format the date as you prefer
         }
-
+        Labels = labels;
         var date = DateTime.Today;
+
+        var rm = new RoomMap();
+        await rm.GetRoomList();
+
         HomeData.TotalBookingMonday = await GetTotalBookingsForDate(context, -6);
         HomeData.TotalBookingTuesday = await GetTotalBookingsForDate(context, -5);
         HomeData.TotalBookingWednesday = await GetTotalBookingsForDate(context, -4);
@@ -112,6 +98,9 @@ public partial class HomeVM : ObservableObject
         HomeData.TotalBookingSaturday = await GetTotalBookingsForDate(context, -1);
         HomeData.TotalBookingSunday = await GetTotalBookingsForDate(context, 0);
 
+        HomeData.TotalAvailableRoom = await GetTotalAvailableRoom(context, rm);
+        HomeData.TotalBlockedRoom = await GetTotalBlockedRoom(context, rm);
+        HomeData.TotalOccupiedRoom = await GetTotalOccupiedRoom(context, rm);
         HomeData.TotalRevenueToday = await GetTotalRevenueToday(context);
         HomeData.TotalRevenue = await GetTotalRevenue(context);
         HomeData.TotalBookingToday = await GetTotalBookingsForDate(context, 0);
@@ -121,12 +110,70 @@ public partial class HomeVM : ObservableObject
         HomeData.TotalStaff = await GetTotalStaff(context);
         HomeData.TotalRoom = await GetTotalRoom(context);
         HomeData.TotalCustomer = await GetTotalCustomer(context);
-        Labels = labels;
 
-        IsLoading = false;
         InitializeCharts();
-    }
+        IsLoading = false;
 
+    }
+    private void InitializeCharts()
+    {
+        SeriesCollection = new SeriesCollection
+            {
+                new ColumnSeries
+                {
+                    Title = "Total booking",
+                    Values = new ChartValues<Int32>
+                    {
+                HomeData.TotalBookingMonday,
+               HomeData.TotalBookingTuesday,
+               HomeData.TotalBookingWednesday,
+                HomeData.TotalBookingThursday,
+                HomeData.TotalBookingFriday,
+                HomeData.TotalBookingSaturday,
+                HomeData.TotalBookingSunday
+
+                },DataLabels = true,
+                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#66CDAA"))
+                },
+
+
+            };
+
+
+
+
+        PieSeriesCollection = new SeriesCollection
+            {
+                new PieSeries
+                {
+                    Values = new ChartValues<int> { HomeData.TotalAvailableRoom },
+                    Title = "Available",
+                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#E4FFE0")),
+                    DataLabels = true,
+                    LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
+                },
+            // Other PieSeries follow...new PieSeries
+              new PieSeries
+                {
+                    Values = new ChartValues<int> { HomeData.TotalOccupiedRoom },
+                    Title = "Occupied",
+                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFE0FC")),
+                    DataLabels = true,
+                    LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
+                },
+                new PieSeries
+                // Other PieSeries follow...new PieSeries
+                {
+                    Values = new ChartValues<int> { HomeData.TotalBlockedRoom },
+                    Title = "Blocked",
+                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#F8EFE2")),
+                    DataLabels = true,
+                    LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
+                },
+                // Other PieSeries follow...
+            };
+        OnPropertyChanged(nameof(Labels));
+    }
     private async Task<decimal> GetTotalRevenueToday(HotelManagementContext context)
     {
         return (decimal)await context.Invoices
@@ -166,24 +213,29 @@ public partial class HomeVM : ObservableObject
              .CountAsync();
         return temp;
     }
-    //private async Task<int> GetTotalAvailableRoom(HotelManagementContext context)
-    //{
-    //    var temp = await context.Bookings
-    //         .CountAsync();
-    //    return temp;
-    //}
-    //private async Task<int> GetTotalBlockedRoom(HotelManagementContext context)
-    //{
-    //    var temp = await context.Bookings
-    //         .CountAsync();
-    //    return temp;
-    //}
-    //private async Task<int> GetTotalOccupiedRoom(HotelManagementContext context)
-    //{
-    //    var temp = await context.Roô
-    //         .CountAsync(b=>b.);
-    //    return temp;
-    //}
+    private async Task<int> GetTotalAvailableRoom(HotelManagementContext context, RoomMap rm)
+    {
+        await Task.Delay(200);
+        var temp = (from r in rm.List where r.Status == "Available" select r).Count();
+
+        //var temp = rm.List.Count(b => b.Status == "Available");
+        return temp;
+    }
+    private async Task<int> GetTotalBlockedRoom(HotelManagementContext context, RoomMap rm)
+    {
+
+        await Task.Delay(200);
+        var temp = (from r in rm.List where r.Status == "Out of Order" select r).Count();
+
+        return temp;
+    }
+    private async Task<int> GetTotalOccupiedRoom(HotelManagementContext context, RoomMap rm)
+    {
+
+        await Task.Delay(200);
+        var temp = (from r in rm.List where r.Status == "Occupied" select r).Count();
+        return temp;
+    }
     private async Task<int> GetTotalCheckInToday(HotelManagementContext context)
     {
         var today = DateTime.Today;
@@ -234,11 +286,11 @@ public partial class HomeVM : ObservableObject
         [ObservableProperty]
         private int _totalBookingSunday;
         [ObservableProperty]
-        private decimal _totalOccupiedRoom;
+        private int _totalOccupiedRoom;
         [ObservableProperty]
-        private decimal _totalAvailableRoom;
+        private int _totalAvailableRoom;
         [ObservableProperty]
-        private decimal _totalBlockedRoom;
+        private int _totalBlockedRoom;
         [ObservableProperty]
 
         private int _totalCheckinToday;
