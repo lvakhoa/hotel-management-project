@@ -71,16 +71,17 @@
                                    Foreground="Gray" />
                     </StackPanel>
                     <ui:SymbolIcon Symbol="Edit24" Margin="320,0,10,0" />
-                    
-                        <TextBlock x:Name="EditTb" Text="Edit Profile"
-                                   FontSize="17"
-                                   LineHeight="20"
-                                   Foreground="#373434"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
-                                   MouseEnter="EditTb_OnMouseEnter"
-                                   MouseLeave="EditTb_OnMouseLeave" />
+                        <Button BorderThickness="0">
+                            <TextBlock x:Name="EditTb" Text="Edit Profile"
+                                       FontSize="17"
+                                       LineHeight="20"
+                                       Foreground="#373434"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       MouseEnter="EditTb_OnMouseEnter"
+                                       MouseLeave="EditTb_OnMouseLeave" />
+                        </Button>
 
                 </StackPanel>
             </Grid>

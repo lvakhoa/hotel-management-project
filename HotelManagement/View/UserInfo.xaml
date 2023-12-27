@@ -3,15 +3,115 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:local="clr-namespace:HotelManagement.View"
         mc:Ignorable="d"
-        Title="UserInfo" Height="450" Width="500">
-    <Grid>
+        Title="UserInfo" Height="450" Width="600">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="0.6*"/>
             <RowDefinition />
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        
-        
+        <Border Grid.Row="1"
+                Background="#D9D9D9"
+                Margin="10 10 10 5"
+                CornerRadius="20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions> 
+                
+                <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <Ellipse Width="70"
+                             Height="70"
+                             Margin="20">
+                        <Ellipse.Stroke>
+                            <SolidColorBrush Color="#FF3B3C32" />
+                        </Ellipse.Stroke>
+                    </Ellipse>
+                    <WrapPanel VerticalAlignment="Center"
+                               Orientation="Vertical">
+                        <TextBlock Text="Username"
+                                   FontWeight="SemiBold"
+                                   FontSize="22"/>
+                        <TextBlock Text="Manager"
+                                   Foreground="#767676"
+                                   FontWeight="SemiBold"
+                                   FontSize="13"/>
+                    </WrapPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="2"
+                Background="#D9D9D9"
+                CornerRadius="20"
+                Margin="10 5 10 10">
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0"
+                            Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Name"
+                                   FontSize="20"
+                                   Margin="10 0 10 10"
+                                   Foreground="#767676"
+                                   FontWeight="SemiBold"/>
+                        <TextBox Margin="10 0 10 10"
+                                 Width="200"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Address"
+                                   FontSize="20"
+                                   Margin="10 0 10 10"
+                                   Foreground="#767676"
+                                   FontWeight="SemiBold"/>
+                        <TextBox Margin="10 0 10 10"
+                                 Width="200"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Row="1"
+                            Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Phone Number"
+                                   FontSize="20"
+                                   Margin="10"
+                                   Foreground="#767676"
+                                   FontWeight="SemiBold"/>
+                        <TextBox Margin="10 0 10 10"
+                                 Width="200"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Date of Birth"
+                                   FontSize="20"
+                                   Margin="10"
+                                   Foreground="#767676"
+                                   FontWeight="SemiBold"/>
+                        <DatePicker Margin="10 0 10 10"
+                                    Width="200"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="3"
+              VerticalAlignment="Center"
+              Margin="10 0 30 0">
+            <WrapPanel HorizontalAlignment="Right">
+                <ui:Button Content="Reset"
+                           Background="#D9D9D9"
+                           Margin="5 0 5 0"/>
+                <ui:Button Content="Save" 
+                           Foreground="White"
+                           Background="Black"
+                           Margin="5 0 5 0"/>
+            </WrapPanel>
+        </Grid>
     </Grid>
 </Window>
