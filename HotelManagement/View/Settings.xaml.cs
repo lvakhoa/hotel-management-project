@@ -40,4 +40,14 @@ public partial class Settings : UserControl
     {
         EditTb.TextDecorations = null;
     }
+
+    private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+    {
+        var edit = new UserInfo()
+        {
+            ShowInTaskbar = false,
+            Topmost = true
+        };
+        edit.ShowDialog();
+    }
 }

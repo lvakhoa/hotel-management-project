@@ -71,7 +71,8 @@
                                    Foreground="Gray" />
                     </StackPanel>
                     <ui:SymbolIcon Symbol="Edit24" Margin="320,0,10,0" />
-                        <Button BorderThickness="0">
+                        <Button BorderThickness="0"
+                                Click="ButtonEdit_Click">
                             <TextBlock x:Name="EditTb" Text="Edit Profile"
                                        FontSize="17"
                                        LineHeight="20"
