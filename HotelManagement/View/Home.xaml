@@ -73,7 +73,11 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
                                 <TextBlock Foreground="#747474">
         Today's revenue
                                 </TextBlock>
-                                <TextBlock Text="{Binding HomeData.TotalRevenueToday}" />
+                                <TextBlock Text="{Binding HomeData.TotalRevenueToday}"
+HorizontalAlignment="Center"
+FontSize="22"
+Foreground="#373434"
+FontWeight="Bold" />
                             </StackPanel>
 
                         </Grid >
@@ -84,10 +88,15 @@ Background="#E4ffe0">
                         <Grid>
                             <StackPanel HorizontalAlignment="Left" Margin="10,0,0,0">
                                 <ui:SymbolIcon Symbol="CalendarRtl12" FontSize="40" HorizontalAlignment="Left"/>
-                                <TextBlock Foreground="#747474">
+                                <TextBlock Margin="0,4,0,0"
+                                    Foreground="#747474">
       Today's booking
                                 </TextBlock>
-                                <TextBlock Text="{Binding HomeData.TotalBookingToday}" />
+                                <TextBlock Text="{Binding HomeData.TotalBookingToday}"
+HorizontalAlignment="Center"
+FontSize="22"
+Foreground="#373434"
+FontWeight="Bold" />
                             </StackPanel>
 
                         </Grid >
@@ -101,7 +110,11 @@ Background="#FFFCE0">
                                 <TextBlock Foreground="#747474">
     Check-in
                                 </TextBlock>
-                                <TextBlock Text="{Binding HomeData.TotalCheckinToday}" />
+                                <TextBlock Text="{Binding HomeData.TotalCheckinToday}"
+HorizontalAlignment="Center"
+FontSize="22"
+Foreground="#373434"
+FontWeight="Bold" />
                             </StackPanel>
 
                         </Grid >
@@ -115,7 +128,11 @@ Background="#E8EFFF" >
                                 <TextBlock Foreground="#747474">
       Check-out
                                 </TextBlock>
-                                <TextBlock Text="{Binding HomeData.TotalCheckoutToday}" />
+                                <TextBlock Text="{Binding HomeData.TotalCheckoutToday}"
+HorizontalAlignment="Center"
+FontSize="22"
+Foreground="#373434"
+FontWeight="Bold" />
                             </StackPanel>
 
                         </Grid >
@@ -138,18 +155,32 @@ Background="#E8EFFF" >
                     <StackPanel Margin="0,0,0,0" Grid.Row="0">
                         <Border Background="#FFF" CornerRadius="10">
                             <StackPanel Margin="20">
-                                <TextBlock Text="Recent Booking" FontSize="22" FontWeight="Bold" />
+                                <TextBlock  Foreground="#373434"
+                                    Text="Recent Booking" FontSize="22" FontWeight="Bold" />
 
                                 <ItemsControl ItemsSource="{Binding RecentBookings}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Border Margin="5" Padding="10" Background="#E6E6E6" CornerRadius="5" BorderBrush="Gray" BorderThickness="1">
-                                                <StackPanel>
-                                                    <TextBlock Text="{Binding RoomType}" FontWeight="Bold" />
-                                                    <TextBlock Text="{Binding RoomNumber}" FontWeight="Bold" />
-                                                    <TextBlock Text="{Binding CustomerName}" />
-                                                    <TextBlock Text="{Binding BookingDate, StringFormat='dd/MM/yyyy - hh:mm tt'}" />
-                                                </StackPanel>
+                                                <Grid >
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="0.5*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel Grid.Column="0">
+                                                        <TextBlock Text="{Binding RoomType}"
+                                                                   FontWeight="Bold"
+                                                                   FontSize="15"/>
+                                                        <TextBlock Text="{Binding RoomNumber}" 
+                                                                   FontSize="15" FontWeight="Bold" />
+                                                    </StackPanel>
+                                                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                                        <TextBlock FontSize="15"
+                                                                   Text="{Binding CustomerName}" />
+                                                        <TextBlock FontSize="15"
+                                                                   Text="{Binding BookingDate, StringFormat='dd/MM/yyyy - hh:mm tt'}" />
+                                                    </StackPanel>
+                                                </Grid>
                                             </Border>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
@@ -172,8 +203,15 @@ Background="#E8EFFF" >
                     
                 </GridSplitter>
             <Grid Grid.Row="1" Grid.Column="1">
-                <wpf:PieChart 
-LegendLocation="Bottom" Height="220" Margin="0,20,0,0"
+                    <TextBlock
+                        Margin="30"
+                        Text="Room Status" 
+                        FontSize="22" 
+                        Panel.ZIndex="2" 
+                         Foreground="#373434"
+                        FontWeight="Bold" />
+                    <wpf:PieChart 
+LegendLocation="Bottom" Height="260" Margin="0,20,0,0"
                           Hoverable="False"  DataClick="PieChart_DataClick_1"
                           Foreground="Black"
                 Series="{Binding PieSeriesCollection}"/>
@@ -187,86 +225,91 @@ LegendLocation="Bottom" Height="220" Margin="0,20,0,0"
                  VerticalAlignment="Top">
 
                 </GridSplitter>
-                <Grid Grid.Row="3" Margin="40,30,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                <Border Grid.Row="3"  
+                        
+                        Margin="50,10,0,0"
+BorderThickness="4" CornerRadius="20"
+BorderBrush="LightGray">
+                    <Grid Margin="20,10,20,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
 
-                </Grid.RowDefinitions>
+                        </Grid.RowDefinitions>
 
-                <TextBlock Text="Total"
+                        <TextBlock Text="Total"
                FontSize="22"
                Foreground="#373434"
                HorizontalAlignment="Left"
                      
                FontWeight="Bold" />
-                    <GridSplitter Grid.Row="0" Height="2" IsEnabled="False" VerticalAlignment="Top"
+                        <GridSplitter Grid.Row="0" Height="2" IsEnabled="False" VerticalAlignment="Top"
       Width="910"
       HorizontalAlignment="Left" Margin="0,0,0,0" />
-                    <StackPanel Grid.Row="1" Margin="0,0,0,0" Grid.RowSpan="2"
+                        <StackPanel Grid.Row="1" Margin="0,0,0,0" Grid.RowSpan="2"
                        >
-                        <TextBlock Text="{Binding HomeData.TotalRevenue, StringFormat='{}{0:0}$'}"
+                            <TextBlock Text="{Binding HomeData.TotalRevenue, StringFormat='{}{0:0}$'}"
            HorizontalAlignment="Center"
            FontSize="22"
            Foreground="#373434"
            FontWeight="Bold" />
 
-                        <TextBlock Foreground="#747474"
+                            <TextBlock Foreground="#747474"
                            FontSize="16"
                              HorizontalAlignment="Center">
      Revenue
-                    </TextBlock>
+                            </TextBlock>
 
-                </StackPanel>
-                <StackPanel Grid.Row="1" Grid.Column="1"
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1"
                    >
-                    <TextBlock Text="{Binding HomeData.TotalBooking}"
+                            <TextBlock Text="{Binding HomeData.TotalBooking}"
                          HorizontalAlignment="Center"
 FontSize="22"
 Foreground="#373434"
 FontWeight="Bold" />
-                    <TextBlock Foreground="#747474"
+                            <TextBlock Foreground="#747474"
                        FontSize="16"
                          HorizontalAlignment="Center">
   Booking
-                    </TextBlock>
+                            </TextBlock>
 
-                </StackPanel>
-                <StackPanel Grid.Row="1" Margin="0,50,4,50" Grid.RowSpan="3"
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Margin="0,50,4,50" Grid.RowSpan="3"
                    >
-                    <TextBlock Text="{Binding HomeData.TotalRoom}"
+                            <TextBlock Text="{Binding HomeData.TotalRoom}"
                          HorizontalAlignment="Center"
 FontSize="22"
 Foreground="#373434"
 FontWeight="Bold" />
-                    <TextBlock Foreground="#747474"
+                            <TextBlock Foreground="#747474"
                        FontSize="16"
                          HorizontalAlignment="Center">
              Room
-                    </TextBlock>
+                            </TextBlock>
 
-                </StackPanel>
-                <StackPanel Grid.Row="2" Grid.Column="2"
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="2"
                    >
-                    <TextBlock Text="{Binding HomeData.TotalStaff}"
+                            <TextBlock Text="{Binding HomeData.TotalStaff}"
                          HorizontalAlignment="Center"
 FontSize="22"
 Foreground="#373434"
 FontWeight="Bold" />
-                    <TextBlock Foreground="#747474"
+                            <TextBlock Foreground="#747474"
                        FontSize="16"
                          HorizontalAlignment="Center">
   Staff
-                    </TextBlock>
+                            </TextBlock>
 
-                </StackPanel>
-                <ui:Button Grid.Row="3" Grid.Column="2"
+                        </StackPanel>
+                        <ui:Button Grid.Row="3" Grid.Column="2"
                 Appearance="Dark"
                Background="#4F4A4A"
                PressedBackground="#4F4A4A"
@@ -282,9 +325,20 @@ FontWeight="Bold" />
 
 
 
-            </Grid>
+                    </Grid>
+                </Border>
+                
             <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
-                <wpf:CartesianChart  Height="200" Series="{Binding SeriesCollection}"
+                    <TextBlock
+     Margin="30,15,0,0"
+     Text="Reservation Stats" 
+     FontSize="22" 
+     Panel.ZIndex="2" 
+      Foreground="#373434"
+     FontWeight="Bold" />
+                    <wpf:CartesianChart 
+                        Margin="0,20,0,0"
+                        Height="200" Series="{Binding SeriesCollection}"
                                 >
                     <wpf:CartesianChart.AxisX>
                         <wpf:Axis  Labels="{Binding Labels}"></wpf:Axis>
