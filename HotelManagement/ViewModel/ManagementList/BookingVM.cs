@@ -3,8 +3,8 @@ using HotelManagement.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Windows;
 using CommunityToolkit.Mvvm.Input;
+using HotelManagement.CustomControls.MessageBox;
 
 namespace HotelManagement.ViewModel.ManagementList;
 
@@ -12,7 +12,7 @@ public partial class BookingList : ObservableObject
 {
     public ObservableCollection<BookingVM> List { get; set; }
 
-    [ObservableProperty] private List<string> _roomIdList;
+    [ObservableProperty] private List<RoomInfo> _roomIdList;
 
     [ObservableProperty] private List<string> _invoiceIdList;
 
@@ -31,8 +31,7 @@ public partial class BookingList : ObservableObject
     public BookingList()
     {
         List = new ObservableCollection<BookingVM>();
-        RoomIdList = new List<string>();
-        InvoiceIdList = new List<string>();
+        RoomIdList = new List<RoomInfo>();
         CustomerIdList = new List<string>();
         StaffIdList = new List<string>();
         PaymentTypeList = new List<string>();
@@ -45,7 +44,7 @@ public partial class BookingList : ObservableObject
         await Task.Delay(1000);
         await using var context = new HotelManagementContext();
 
-        var bookings = await context.Bookings.Include("Invoice").ToListAsync();
+        var bookings = await context.Bookings.Include("Invoice").Where(x => (bool)!x.Deleted).ToListAsync();
 
         foreach (var item in bookings)
         {
@@ -53,7 +52,14 @@ public partial class BookingList : ObservableObject
             {
                 BookingID = item.BookingId,
                 InvoiceID = item.InvoiceId,
-                RoomID = item.RoomId,
+                RoomItem = new RoomInfo()
+                {
+                    RoomID = item.RoomId,
+                    RoomType = (from r in context.Rooms
+                        join rt in context.RoomTypes on r.RoomTypeId equals rt.RoomTypeId
+                        where r.RoomId == item.RoomId
+                        select rt.RoomTypeName).FirstOrDefault()
+                },
                 CustomerID = item.Invoice.CustomerId,
                 StaffID = item.Invoice.StaffId,
                 GuestQuantity = item.GuestQuantity.ToString(),
@@ -66,31 +72,27 @@ public partial class BookingList : ObservableObject
         }
 
         var roomIds = await (from r in context.Rooms
-            where r.Deleted == false && r.Notes == null
+            join rt in context.RoomTypes on r.RoomTypeId equals rt.RoomTypeId
+            where r.Deleted == false && string.IsNullOrEmpty(r.Notes) && string.IsNullOrWhiteSpace(r.Notes)
             let b = from b in r.Bookings
                 where b.Deleted == false
                 select b.CheckOutDate
             where !b.Any() || b.Max() < DateTime.Now
-            select r.RoomId).Distinct().ToListAsync();
+            orderby r.RoomId
+            select new RoomInfo() { RoomID = r.RoomId, RoomType = rt.RoomTypeName }).Distinct().ToListAsync();
 
         foreach (var item in roomIds)
         {
             RoomIdList.Add(item);
         }
 
-        var invoiceIds = await context.Invoices.Select(x => x.InvoiceId).ToListAsync();
-        foreach (var item in invoiceIds)
-        {
-            InvoiceIdList.Add(item);
-        }
-
-        var customerIds = await context.Customers.Select(x => x.CustomerId).ToListAsync();
+        var customerIds = await context.Customers.OrderBy(x => x.CustomerId).Select(x => x.CustomerId).ToListAsync();
         foreach (var item in customerIds)
         {
             CustomerIdList.Add(item);
         }
 
-        var staffIds = await context.Accounts.Select(x => x.StaffId).ToListAsync();
+        var staffIds = await context.Accounts.OrderBy(x => x.StaffId).Select(x => x.StaffId).ToListAsync();
         foreach (var item in staffIds)
         {
             StaffIdList.Add(item);
@@ -109,15 +111,27 @@ public partial class BookingList : ObservableObject
 
     #region EditBooking
 
-    public void GetBookingById(string? id)
+    public async void GetBookingById(string? id)
     {
+        CurrentBooking = new BookingVM() { RoomItem = new RoomInfo() };
+
+        await using var context = new HotelManagementContext();
+
+        InvoiceIdList = new List<string>();
+
+        var invoiceIds = await context.Invoices.Select(x => x.InvoiceId).ToListAsync();
+        foreach (var item in invoiceIds)
+        {
+            InvoiceIdList.Add(item);
+        }
+
         var booking = (from b in List
             where b.BookingID == id
             select new
             {
                 b.BookingID,
                 b.InvoiceID,
-                b.RoomID,
+                b.RoomItem,
                 b.CustomerID,
                 b.StaffID,
                 b.GuestQuantity,
@@ -129,20 +143,21 @@ public partial class BookingList : ObservableObject
             }).FirstOrDefault();
 
         if (booking != null)
-            CurrentBooking = new BookingVM()
-            {
-                BookingID = booking.BookingID,
-                InvoiceID = booking.InvoiceID,
-                RoomID = booking.RoomID,
-                CustomerID = booking.CustomerID,
-                StaffID = booking.StaffID,
-                GuestQuantity = booking.GuestQuantity,
-                CheckInDate = booking.CheckInDate,
-                CheckOutDate = booking.CheckOutDate,
-                PaymentMethod = booking.PaymentMethod,
-                TotalAmount = booking.TotalAmount,
-                DepositFee = booking.DepositFee
-            };
+        {
+            CurrentBooking.BookingID = booking.BookingID;
+            CurrentBooking.InvoiceID = booking.InvoiceID;
+            CurrentBooking.RoomItem.RoomID = booking.RoomItem!.RoomID;
+            CurrentBooking.RoomItem.RoomType = booking.RoomItem.RoomType;
+
+            CurrentBooking.CustomerID = booking.CustomerID;
+            CurrentBooking.StaffID = booking.StaffID;
+            CurrentBooking.GuestQuantity = booking.GuestQuantity;
+            CurrentBooking.CheckInDate = booking.CheckInDate;
+            CurrentBooking.CheckOutDate = booking.CheckOutDate;
+            CurrentBooking.PaymentMethod = booking.PaymentMethod;
+            CurrentBooking.TotalAmount = booking.TotalAmount;
+            CurrentBooking.DepositFee = booking.DepositFee;
+        }
 
         CurrentBooking.PropertyChanged += (sender, args) => { Add_EditBookingCommand.NotifyCanExecuteChanged(); };
     }
@@ -151,13 +166,23 @@ public partial class BookingList : ObservableObject
 
     #region AddBooking
 
-    public void GenerateBookingId()
+    public async void GenerateBookingId()
     {
-        using var context = new HotelManagementContext();
-        var lastInvoice = context.Invoices.OrderByDescending(x => x.InvoiceId).FirstOrDefault();
-        var lastBooking = context.Bookings.OrderByDescending(x => x.BookingId).FirstOrDefault();
+        CurrentBooking = new BookingVM() { RoomItem = new RoomInfo() };
 
-        CurrentBooking = new BookingVM();
+        await using var context = new HotelManagementContext();
+
+        InvoiceIdList = new List<string>();
+
+        var invoiceIds = await context.Invoices.Select(x => x.InvoiceId).ToListAsync();
+        foreach (var item in invoiceIds)
+        {
+            InvoiceIdList.Add(item);
+        }
+
+        var lastInvoice = await context.Invoices.OrderByDescending(x => x.InvoiceId).FirstOrDefaultAsync();
+        var lastBooking = await context.Bookings.OrderByDescending(x => x.BookingId).FirstOrDefaultAsync();
+
         if (lastBooking != null)
         {
             string numericPart = lastBooking.BookingId.Substring(1);
@@ -193,17 +218,17 @@ public partial class BookingList : ObservableObject
     {
         return CurrentBooking is
         {
-            InvoiceID: not null, RoomID: not null, PaymentMethod: not null, CustomerID: not null, StaffID: not null,
+            InvoiceID: not null, RoomItem: not null, PaymentMethod: not null, CustomerID: not null, StaffID: not null,
             HasErrors: false
         };
     }
 
     [RelayCommand(CanExecute = nameof(CanAdd_EditBooking))]
-    private void Add_EditBooking()
+    private async Task Add_EditBooking()
     {
-        using var context = new HotelManagementContext();
-        var booking = context.Bookings.Find(CurrentBooking.BookingID);
-        var invoice = context.Invoices.Find(CurrentBooking.InvoiceID);
+        await using var context = new HotelManagementContext();
+        var booking = await context.Bookings.FindAsync(CurrentBooking.BookingID);
+        var invoice = await context.Invoices.FindAsync(CurrentBooking.InvoiceID);
 
         if (booking != null && invoice != null)
         {
@@ -222,31 +247,89 @@ public partial class BookingList : ObservableObject
 
             booking.BookingId = CurrentBooking.BookingID!;
             booking.InvoiceId = CurrentBooking.InvoiceID!;
-            booking.RoomId = CurrentBooking.RoomID!;
+            booking.RoomId = CurrentBooking.RoomItem!.RoomID!;
             booking.GuestQuantity = int.Parse(CurrentBooking.GuestQuantity!);
             booking.CheckInDate = CurrentBooking.CheckInDate;
             booking.CheckOutDate = CurrentBooking.CheckOutDate;
             booking.TotalAmount = CurrentBooking.TotalAmount;
-
             invoice.PaymentType = CurrentBooking.PaymentMethod == "Cash" ? "Cash" : "Credit card";
+
+            await context.SaveChangesAsync();
+
+            var totalAmount = await (from b in context.Bookings
+                where b.BookingId == CurrentBooking.BookingID
+                select b.TotalAmount).FirstOrDefaultAsync();
+
+            List[index].TotalAmount = totalAmount;
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Edit booking successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
         }
-        else
+        else if (booking == null && invoice != null)
         {
+            var totalAmount = CalculateTotalAmount();
+
             List.Add(new BookingVM()
             {
                 BookingID = CurrentBooking.BookingID,
                 InvoiceID = CurrentBooking.InvoiceID,
-                RoomID = CurrentBooking.RoomID,
+                RoomItem = new RoomInfo()
+                {
+                    RoomID = CurrentBooking.RoomItem!.RoomID,
+                    RoomType = CurrentBooking.RoomItem.RoomType
+                },
                 CustomerID = CurrentBooking.CustomerID,
                 StaffID = CurrentBooking.StaffID,
                 GuestQuantity = CurrentBooking.GuestQuantity,
                 CheckInDate = CurrentBooking.CheckInDate,
                 CheckOutDate = CurrentBooking.CheckOutDate,
                 PaymentMethod = CurrentBooking.PaymentMethod,
-                TotalAmount = CurrentBooking.TotalAmount
+                TotalAmount = totalAmount
             });
 
+            var bookingEntity = new Booking()
+            {
+                BookingId = CurrentBooking.BookingID!,
+                InvoiceId = CurrentBooking.InvoiceID!,
+                RoomId = CurrentBooking.RoomItem.RoomID!,
+                GuestQuantity = int.Parse(CurrentBooking.GuestQuantity!),
+                CheckInDate = CurrentBooking.CheckInDate,
+                CheckOutDate = CurrentBooking.CheckOutDate,
+                TotalAmount = CurrentBooking.TotalAmount
+            };
+
+            await context.Bookings.AddAsync(bookingEntity);
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Add booking successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+        }
+        else
+        {
             var totalAmount = CalculateTotalAmount();
+
+            List.Add(new BookingVM()
+            {
+                BookingID = CurrentBooking.BookingID,
+                InvoiceID = CurrentBooking.InvoiceID,
+                RoomItem = new RoomInfo()
+                {
+                    RoomID = CurrentBooking.RoomItem!.RoomID,
+                    RoomType = CurrentBooking.RoomItem.RoomType
+                },
+                CustomerID = CurrentBooking.CustomerID,
+                StaffID = CurrentBooking.StaffID,
+                GuestQuantity = CurrentBooking.GuestQuantity,
+                CheckInDate = CurrentBooking.CheckInDate,
+                CheckOutDate = CurrentBooking.CheckOutDate,
+                PaymentMethod = CurrentBooking.PaymentMethod,
+                TotalAmount = totalAmount
+            });
 
             var invoiceEntity = new Invoice()
             {
@@ -254,36 +337,42 @@ public partial class BookingList : ObservableObject
                 CustomerId = CurrentBooking.CustomerID!,
                 StaffId = CurrentBooking.StaffID!,
                 InvoiceDate = DateTime.Now,
-                TotalAmount = totalAmount,
+                TotalAmount = 0,
                 PaymentType = CurrentBooking.PaymentMethod == "Cash" ? "Cash" : "Credit card"
             };
 
-            context.Invoices.Add(invoiceEntity);
+            await context.Invoices.AddAsync(invoiceEntity);
 
             var bookingEntity = new Booking()
             {
                 BookingId = CurrentBooking.BookingID!,
                 InvoiceId = CurrentBooking.InvoiceID!,
-                RoomId = CurrentBooking.RoomID!,
+                RoomId = CurrentBooking.RoomItem.RoomID!,
                 GuestQuantity = int.Parse(CurrentBooking.GuestQuantity!),
                 CheckInDate = CurrentBooking.CheckInDate,
                 CheckOutDate = CurrentBooking.CheckOutDate,
                 TotalAmount = CurrentBooking.TotalAmount
             };
 
-            context.Bookings.Add(bookingEntity);
-        }
+            await context.Bookings.AddAsync(bookingEntity);
 
-        context.SaveChanges();
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Add booking successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+        }
     }
 
     private decimal CalculateTotalAmount()
     {
         using var context = new HotelManagementContext();
-        var room = context.Rooms.Find(CurrentBooking.RoomID);
+        var room = context.Rooms.Find(CurrentBooking.RoomItem!.RoomID);
         var roomType = context.RoomTypes.Find(room!.RoomTypeId);
 
-        decimal totalAmount = roomType!.RoomPrice * int.Parse(CurrentBooking.GuestQuantity!);
+        decimal totalAmount =
+            roomType!.RoomPrice * CurrentBooking.CheckOutDate!.Value.Subtract(CurrentBooking.CheckInDate!.Value).Days;
 
         return totalAmount;
     }
@@ -295,10 +384,12 @@ public partial class BookingList : ObservableObject
     [RelayCommand]
     private void Delete(string id)
     {
-        var result = MessageBox.Show("Are you sure you want to delete this booking?", "Delete Booking",
-            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Delete Booking",
+            "Are you sure you want to delete this booking?",
+            msgImage: MessageBoxImage.WARNING, msgButton: MessageBoxButton.YesNo);
 
-        if (result == MessageBoxResult.Yes)
+        if (result == MessageBoxResult.YES)
         {
             int index = -1;
             foreach (var item in List)
@@ -329,7 +420,7 @@ public partial class BookingList : ObservableObject
         #region Properties
 
         // BookingID
-        public string? BookingID { get; set; }
+        [ObservableProperty] private string? _bookingID;
 
         // InvoiceID
         private string? _invoiceID;
@@ -342,15 +433,15 @@ public partial class BookingList : ObservableObject
         }
 
         // RoomID
-        private string? _roomID;
+        private RoomInfo? _roomItem;
 
         [Required]
-        public string? RoomID
+        public RoomInfo? RoomItem
         {
-            get => _roomID;
+            get => _roomItem;
             set
             {
-                SetProperty(ref _roomID, value);
+                SetProperty(ref _roomItem, value);
                 ValidateProperty(GuestQuantity, nameof(GuestQuantity));
             }
         }
@@ -427,9 +518,8 @@ public partial class BookingList : ObservableObject
 
         // TotalAmount
         public decimal? TotalAmount { get; set; }
-        
-        [ObservableProperty]
-        private decimal? _depositFee = 0;
+
+        [ObservableProperty] private decimal? _depositFee = 0;
 
         #endregion
 
@@ -444,10 +534,10 @@ public partial class BookingList : ObservableObject
             var capacity =
                 (from room in hotelContext.Rooms
                     join roomType in hotelContext.RoomTypes on room.RoomTypeId equals roomType.RoomTypeId
-                    where room.RoomId == instance.RoomID
+                    where room.RoomId == instance.RoomItem.RoomID
                     select roomType.Capacity).FirstOrDefault();
 
-            if (instance.RoomID == null)
+            if (instance.RoomItem == null)
                 return new ValidationResult("Select Room ID before changing guest quantity!");
 
             if (string.IsNullOrEmpty(guestQuantity))
@@ -503,8 +593,8 @@ public partial class BookingList : ObservableObject
             using var context = new HotelManagementContext();
             var booking = context.Bookings.Find(BookingID);
             var invoice = context.Invoices.Find(InvoiceID);
-            
-            if(checkIn < DateTime.Now)
+
+            if (checkIn < DateTime.Now)
                 DepositFee = 0;
             else if (booking == null)
                 DepositFee = (checkIn - DateTime.Now).Value.Days / 15 * 20;
@@ -512,4 +602,10 @@ public partial class BookingList : ObservableObject
                 DepositFee = (checkIn - invoice.InvoiceDate).Value.Days / 15 * 20;
         }
     }
+}
+
+public class RoomInfo
+{
+    public string? RoomID { get; set; }
+    public string? RoomType { get; set; }
 }

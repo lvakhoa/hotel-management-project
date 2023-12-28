@@ -22,7 +22,7 @@ public partial class StaffDataGrid : UserControl
         var addStaff = new AddStaff(this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addStaff.ShowDialog();
     }
@@ -34,7 +34,7 @@ public partial class StaffDataGrid : UserControl
         var addStaff = new AddStaff(btn.Tag.ToString(), this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addStaff.ShowDialog();
     }
@@ -98,45 +98,5 @@ public partial class StaffDataGrid : UserControl
                item.Email!.ToLower().Contains(text) ||
                item.Address!.ToLower().Contains(text) ||
                item.Gender!.ToLower().Contains(text);
-    }
-
-
-    private void FilterByNumber(string text)
-    {
-        if (string.IsNullOrEmpty(text) || string.IsNullOrWhiteSpace(text)) return;
-
-        var itemSourceList = new CollectionViewSource() { Source = (DataContext as StaffList)!.List };
-
-        ICollectionView itemlist = itemSourceList.View;
-
-        var filter =
-            new Predicate<object>(item => decimal.Parse((item as StaffList.StaffVM)!.Salary!) >= decimal.Parse(text));
-
-        itemlist.Filter = filter;
-
-        DataGrid1.ItemsSource = itemlist;
-    }
-
-    private void MenuItem_OnClick(object sender, RoutedEventArgs e)
-    {
-        string result = Microsoft.VisualBasic.Interaction.InputBox("Enter some text:", "Input Dialog");
-
-        FilterByNumber(result);
-    }
-
-    private void FilterBtn_OnClick(object sender, RoutedEventArgs e)
-    {
-        FilterMenu.IsOpen = true;
-    }
-
-    private void StaffDataGrid_OnLoaded(object sender, RoutedEventArgs e)
-    {
-        if (DataGrid1 != null)
-        {
-            var columns = DataGrid1.Columns;
-
-            FilterMenu.ItemsSource = columns.Where(x => x.Header != null)
-                .Select(x => x.Header.ToString() );
-        }
     }
 }

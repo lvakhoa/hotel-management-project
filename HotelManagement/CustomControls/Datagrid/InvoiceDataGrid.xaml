@@ -95,7 +95,7 @@
                                                Padding="5" Background="#D9D9D9"
                                                MouseOverBackground="#DFDFDF" PressedBackground="#D9D9D9" 
                                                Command="{Binding ElementName=DatagridView, Path=DataContext.DeleteCommand}"
-                                               CommandParameter="{Binding ID}"
+                                               CommandParameter="{Binding InvoiceID}"
                                                ToolTip="Click here to delete invoice"
                                                ToolTipService.InitialShowDelay="500"/>
                                 </StackPanel>

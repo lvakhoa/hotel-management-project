@@ -2,15 +2,15 @@
 using HotelManagement.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
-using System.Windows;
 using CommunityToolkit.Mvvm.Input;
+using HotelManagement.CustomControls.MessageBox;
 
 namespace HotelManagement.ViewModel.ManagementList;
 
 public partial class InvoiceList : ObservableObject
 {
     public ObservableCollection<InvoiceVM> List { get; set; }
-    
+
     [ObservableProperty] private InvoiceVM _currentInvoice;
 
     [ObservableProperty] private bool _isLoading;
@@ -29,15 +29,16 @@ public partial class InvoiceList : ObservableObject
         await using var context = new HotelManagementContext();
 
         var invoices = await (from invoice in context.Invoices
-                              select new
-                              {
-                                  invoice.InvoiceId,
-                                  invoice.CustomerId,
-                                  invoice.StaffId,
-                                  invoice.InvoiceDate,
-                                  invoice.TotalAmount,
-                                  invoice.PaymentType
-                              }).ToListAsync();
+            where invoice.Deleted == false
+            select new
+            {
+                invoice.InvoiceId,
+                invoice.CustomerId,
+                invoice.StaffId,
+                invoice.InvoiceDate,
+                invoice.TotalAmount,
+                invoice.PaymentType
+            }).ToListAsync();
 
         foreach (var item in invoices)
         {
@@ -54,7 +55,7 @@ public partial class InvoiceList : ObservableObject
 
         IsLoading = false;
     }
-    
+
     #region EditRoomType
 
     public void GetInvoiceById(string? id)
@@ -70,7 +71,7 @@ public partial class InvoiceList : ObservableObject
                 i.TotalAmount,
                 i.PaymentType,
             }).FirstOrDefault();
-        
+
         CurrentInvoice = new InvoiceVM()
         {
             InvoiceID = invoice.InvoiceID,
@@ -81,20 +82,23 @@ public partial class InvoiceList : ObservableObject
             PaymentType = invoice.PaymentType,
         };
     }
+
     #endregion
-    
+
     #region Delete Command
 
     [RelayCommand]
     private void Delete(string id)
     {
-        var result = MessageBox.Show("Are you sure you want to delete this invoice?", "Delete Invoice",
-            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Delete Invoice",
+            "Are you sure you want to delete this invoice?",
+            msgImage: MessageBoxImage.WARNING, msgButton: MessageBoxButton.YesNo);
 
-        if (result == MessageBoxResult.Yes)
+        if (result == MessageBoxResult.YES)
         {
             int index = -1;
-            foreach(var item in List)
+            foreach (var item in List)
             {
                 if (item.InvoiceID == id)
                 {
@@ -102,18 +106,19 @@ public partial class InvoiceList : ObservableObject
                     break;
                 }
             }
-            
-            if(index != -1)
+
+            if (index != -1)
                 List.RemoveAt(index);
-            
+
             using var context = new HotelManagementContext();
             var invoice = context.Invoices.Find(id);
-            
+
             invoice!.Deleted = true;
             invoice.DeletedDate = DateTime.Now;
             context.SaveChanges();
         }
     }
+
     #endregion
 
     public class InvoiceVM
@@ -127,6 +132,5 @@ public partial class InvoiceList : ObservableObject
         public DateTime InvoiceDate { get; set; }
         public decimal? TotalAmount { get; set; }
         public string? PaymentType { get; set; }
-
     }
 }

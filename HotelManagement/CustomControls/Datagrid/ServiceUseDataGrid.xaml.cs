@@ -21,7 +21,7 @@ public partial class ServiceUseDataGrid : UserControl
         var addServiceUse = new AddServiceUse(this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addServiceUse.ShowDialog();
     }
@@ -33,7 +33,7 @@ public partial class ServiceUseDataGrid : UserControl
         var addServiceUse = new AddServiceUse(btn.Tag.ToString(), btn.Uid ,this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addServiceUse.ShowDialog();
     }
@@ -91,6 +91,6 @@ public partial class ServiceUseDataGrid : UserControl
     {
         var item = (ServiceUseList.ServiceUseVM)obj;
         return item.InvoiceId!.ToLower().Contains(text) ||
-               item.ServiceId!.ToLower().Contains(text);
+               item.ServiceItem!.ServiceId.ToLower().Contains(text);
     }
 }

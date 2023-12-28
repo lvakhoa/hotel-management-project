@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Windows;
 using CommunityToolkit.Mvvm.Input;
+using HotelManagement.CustomControls.MessageBox;
 
 namespace HotelManagement.ViewModel.ManagementList;
 
@@ -24,7 +24,7 @@ public partial class ServiceList : ObservableObject
     public ServiceList()
     {
         List = new ObservableCollection<ServiceVM>();
-        
+
         ServiceTypeList = new List<string>();
         GetServiceList();
     }
@@ -44,7 +44,7 @@ public partial class ServiceList : ObservableObject
                 service.ServiceType,
                 service.ServicePrice
             }).ToListAsync();
-        
+
         foreach (var item in services)
         {
             List.Add(new ServiceVM()
@@ -66,8 +66,9 @@ public partial class ServiceList : ObservableObject
     }
 
     #endregion
-    
+
     #region EditService
+
     public void GetServiceById(string? id)
     {
         var service = (from s in List
@@ -79,7 +80,7 @@ public partial class ServiceList : ObservableObject
                 s.ServiceType,
                 s.ServicePrice
             }).FirstOrDefault();
-        
+
         if (service != null)
             CurrentService = new ServiceVM()
             {
@@ -88,19 +89,21 @@ public partial class ServiceList : ObservableObject
                 ServiceType = service.ServiceType,
                 ServicePrice = service.ServicePrice
             };
-        
+
         CurrentService.PropertyChanged += (e, args) => { Add_EditServiceCommand.NotifyCanExecuteChanged(); };
     }
+
     #endregion
-    
+
     #region AddService
+
     public void GenerateServiceId()
     {
         using var context = new HotelManagementContext();
         var lastService = context.Services.OrderByDescending(x => x.ServiceId).FirstOrDefault();
 
         CurrentService = new ServiceVM();
-        if(lastService != null)
+        if (lastService != null)
         {
             string numericPart = lastService.ServiceId.Substring(1);
             int numericVal = int.Parse(numericPart) + 1;
@@ -110,13 +113,14 @@ public partial class ServiceList : ObservableObject
         {
             CurrentService.ID = "S0001";
         }
-        
+
         CurrentService.PropertyChanged += (e, args) => { Add_EditServiceCommand.NotifyCanExecuteChanged(); };
     }
+
     #endregion
-    
+
     #region Add_Edit Command
-    
+
     private bool CanAdd_EditService()
     {
         return CurrentService is
@@ -127,12 +131,12 @@ public partial class ServiceList : ObservableObject
             HasErrors: false
         };
     }
-    
+
     [RelayCommand(CanExecute = nameof(CanAdd_EditService))]
-    private void Add_EditService()
+    private async Task Add_EditService()
     {
-        using var context = new HotelManagementContext();
-        var service = context.Services.Find(CurrentService.ID);
+        await using var context = new HotelManagementContext();
+        var service = await context.Services.FindAsync(CurrentService.ID);
 
         if (service != null)
         {
@@ -145,14 +149,21 @@ public partial class ServiceList : ObservableObject
                     break;
                 }
             }
-            
-            if(index != -1)
+
+            if (index != -1)
                 List[index] = CurrentService;
-            
+
             service.ServiceId = CurrentService.ID!;
             service.ServiceName = CurrentService.ServiceName!;
             service.ServiceType = CurrentService.ServiceType!;
             service.ServicePrice = decimal.Parse(CurrentService.ServicePrice);
+            
+            await context.SaveChangesAsync();
+
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Edit service successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
         }
         else
         {
@@ -171,23 +182,32 @@ public partial class ServiceList : ObservableObject
                 ServiceType = CurrentService.ServiceType!,
                 ServicePrice = decimal.Parse(CurrentService.ServicePrice)
             };
+
+            await context.Services.AddAsync(entity);
             
-            context.Services.Add(entity);
+            await context.SaveChangesAsync();
+
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Add service successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
         }
-        
-        context.SaveChanges();
+
     }
+
     #endregion
-    
+
     #region Delete Command
 
     [RelayCommand]
     private void Delete(string id)
     {
-        var result = MessageBox.Show("Are you sure you want to delete this service?", "Delete Service",
-            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Delete Service",
+            "Are you sure you want to delete this service?",
+            msgImage: MessageBoxImage.WARNING, msgButton: MessageBoxButton.YesNo);
 
-        if (result == MessageBoxResult.Yes)
+        if (result == MessageBoxResult.YES)
         {
             int index = -1;
             foreach (var item in List)
@@ -198,40 +218,44 @@ public partial class ServiceList : ObservableObject
                     break;
                 }
             }
-            
-            if(index != -1)
+
+            if (index != -1)
                 List.RemoveAt(index);
-            
+
             using var context = new HotelManagementContext();
             var service = context.Services.Find(id);
-            
+
             service.Deleted = true;
             service.DeletedDate = DateTime.Now;
             context.SaveChanges();
         }
     }
+
     #endregion
 
     public partial class ServiceVM : ObservableValidator
     {
+        #region Properties
         public string? ID { get; set; }
 
-        [ObservableProperty] 
-        [NotifyDataErrorInfo] 
+        [ObservableProperty]
+        [NotifyDataErrorInfo]
         [Required(ErrorMessage = "Service name is required")]
+        [CustomValidation(typeof(ServiceVM), "ValidateServiceName")]
         private string? _serviceName;
 
-        [ObservableProperty] 
-        [NotifyDataErrorInfo] 
-        [Required]
+        [ObservableProperty] [NotifyDataErrorInfo] [Required]
         private string? _serviceType;
-        
+
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = "Service price is required")]
         [CustomValidation(typeof(ServiceVM), "ValidatePrice")]
         private string? _servicePrice;
         
+        #endregion
+        
+        #region Custom Validation
         public static ValidationResult ValidatePrice(string? price, ValidationContext context)
         {
             using var hotelContext = new HotelManagementContext();
@@ -244,5 +268,19 @@ public partial class ServiceList : ObservableObject
 
             return ValidationResult.Success!;
         }
+
+        public static ValidationResult ValidateServiceName(string? serviceName, ValidationContext context)
+        {
+            var instance = context.ObjectInstance as ServiceVM;
+            using var hotelContext = new HotelManagementContext();
+
+            return Enumerable.Any(hotelContext.Services,
+                item =>
+                    string.Equals(item.ServiceName, serviceName?.Trim(), StringComparison.CurrentCultureIgnoreCase) &&
+                    item.ServiceId != instance.ID)
+                ? new ValidationResult("Service name already exists")
+                : ValidationResult.Success!;
+        }
+        #endregion
     }
 }

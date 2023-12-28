@@ -21,7 +21,7 @@ public partial class RoomDataGrid : UserControl
         var addRoom = new AddRoom(this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addRoom.ShowDialog();
     }
@@ -33,7 +33,7 @@ public partial class RoomDataGrid : UserControl
         var addRoom = new AddRoom(btn.Tag.ToString(), this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addRoom.ShowDialog();
     }

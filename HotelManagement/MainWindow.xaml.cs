@@ -34,12 +34,14 @@ public partial class MainWindow : Window
     private void LogoutBtn_OnChecked(object sender, RoutedEventArgs e)
     {
         var loginView = new LoginView();
+        App.ActivatedWindow = loginView;
         loginView.Show();
         loginView.IsVisibleChanged += (s, ev) =>
         {
             if (loginView.IsVisible == false && loginView.IsLoaded)
             {
                 var mainView = new MainWindow();
+                App.ActivatedWindow = mainView;
                 mainView.Show();
                 loginView.Close();
             }

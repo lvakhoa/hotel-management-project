@@ -38,7 +38,7 @@
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="30,0">
                     <ui:SymbolIcon Symbol="PeopleAdd16" FontSize="40" Margin="0,0,10,0" />
                     <TextBlock VerticalAlignment="Center"
-                               FontSize="24" FontWeight="Bold" Text="Add Customer" />
+                               FontSize="24" FontWeight="Bold" Text="Add/Edit Customer" />
                 </StackPanel>
 
                 <ui:Button Grid.Column="1"

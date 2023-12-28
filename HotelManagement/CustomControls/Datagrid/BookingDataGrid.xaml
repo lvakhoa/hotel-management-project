@@ -133,7 +133,7 @@
 
                     <DataGridTextColumn Header="Invoice ID" Binding="{Binding InvoiceID, ValidatesOnDataErrors=False}" />
 
-                    <DataGridTextColumn Header="Room ID" Binding="{Binding RoomID, ValidatesOnDataErrors=False}" />
+                    <DataGridTextColumn Header="Room ID" Binding="{Binding RoomItem.RoomID, ValidatesOnDataErrors=False}" />
 
                     <DataGridTextColumn Header="Guest Quantity"
                                         Binding="{Binding GuestQuantity, ValidatesOnDataErrors=False}" />

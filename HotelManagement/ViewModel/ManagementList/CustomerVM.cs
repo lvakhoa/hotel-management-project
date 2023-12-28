@@ -3,8 +3,8 @@ using HotelManagement.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Windows;
 using CommunityToolkit.Mvvm.Input;
+using HotelManagement.CustomControls.MessageBox;
 
 namespace HotelManagement.ViewModel.ManagementList;
 
@@ -13,7 +13,7 @@ public partial class CustomerList : ObservableObject
     public ObservableCollection<CustomerVM> List { get; set; }
 
     [ObservableProperty] private bool _isLoading;
-    
+
     [ObservableProperty] private List<string> _genderList;
 
     [ObservableProperty] private CustomerVM _currentCustomer;
@@ -63,7 +63,7 @@ public partial class CustomerList : ObservableObject
         }
 
         IsLoading = false;
-        
+
         GenderList.Add("male");
         GenderList.Add("female");
     }
@@ -76,14 +76,14 @@ public partial class CustomerList : ObservableObject
     {
         using var context = new HotelManagementContext();
         var customer = (from c in List where c.ID == id select c).FirstOrDefault();
-        
+
         CurrentCustomer = new CustomerVM()
         {
             ID = customer.ID, FullName = customer.FullName,
             ContactNumber = customer.ContactNumber, Email = customer.Email, Address = customer.Address,
             Gender = customer.Gender, CreditCard = customer.CreditCard, ProofID = customer.ProofID
         };
-        
+
         CurrentCustomer.PropertyChanged += (sender, args) => { Add_EditCustomerCommand.NotifyCanExecuteChanged(); };
     }
 
@@ -114,7 +114,7 @@ public partial class CustomerList : ObservableObject
     #endregion
 
     #region Add_Edit Command
-    
+
     private bool CanAdd_EditCustomer()
     {
         return CurrentCustomer is
@@ -131,10 +131,10 @@ public partial class CustomerList : ObservableObject
     }
 
     [RelayCommand(CanExecute = nameof(CanAdd_EditCustomer))]
-    private void Add_EditCustomer()
+    private async Task Add_EditCustomer()
     {
-        using var context = new HotelManagementContext();
-        var customer = context.Customers.Find(CurrentCustomer.ID);
+        await using var context = new HotelManagementContext();
+        var customer = await context.Customers.FindAsync(CurrentCustomer.ID);
         if (customer != null)
         {
             int index = -1;
@@ -158,6 +158,12 @@ public partial class CustomerList : ObservableObject
             customer.Gender = CurrentCustomer.Gender;
             customer.CreditCard = CurrentCustomer.CreditCard;
             customer.IdProof = CurrentCustomer.ProofID;
+
+            await context.SaveChangesAsync();
+
+            MessageBox.Show(
+                App.ActivatedWindow, "Success", "Edit customer successfully",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
         }
         else
         {
@@ -182,10 +188,15 @@ public partial class CustomerList : ObservableObject
                 IdProof = CurrentCustomer.ProofID
             };
 
-            context.Customers.Add(entity);
-        }
+            await context.Customers.AddAsync(entity);
 
-        context.SaveChanges();
+            await context.SaveChangesAsync();
+
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Add customer successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+        }
     }
 
     #endregion
@@ -195,10 +206,12 @@ public partial class CustomerList : ObservableObject
     [RelayCommand]
     private void Delete(string id)
     {
-        var result = MessageBox.Show("Are you sure you want to delete this customer?", "Delete Customer",
-            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Delete Customer",
+            "Are you sure you want to delete this customer?",
+            msgImage: MessageBoxImage.WARNING, msgButton: MessageBoxButton.YesNo);
 
-        if (result == MessageBoxResult.Yes)
+        if (result == MessageBoxResult.YES)
         {
             int index = -1;
             foreach (var item in List)
@@ -227,53 +240,103 @@ public partial class CustomerList : ObservableObject
     public partial class CustomerVM : ObservableValidator
     {
         #region Properties
-        
+
         // ID
         public string? ID { get; set; }
 
         // FullName
-        [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [Required (ErrorMessage = "Full Name is required")]
+        [ObservableProperty] [NotifyDataErrorInfo] [Required(ErrorMessage = "Full Name is required")]
         private string? _fullName;
-        
+
         // ContactNumber
         [ObservableProperty]
         [NotifyDataErrorInfo]
-        [Required (ErrorMessage = "Phone Number is required")]
-        [Phone(ErrorMessage = "Invalid Phone Number")]
+        [Required(ErrorMessage = "Contact Number is required")]
+        [Phone(ErrorMessage = "Invalid Contact Number")]
+        [CustomValidation(typeof(CustomerVM), "ValidateContactNumber")]
         private string? _contactNumber;
-        
+
         // Email
-        [ObservableProperty] 
-        [NotifyDataErrorInfo] 
-        [Required (ErrorMessage = "Email is required")] 
+        [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [CustomValidation(typeof(CustomerVM), "ValidateEmail")]
         private string? _email;
 
         // Address
-        [ObservableProperty] 
-        [NotifyDataErrorInfo] 
-        [Required (ErrorMessage = "Address is required")]
+        [ObservableProperty] [NotifyDataErrorInfo] [Required(ErrorMessage = "Address is required")]
         private string? _address;
 
         // Gender
-        [ObservableProperty] 
-        [Required] 
-        private string? _gender;
+        [ObservableProperty] [Required] private string? _gender;
 
         // CreditCard
-        [ObservableProperty] 
-        [NotifyDataErrorInfo] 
-        [Required (ErrorMessage = "Credit Card is required")]
+        [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required(ErrorMessage = "Credit Card is required")]
         [RegularExpression(@"^\d{4}-\d{4}-\d{4}-\d{4}$", ErrorMessage = "Valid Proof ID format is xxxx-xxxx-xxxx-xxxx")]
+        [CustomValidation(typeof(CustomerVM), "ValidateCreditCard")]
         private string? _creditCard;
 
         // ProofID
-        [ObservableProperty] 
+        [ObservableProperty]
         [NotifyDataErrorInfo]
-        [Required (ErrorMessage = "Proof ID is required")]
+        [Required(ErrorMessage = "Proof ID is required")]
+        [CustomValidation(typeof(CustomerVM), "ValidateProofId")]
         private string? _proofID;
+
+        #endregion
+
+        #region Custom Validation
+
+        public static ValidationResult ValidateContactNumber(string? contactNumber, ValidationContext context)
+        {
+            var instance = context.ObjectInstance as CustomerVM;
+            using var hotelContext = new HotelManagementContext();
+
+            return Enumerable.Any(hotelContext.Customers,
+                item => string.Equals(item.ContactNumber, contactNumber?.Trim(),
+                    StringComparison.CurrentCultureIgnoreCase) && item.CustomerId != instance.ID)
+                ? new ValidationResult("Contact Number already exists")
+                : ValidationResult.Success!;
+        }
+
+        public static ValidationResult ValidateEmail(string? email, ValidationContext context)
+        {
+            var instance = context.ObjectInstance as CustomerVM;
+            using var hotelContext = new HotelManagementContext();
+
+            return Enumerable.Any(hotelContext.Customers,
+                item => string.Equals(item.Email, email?.Trim(), StringComparison.CurrentCultureIgnoreCase) &&
+                        item.CustomerId != instance.ID)
+                ? new ValidationResult("Email already exists")
+                : ValidationResult.Success!;
+        }
+
+        public static ValidationResult ValidateCreditCard(string? creditCard, ValidationContext context)
+        {
+            var instance = context.ObjectInstance as CustomerVM;
+            using var hotelContext = new HotelManagementContext();
+
+            return Enumerable.Any(hotelContext.Customers,
+                item => string.Equals(item.CreditCard, creditCard?.Trim(), StringComparison.CurrentCultureIgnoreCase) &&
+                        item.CustomerId != instance.ID)
+                ? new ValidationResult("Credit Card already exists")
+                : ValidationResult.Success!;
+        }
+
+        public static ValidationResult ValidateProofId(string? proofID, ValidationContext context)
+        {
+            var instance = context.ObjectInstance as CustomerVM;
+            using var hotelContext = new HotelManagementContext();
+
+            return Enumerable.Any(hotelContext.Customers,
+                item => string.Equals(item.IdProof, proofID?.Trim(), StringComparison.CurrentCultureIgnoreCase) &&
+                        item.CustomerId != instance.ID)
+                ? new ValidationResult("Proof ID already exists")
+                : ValidationResult.Success!;
+        }
 
         #endregion
     }

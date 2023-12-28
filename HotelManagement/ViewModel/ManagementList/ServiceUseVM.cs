@@ -3,8 +3,8 @@ using HotelManagement.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Windows;
 using CommunityToolkit.Mvvm.Input;
+using HotelManagement.CustomControls.MessageBox;
 
 namespace HotelManagement.ViewModel.ManagementList;
 
@@ -18,7 +18,7 @@ public partial class ServiceUseList : ObservableObject
 
     [ObservableProperty] private List<string> _invoiceIdList;
 
-    [ObservableProperty] private List<string> _serviceIdList;
+    [ObservableProperty] private List<ServiceInfo> _serviceIdList;
 
     #region Constructor
 
@@ -27,7 +27,7 @@ public partial class ServiceUseList : ObservableObject
         GetServiceUseList();
 
         InvoiceIdList = new List<string>();
-        ServiceIdList = new List<string>();
+        ServiceIdList = new List<ServiceInfo>();
     }
 
     private async void GetServiceUseList()
@@ -39,11 +39,13 @@ public partial class ServiceUseList : ObservableObject
         await using var context = new HotelManagementContext();
 
         var serviceUses = await (from serviceUse in context.ServiceUses
+                join service in context.Services on serviceUse.ServiceId equals service.ServiceId
                 where serviceUse.Deleted == false
                 select new
                 {
                     serviceUse.InvoiceId,
                     serviceUse.ServiceId,
+                    service.ServiceName,
                     serviceUse.ServiceQuantity,
                     serviceUse.TotalAmount
                 }
@@ -54,7 +56,11 @@ public partial class ServiceUseList : ObservableObject
             List.Add(new ServiceUseVM()
             {
                 InvoiceId = item.InvoiceId,
-                ServiceId = item.ServiceId,
+                ServiceItem = new ServiceInfo()
+                {
+                    ServiceId = item.ServiceId,
+                    ServiceName = item.ServiceName
+                },
                 ServiceQuantity = item.ServiceQuantity.ToString(),
                 TotalAmount = item.TotalAmount,
             });
@@ -64,11 +70,14 @@ public partial class ServiceUseList : ObservableObject
 
         InvoiceIdList = await (from invoice in context.Invoices
             where invoice.Deleted == false
+            orderby invoice.InvoiceId
             select invoice.InvoiceId).ToListAsync();
 
         ServiceIdList = await (from service in context.Services
-            where service.Deleted == false
-            select service.ServiceId).ToListAsync();
+                where service.Deleted == false
+                orderby service.ServiceId
+                select new ServiceInfo() { ServiceId = service.ServiceId, ServiceName = service.ServiceName })
+            .ToListAsync();
     }
 
     #endregion
@@ -77,7 +86,7 @@ public partial class ServiceUseList : ObservableObject
 
     public void AddServiceUse()
     {
-        CurrentServiceUse = new ServiceUseVM();
+        CurrentServiceUse = new ServiceUseVM() {ServiceItem = new ServiceInfo()};
         CurrentServiceUse.PropertyChanged += (_, _) => Add_EditServiceUseCommand.NotifyCanExecuteChanged();
     }
 
@@ -88,13 +97,17 @@ public partial class ServiceUseList : ObservableObject
     public void GetServiceUseById(string serviceId, string invoiceId)
     {
         using var context = new HotelManagementContext();
-        var serviceUse = (from s in List where s.InvoiceId == invoiceId && s.ServiceId == serviceId select s)
+        var serviceUse = (from s in List where s.InvoiceId == invoiceId && s.ServiceItem.ServiceId == serviceId select s)
             .FirstOrDefault();
 
         CurrentServiceUse = new ServiceUseVM()
         {
             InvoiceId = serviceUse.InvoiceId,
-            ServiceId = serviceUse.ServiceId,
+            ServiceItem = new ServiceInfo()
+            {
+                ServiceId = serviceUse.ServiceItem.ServiceId,
+                ServiceName = serviceUse.ServiceItem.ServiceName
+            },
             ServiceQuantity = serviceUse.ServiceQuantity,
             TotalAmount = serviceUse.TotalAmount
         };
@@ -111,7 +124,7 @@ public partial class ServiceUseList : ObservableObject
         return CurrentServiceUse is
         {
             InvoiceId: not null,
-            ServiceId: not null,
+            ServiceItem: not null,
             ServiceQuantity: not null,
             HasErrors: false
         };
@@ -121,7 +134,7 @@ public partial class ServiceUseList : ObservableObject
     private async Task Add_EditServiceUse()
     {
         await using var context = new HotelManagementContext();
-        var serviceUse = await context.ServiceUses.FindAsync(CurrentServiceUse.InvoiceId, CurrentServiceUse.ServiceId);
+        var serviceUse = await context.ServiceUses.FindAsync(CurrentServiceUse.InvoiceId, CurrentServiceUse.ServiceItem!.ServiceId);
 
         if (serviceUse != null)
         {
@@ -129,7 +142,7 @@ public partial class ServiceUseList : ObservableObject
             foreach (var item in List)
             {
                 if (item.InvoiceId == CurrentServiceUse.InvoiceId &&
-                    item.ServiceId == CurrentServiceUse.ServiceId)
+                    item.ServiceItem!.ServiceId == CurrentServiceUse.ServiceItem!.ServiceId)
                 {
                     index = List.IndexOf(item);
                     break;
@@ -137,21 +150,40 @@ public partial class ServiceUseList : ObservableObject
             }
 
             if (index != -1)
+            {
                 List[index] = CurrentServiceUse;
+            }
 
             serviceUse.InvoiceId = CurrentServiceUse.InvoiceId!;
-            serviceUse.ServiceId = CurrentServiceUse.ServiceId!;
+            serviceUse.ServiceId = CurrentServiceUse.ServiceItem.ServiceId!;
             serviceUse.ServiceQuantity = int.Parse(CurrentServiceUse.ServiceQuantity!);
             serviceUse.TotalAmount = CurrentServiceUse.TotalAmount;
 
             context.ServiceUses.Update(serviceUse);
+            
+            await context.SaveChangesAsync();
+            
+            var totalAmount = await (from s in context.ServiceUses
+                where s.ServiceId == CurrentServiceUse.ServiceItem.ServiceId && s.InvoiceId == CurrentServiceUse.InvoiceId
+                select s.TotalAmount).FirstOrDefaultAsync();
+            
+            List[index].TotalAmount = totalAmount;
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Edit service use successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
         }
         else
         {
             List.Add(new ServiceUseVM()
             {
                 InvoiceId = CurrentServiceUse.InvoiceId,
-                ServiceId = CurrentServiceUse.ServiceId,
+                ServiceItem = new ServiceInfo()
+                {
+                    ServiceId = CurrentServiceUse.ServiceItem.ServiceId,
+                    ServiceName = CurrentServiceUse.ServiceItem.ServiceName
+                },
                 ServiceQuantity = CurrentServiceUse.ServiceQuantity,
                 TotalAmount = CurrentServiceUse.TotalAmount
             });
@@ -159,15 +191,27 @@ public partial class ServiceUseList : ObservableObject
             var entity = new ServiceUse()
             {
                 InvoiceId = CurrentServiceUse.InvoiceId!,
-                ServiceId = CurrentServiceUse.ServiceId!,
+                ServiceId = CurrentServiceUse.ServiceItem!.ServiceId,
                 ServiceQuantity = int.Parse(CurrentServiceUse.ServiceQuantity!),
                 TotalAmount = CurrentServiceUse.TotalAmount
             };
 
             await context.ServiceUses.AddAsync(entity);
+            
+            await context.SaveChangesAsync();
+            
+            var totalAmount = await (from s in context.ServiceUses
+                where s.ServiceId == CurrentServiceUse.ServiceItem.ServiceId && s.InvoiceId == CurrentServiceUse.InvoiceId
+                select s.TotalAmount).FirstOrDefaultAsync();
+            
+            List[^1].TotalAmount = totalAmount;
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Add service use successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+            
         }
-
-        await context.SaveChangesAsync();
     }
 
     #endregion
@@ -181,15 +225,17 @@ public partial class ServiceUseList : ObservableObject
         var serviceId = (string)param.Item1;
         var invoiceId = (string)param.Item2;
 
-        var result = MessageBox.Show("Are you sure you want to delete this service use?", "Delete Service Use",
-            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Delete Service Use",
+            "Are you sure you want to delete this service use?",
+            msgImage: MessageBoxImage.WARNING, msgButton: MessageBoxButton.YesNo);
 
-        if (result == MessageBoxResult.Yes)
+        if (result == MessageBoxResult.YES)
         {
             int index = -1;
             foreach (var item in List)
             {
-                if (item.InvoiceId == invoiceId && item.ServiceId == serviceId)
+                if (item.InvoiceId == invoiceId && item.ServiceItem!.ServiceId == serviceId)
                 {
                     index = List.IndexOf(item);
                     break;
@@ -212,19 +258,25 @@ public partial class ServiceUseList : ObservableObject
 
     public partial class ServiceUseVM : ObservableValidator
     {
+        #region Properties
+        
         [ObservableProperty] [NotifyDataErrorInfo] [Required]
         private string? _invoiceId;
 
         [ObservableProperty] [NotifyDataErrorInfo] [Required]
-        private string? _serviceId;
-
+        private ServiceInfo _serviceItem;
+        
         [ObservableProperty]
         [NotifyDataErrorInfo]
-        [Required (ErrorMessage = "Service quantity is required")]
+        [Required(ErrorMessage = "Service quantity is required")]
         [CustomValidation(typeof(ServiceUseVM), nameof(ValidateQuantity))]
         private string? _serviceQuantity;
 
-        public decimal? TotalAmount { get; set; }
+        [ObservableProperty] private decimal? _totalAmount;
+        
+        #endregion
+        
+        #region Custom Validation
 
         public static ValidationResult ValidateQuantity(string? quantity, ValidationContext context)
         {
@@ -235,11 +287,19 @@ public partial class ServiceUseList : ObservableObject
 
             if (!int.TryParse(quantity, out _))
                 return new ValidationResult("Service quantity must be a number!");
-            
+
             if (int.Parse(quantity) <= 0)
                 return new ValidationResult("Service quantity must be greater than 0!");
 
             return ValidationResult.Success!;
         }
+        
+        #endregion
     }
+}
+
+public class ServiceInfo
+{
+    public string? ServiceId { get; set; }
+    public string? ServiceName { get; set; }
 }

@@ -45,24 +45,6 @@
                            Margin="10,0,10,0"
                            Click="SearchBtn_OnClick" />
                 
-                <ui:Button Background="Transparent" Foreground="#4F4A4A"
-                           Width="40" Height="40" BorderThickness="2"
-                           Icon="Filter12" FontSize="26" Click="FilterBtn_OnClick"
-                           ToolTip="Click here to filter" ToolTipService.InitialShowDelay="500">
-                    <ui:Button.ContextMenu>
-                        <ContextMenu x:Name="FilterMenu">
-                            <!-- <MenuItem Header="Number Filters"> -->
-                            <!--     <MenuItem Header="Greater Than Or Equal To"/> -->
-                            <!--     <M enuItem Header="Less Than" /> -->
-                            <!-- </MenuItem> -->
-                            <!-- <MenuItem Header="Text Filters"> -->
-                            <!--     <MenuItem Header="Begins With" /> -->
-                            <!--     <MenuItem Header="Ends With" /> -->
-                            <!-- </MenuItem> -->
-                        </ContextMenu>
-                    </ui:Button.ContextMenu>
-                </ui:Button>
-                
                 
             </StackPanel>
 
@@ -94,8 +76,7 @@
                          ItemsSource="{Binding List}" GridLinesVisibility="Horizontal"
                          CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False"
                          IsReadOnly="True" FrozenColumnCount="1"
-                         Visibility="{Binding Path=IsLoading, Converter={StaticResource InvertVisibilityConverter}}"
-                         Loaded="StaffDataGrid_OnLoaded">
+                         Visibility="{Binding Path=IsLoading, Converter={StaticResource InvertVisibilityConverter}}">
 
                 <ui:DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}">

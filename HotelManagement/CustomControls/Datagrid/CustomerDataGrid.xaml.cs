@@ -21,7 +21,7 @@ public partial class CustomerDataGrid : UserControl
         var addCustomer = new AddCustomer(this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addCustomer.ShowDialog();
     }
@@ -33,7 +33,7 @@ public partial class CustomerDataGrid : UserControl
         var addCustomer = new AddCustomer(btn.Tag.ToString(), this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addCustomer.ShowDialog();
     }

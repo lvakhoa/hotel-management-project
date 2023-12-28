@@ -50,7 +50,7 @@
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Text" Value="{Binding ElementName=_usernamebox, Path=Text}" />
+            <Setter Property="Text" Value="{Binding ElementName=_usernamebox, Path=Text, UpdateSourceTrigger=PropertyChanged}" />
 
             <Style.Triggers>
                 <DataTrigger Binding="{Binding FontSize, ElementName=titleusername}"

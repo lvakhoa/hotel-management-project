@@ -21,7 +21,7 @@ public partial class BookingDataGrid : UserControl
         var addBooking = new AddBooking(this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addBooking.ShowDialog();
     }
@@ -33,7 +33,7 @@ public partial class BookingDataGrid : UserControl
         var addBooking = new AddBooking(btn.Tag.ToString(), this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true,
+            Owner = Window.GetWindow(this),
         };
         addBooking.ShowDialog();
     }
@@ -92,6 +92,6 @@ public partial class BookingDataGrid : UserControl
         var item = (BookingList.BookingVM)obj;
         return item.BookingID!.ToLower().Contains(text) ||
                item.InvoiceID!.ToLower().Contains(text) ||
-               item.RoomID!.ToLower().Contains(text);
+               item.RoomItem!.RoomID!.ToLower().Contains(text);
     }
 }

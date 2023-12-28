@@ -21,7 +21,7 @@ public partial class ServiceDataGrid : UserControl
         var addService = new AddService(this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addService.ShowDialog();
     }
@@ -33,7 +33,7 @@ public partial class ServiceDataGrid : UserControl
         var addService = new AddService(btn.Tag.ToString(), this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addService.ShowDialog();
     }

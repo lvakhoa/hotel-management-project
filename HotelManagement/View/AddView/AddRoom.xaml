@@ -33,7 +33,7 @@
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="30,0">
                     <ui:SymbolIcon Symbol="ConferenceRoom16" FontSize="40" Margin="0,0,10,0" />
                     <TextBlock VerticalAlignment="Center"
-                               FontSize="24" FontWeight="Bold" Text="Add Room" />
+                               FontSize="24" FontWeight="Bold" Text="Add/Edit Room" />
                 </StackPanel>
 
                 <ui:Button Grid.Column="1"
