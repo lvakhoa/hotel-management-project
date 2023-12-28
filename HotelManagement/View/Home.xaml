@@ -7,7 +7,7 @@
 xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel="clr-namespace:HotelManagement.ViewModel"
              xmlns:uti="clr-namespace:HotelManagement.Utilities" xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d"
-  d:DesignHeight="638" d:DesignWidth="1010"
+  d:DesignHeight="630" d:DesignWidth="1010"
   Background="Transparent" Width="1010" Height="638" >
 
 
@@ -21,6 +21,7 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
 
 
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <!-- Độ cao tự động cho phần Overview -->
@@ -30,9 +31,7 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
 
         
         <Grid Background="#FFF" Margin="0,-4,0,4" Grid.Row="0">
-            <fa:ImageAwesome Icon="Spinner" Spin="{Binding IsLoading}"
-                             Visibility="{Binding Path=IsLoading, Converter={StaticResource VisibilityConverter}}"
-                             Height="48" Width="48" />
+            
 
             <TextBlock
                        Margin="40,10,0,10"
@@ -43,11 +42,15 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
                        FontWeight="Bold" />
         </Grid>
 
-   
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
+        <fa:ImageAwesome Grid.Row="1" Icon="Spinner" Spin="{Binding IsLoading}"
+                 Visibility="{Binding Path=IsLoading, Converter={StaticResource VisibilityConverter}}"
+                 Height="48" Width="48" />
+
+
+        <ScrollViewer Grid.Row="1" Visibility="{Binding Path=IsLoading, Converter={StaticResource InvertVisibilityConverter}}" VerticalScrollBarVisibility="Visible">
                 <Grid Background="#FFF" Margin="0,-4,0,4">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="100" />
+                        <RowDefinition Height="120" />
                         <RowDefinition Height="291*" />
                         <RowDefinition Height="241*" />
                     </Grid.RowDefinitions>
@@ -62,7 +65,7 @@ xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodel
                 
 
                     <StackPanel  Orientation="Horizontal" Grid.ColumnSpan="3">
-                    <Border CornerRadius="12" Height="100" Width="160" Margin="50,0,0,0"
+                    <Border CornerRadius="12" Height="100" Width="160" Margin="50,5,0,5"
   Background="#E8EFFF">
                         <Grid >
                             <StackPanel HorizontalAlignment="Left" Margin="10,0,0,0">
@@ -120,37 +123,54 @@ Background="#E8EFFF" >
                
 
             </StackPanel>
+                <GridSplitter Grid.Row="0" 
+                Margin="0,0,0,2"
+                Grid.ColumnSpan="3"
+   Height="2"
+   Width="950"
+                
+   VerticalAlignment="Bottom">
 
-            <StackPanel Margin="22,0,0,0" Grid.Row="1">
-                <Border Background="#FFF" CornerRadius="10">
-                    <StackPanel Margin="20">
-                        <TextBlock Text="Recent Booking" FontSize="22" FontWeight="Bold" />
+                </GridSplitter>
+                <Border Grid.Row="1"  Margin="50,10,0,0"
+                        BorderThickness="4" CornerRadius="20"
+                        BorderBrush="LightGray">
+                    <StackPanel Margin="0,0,0,0" Grid.Row="0">
+                        <Border Background="#FFF" CornerRadius="10">
+                            <StackPanel Margin="20">
+                                <TextBlock Text="Recent Booking" FontSize="22" FontWeight="Bold" />
 
-                            <ItemsControl ItemsSource="{Binding RecentBookings}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Margin="5" Padding="10" Background="#E6E6E6" CornerRadius="5" BorderBrush="Gray" BorderThickness="1">
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding RoomType}" FontWeight="Bold" />
-                                                <TextBlock Text="{Binding RoomNumber}" FontWeight="Bold" />
-                                                <TextBlock Text="{Binding CustomerName}" />
-                                                <TextBlock Text="{Binding BookingDate, StringFormat='dd/MM/yyyy - hh:mm tt'}" />
-                                            </StackPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                                <ItemsControl ItemsSource="{Binding RecentBookings}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Margin="5" Padding="10" Background="#E6E6E6" CornerRadius="5" BorderBrush="Gray" BorderThickness="1">
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding RoomType}" FontWeight="Bold" />
+                                                    <TextBlock Text="{Binding RoomNumber}" FontWeight="Bold" />
+                                                    <TextBlock Text="{Binding CustomerName}" />
+                                                    <TextBlock Text="{Binding BookingDate, StringFormat='dd/MM/yyyy - hh:mm tt'}" />
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
 
-                         
 
-                     
+
+
+
+                            </StackPanel>
+                        </Border>
+
 
                     </StackPanel>
                 </Border>
-
-
-            </StackPanel>
-
+               
+                <GridSplitter Grid.Row="1" 
+                              Height="2"
+                              VerticalAlignment="Top">
+                    
+                </GridSplitter>
             <Grid Grid.Row="1" Grid.Column="1">
                 <wpf:PieChart 
 LegendLocation="Bottom" Height="220" Margin="0,20,0,0"
@@ -158,7 +178,16 @@ LegendLocation="Bottom" Height="220" Margin="0,20,0,0"
                           Foreground="Black"
                 Series="{Binding PieSeriesCollection}"/>
             </Grid>
-            <Grid Grid.Row="3" Margin="40,30,0,0">
+                <GridSplitter Grid.Row="2" 
+                              Margin="0,0,0,0"
+                              Grid.ColumnSpan="3"
+                 Height="2"
+                 Width="950"
+                              
+                 VerticalAlignment="Top">
+
+                </GridSplitter>
+                <Grid Grid.Row="3" Margin="40,30,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
