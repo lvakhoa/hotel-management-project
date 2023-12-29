@@ -26,15 +26,10 @@ namespace HotelManagement.View
             InitializeComponent();
         }
 
-        private void Login_OnClicked(object sender, RoutedEventArgs e)
-        {
-            LoginWindow.Focus();
-        }
-
         private void Box_OnKeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Enter)
-                LoginWindow.Focus();
+                UsernameBox.Focus();
         }
         
         private void MinimizeBtn_OnClick(object sender, RoutedEventArgs e)

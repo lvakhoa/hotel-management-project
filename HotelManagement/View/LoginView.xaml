@@ -107,6 +107,7 @@
                                BorderThickness="0"
                                MouseOverBackground="#EE4242"
                                PressedBackground="#FF2525"
+                               PressedForeground="#FFF"
                                CornerRadius="0, 10, 0, 0"
                                Click="CloseBtn_OnClick">
                         
@@ -193,8 +194,7 @@
                             Width="260"
                             VerticalAlignment="Center"
                             CornerRadius="10"
-                            Command="{Binding LoginCommand}" 
-                            Click="Login_OnClicked"/>
+                            Command="{Binding LoginCommand}" />
                     
                     <Border x:Name="Error" Width="300" Height="44" Background="#EF4040"
                             CornerRadius="5" Margin="0 5 20 0">

@@ -10,10 +10,10 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="1012"
              Loaded="Management_OnLoaded">
-
-    <UserControl.DataContext>
-        <vm:ManagementVM />
-    </UserControl.DataContext>
+    
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+    </UserControl.Resources>
 
     <Grid x:Name="ManageView">
         <Grid.RowDefinitions>
@@ -28,29 +28,30 @@
                        FontSize="16"
                        FontWeight="Bold"
                        Background="#C0C0C0"
-                       Content="Staff"
+                       Content="Customer"
                        MouseOverBackground="#4F4A4A"
                        PressedBackground="#4F4A4A"
                        CornerRadius="0,0,10,10"
                        BorderThickness="0"
                        Margin="20,0,0,0"
-                       Click="StaffBtn_OnClick"
-                       Command="{Binding StaffCommand}" />
-
+                       Click="CustomerBtn_OnClick"
+                       Command="{Binding CustomerCommand}" />
+            
             <ui:Button Appearance="Dark"
                        Padding="20, 10"
                        Foreground="#fff"
                        FontSize="16"
                        FontWeight="Bold"
                        Background="#C0C0C0"
-                       Content="Customer"
+                       Content="Staff"
                        MouseOverBackground="#4F4A4A"
                        PressedBackground="#4F4A4A"
                        CornerRadius="0,0,10,10"
                        BorderThickness="0"
                        Margin="10,0,0,0"
-                       Click="CustomerBtn_OnClick"
-                       Command="{Binding CustomerCommand}" />
+                       Click="StaffBtn_OnClick"
+                       Command="{Binding StaffCommand}" 
+                       Visibility="{Binding Path=IsManager, Converter={StaticResource VisibilityConverter}}"/>
 
             <ui:Button Appearance="Dark"
                        Padding="20, 10"
