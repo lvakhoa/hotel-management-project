@@ -11,10 +11,8 @@ namespace HotelManagement.ViewModel;
 
 public partial class HomeVM : ObservableObject
 {
-
     [ObservableProperty]
     private HomeItemProperty _homeData;
-
     [ObservableProperty]
     private SeriesCollection _seriesCollection;
     [ObservableProperty]
@@ -25,8 +23,7 @@ public partial class HomeVM : ObservableObject
     private bool _isLoading;
     [ObservableProperty]
     private ObservableCollection<BookingDisplay> _recentBookings;
-
-    // Define a data structure for display
+    
     public class BookingDisplay
     {
         public string RoomType { get; set; }
@@ -60,24 +57,14 @@ public partial class HomeVM : ObservableObject
     {
         HomeData = new HomeItemProperty();
         LoadHomeDataAsync();
-        LoadRecentBookingsAsync();
-        //InitializeCharts();
+        _ = LoadRecentBookingsAsync();
     }
-
-
-
-
-
 
     private async void LoadHomeDataAsync()
     {
         IsLoading = true;
-        await Task.Delay(1000); // Simulated delay
-
+        await Task.Delay(100); // Simulated delay
         await using var context = new HotelManagementContext();
-
-
-
         var labels = new string[7];
         for (int i = -6; i <= 0; i++)
         {
@@ -86,7 +73,6 @@ public partial class HomeVM : ObservableObject
         }
         Labels = labels;
         var date = DateTime.Today;
-
         var rm = new RoomMap();
         await rm.GetRoomList();
 
@@ -113,65 +99,59 @@ public partial class HomeVM : ObservableObject
 
         InitializeCharts();
         IsLoading = false;
-
     }
+    
     private void InitializeCharts()
     {
         SeriesCollection = new SeriesCollection
+        {
+            new ColumnSeries
             {
-                new ColumnSeries
+                Title = "Total booking",
+                Values = new ChartValues<Int32>
                 {
-                    Title = "Total booking",
-                    Values = new ChartValues<Int32>
-                    {
-                HomeData.TotalBookingMonday,
-               HomeData.TotalBookingTuesday,
-               HomeData.TotalBookingWednesday,
-                HomeData.TotalBookingThursday,
-                HomeData.TotalBookingFriday,
-                HomeData.TotalBookingSaturday,
-                HomeData.TotalBookingSunday
-
-                },DataLabels = true,
-                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#66CDAA"))
+                    HomeData.TotalBookingMonday,
+                    HomeData.TotalBookingTuesday,
+                    HomeData.TotalBookingWednesday,
+                    HomeData.TotalBookingThursday,
+                    HomeData.TotalBookingFriday,
+                    HomeData.TotalBookingSaturday, 
+                    HomeData.TotalBookingSunday
                 },
-
-
-            };
-
-
-
-
+                DataLabels = true, 
+                Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#66CDAA"))
+            },
+        };
         PieSeriesCollection = new SeriesCollection
+        {
+            new PieSeries
             {
-                new PieSeries
-                {
-                    Values = new ChartValues<int> { HomeData.TotalAvailableRoom },
-                    Title = "Available",
-                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#E4FFE0")),
-                    DataLabels = true,
-                    LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
-                },
+                Values = new ChartValues<int> { HomeData.TotalAvailableRoom },
+                Title = "Available",
+                Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#C2FCC1")),
+                DataLabels = false,
+                LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
+            },
             // Other PieSeries follow...new PieSeries
-              new PieSeries
-                {
-                    Values = new ChartValues<int> { HomeData.TotalOccupiedRoom },
-                    Title = "Occupied",
-                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFE0FC")),
-                    DataLabels = true,
-                    LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
-                },
-                new PieSeries
+            new PieSeries
+            {
+                Values = new ChartValues<int> { HomeData.TotalOccupiedRoom },
+                Title = "Occupied",
+                Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FCFE7C")),
+                DataLabels = false,
+                LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
+            },
+            new PieSeries
                 // Other PieSeries follow...new PieSeries
-                {
-                    Values = new ChartValues<int> { HomeData.TotalBlockedRoom },
-                    Title = "Blocked",
-                    Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#F8EFE2")),
-                    DataLabels = true,
-                    LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
-                },
+            {
+                Values = new ChartValues<int> { HomeData.TotalBlockedRoom },
+                Title = "Blocked",
+                Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FCB7B7")),
+                DataLabels = false,
+                LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
+            },
                 // Other PieSeries follow...
-            };
+        };
         OnPropertyChanged(nameof(Labels));
     }
     private async Task<decimal> GetTotalRevenueToday(HotelManagementContext context)
@@ -184,7 +164,6 @@ public partial class HomeVM : ObservableObject
     private async Task<decimal> GetTotalRevenue(HotelManagementContext context)
     {
         return (decimal)await context.Invoices
-
             .SumAsync(i => i.TotalAmount);
     }
 
@@ -194,48 +173,44 @@ public partial class HomeVM : ObservableObject
         var temp = await context.Bookings
             .CountAsync(b => b.CheckInDate.Value.Date == today);
         return temp;
-
     }
 
     private async Task<int> GetTotalBookingsForDate(HotelManagementContext context, int x)
     {
         var today = DateTime.Today.AddDays(x);
         var temp = await context.Bookings
-
                             .CountAsync(b => b.CheckInDate.Value.Date == today);
         return temp;
     }
-
-
+    
     private async Task<int> GetTotalBooking(HotelManagementContext context)
     {
         var temp = await context.Bookings
              .CountAsync();
         return temp;
     }
+    
     private async Task<int> GetTotalAvailableRoom(HotelManagementContext context, RoomMap rm)
     {
         await Task.Delay(200);
         var temp = (from r in rm.List where r.Status == "Available" select r).Count();
-
-        //var temp = rm.List.Count(b => b.Status == "Available");
         return temp;
     }
+    
     private async Task<int> GetTotalBlockedRoom(HotelManagementContext context, RoomMap rm)
     {
-
         await Task.Delay(200);
         var temp = (from r in rm.List where r.Status == "Out of Order" select r).Count();
-
         return temp;
     }
+    
     private async Task<int> GetTotalOccupiedRoom(HotelManagementContext context, RoomMap rm)
     {
-
         await Task.Delay(200);
         var temp = (from r in rm.List where r.Status == "Occupied" select r).Count();
         return temp;
     }
+    
     private async Task<int> GetTotalCheckInToday(HotelManagementContext context)
     {
         var today = DateTime.Today;
@@ -243,6 +218,7 @@ public partial class HomeVM : ObservableObject
             .CountAsync(b => b.CheckInDate.Value.Date == today);
         return temp;
     }
+    
     private async Task<int> GetTotalCheckOutToday(HotelManagementContext context)
     {
         var today = DateTime.Today;
@@ -250,7 +226,6 @@ public partial class HomeVM : ObservableObject
             .CountAsync(b => b.CheckOutDate.Value.Date == today);
         return temp;
     }
-
 
     private async Task<int> GetTotalStaff(HotelManagementContext context)
     {
@@ -266,57 +241,27 @@ public partial class HomeVM : ObservableObject
     {
         return await context.Rooms.CountAsync();
     }
-
-
-
+    
     public partial class HomeItemProperty : ObservableObject
     {
-        [ObservableProperty]
-        private int _totalBookingMonday;
-        [ObservableProperty]
-        private int _totalBookingTuesday;
-        [ObservableProperty]
-        private int _totalBookingWednesday;
-        [ObservableProperty]
-        private int _totalBookingThursday;
-        [ObservableProperty]
-        private int _totalBookingFriday;
-        [ObservableProperty]
-        private int _totalBookingSaturday;
-        [ObservableProperty]
-        private int _totalBookingSunday;
-        [ObservableProperty]
-        private int _totalOccupiedRoom;
-        [ObservableProperty]
-        private int _totalAvailableRoom;
-        [ObservableProperty]
-        private int _totalBlockedRoom;
-        [ObservableProperty]
-
-        private int _totalCheckinToday;
-        [ObservableProperty]
-        private int _totalCheckoutToday;
-
-        [ObservableProperty]
-        private decimal _totalRevenueToday;
-
-        [ObservableProperty]
-        private decimal _totalRevenue;
-
-        [ObservableProperty]
-        private int _totalBookingToday;
-
-        [ObservableProperty]
-        private int _totalBooking;
-
-        [ObservableProperty]
-        private int _totalStaff;
-
-        [ObservableProperty]
-        private int _totalRoom;
-        [ObservableProperty]
-        private int _totalCustomer;
-
-
+        [ObservableProperty] private int _totalBookingMonday;
+        [ObservableProperty] private int _totalBookingTuesday;
+        [ObservableProperty] private int _totalBookingWednesday;
+        [ObservableProperty] private int _totalBookingThursday;
+        [ObservableProperty] private int _totalBookingFriday;
+        [ObservableProperty] private int _totalBookingSaturday;
+        [ObservableProperty] private int _totalBookingSunday;
+        [ObservableProperty] private int _totalOccupiedRoom;
+        [ObservableProperty] private int _totalAvailableRoom;
+        [ObservableProperty] private int _totalBlockedRoom;
+        [ObservableProperty] private int _totalCheckinToday;
+        [ObservableProperty] private int _totalCheckoutToday;
+        [ObservableProperty] private decimal _totalRevenueToday;
+        [ObservableProperty] private decimal _totalRevenue;
+        [ObservableProperty] private int _totalBookingToday;
+        [ObservableProperty] private int _totalBooking;
+        [ObservableProperty] private int _totalStaff;
+        [ObservableProperty] private int _totalRoom;
+        [ObservableProperty] private int _totalCustomer;
     }
 }
