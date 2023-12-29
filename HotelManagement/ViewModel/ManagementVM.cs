@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using HotelManagement.Model;
 using HotelManagement.ViewModel.ManagementList;
 
 namespace HotelManagement.ViewModel;
@@ -7,9 +8,17 @@ namespace HotelManagement.ViewModel;
 internal partial class ManagementVM : ObservableObject
 {
     [ObservableProperty] private object _currentManagement;
-    public ManagementVM()
+
+    public bool IsManager { get; set; } = false;
+    public ManagementVM(string? staffID)
     {
-        CurrentManagement = new StaffList();
+        CurrentManagement = new CustomerList();
+        
+        using var context = new HotelManagementContext();
+        var staff = context.Staff.Find(staffID);
+        
+        if(staff is { Position: "Hotel Manager" })
+            IsManager = true;
     }
 
     [RelayCommand]

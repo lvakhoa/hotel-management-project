@@ -21,7 +21,7 @@ public partial class RoomTypeDataGrid : UserControl
         var addRoomType = new AddRoomType(this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addRoomType.ShowDialog();
     }
@@ -33,7 +33,7 @@ public partial class RoomTypeDataGrid : UserControl
         var addRoomType = new AddRoomType(btn.Tag.ToString(), this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addRoomType.ShowDialog();
     }
@@ -92,5 +92,18 @@ public partial class RoomTypeDataGrid : UserControl
         var item = (RoomtypeList.RoomtypeVM)obj;
         return item.ID!.ToLower().Contains(text) ||
                item.RoomTypeName!.ToLower().Contains(text);
+    }
+
+    private void RestoreBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        RestoreMenu.IsOpen = true;
+    }
+    
+    private void OnOpened(object sender, RoutedEventArgs e)
+    {
+        var contextMenu = (ContextMenu)sender;
+        ((MenuItem)contextMenu.Items[0]!).Command = DataContext is RoomtypeList roomTypeList ? roomTypeList.RestoreLast7DaysCommand : null;
+        ((MenuItem)contextMenu.Items[1]!).Command = DataContext is RoomtypeList roomTypeList1 ? roomTypeList1.RestoreLast30DaysCommand : null;
+        ((MenuItem)contextMenu.Items[2]!).Command = DataContext is RoomtypeList roomTypeList2 ? roomTypeList2.RestoreAllCommand : null;
     }
 }

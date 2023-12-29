@@ -20,7 +20,7 @@ public partial class NavigationVM : ObservableObject
     private void RoomMap() => CurrentView = new RoomMapVM();
     
     [RelayCommand]
-    private void Management() => CurrentView = new ManagementVM();
+    private void Management() => CurrentView = new ManagementVM(CurrentStaff.ID);
     
     [RelayCommand]
     private void Inbox() => CurrentView = new InboxVM();
@@ -44,6 +44,7 @@ public partial class NavigationVM : ObservableObject
 
         if (staff != null)
         {
+            CurrentStaff.ID = userId;
             CurrentStaff.FullName = staff.FullName;
             CurrentStaff.Position = staff.Position;
             CurrentStaff.Address = staff.Address;

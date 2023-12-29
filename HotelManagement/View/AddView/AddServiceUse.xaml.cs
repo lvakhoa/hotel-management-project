@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using HotelManagement.ViewModel.ManagementList;
 
@@ -6,13 +7,14 @@ namespace HotelManagement.View.AddView;
 
 public partial class AddServiceUse : Window
 {
+    private ServiceUseList? ServiceUse => DataContext as ServiceUseList;
     public AddServiceUse(object dataContext)
     {
         InitializeComponent();
         
         DataContext = dataContext;
         
-        (DataContext as ServiceUseList).AddServiceUse();
+        ServiceUse!.AddServiceUse();
     }
     
     public AddServiceUse(string serviceId, string invoiceId, object dataContext)
@@ -21,7 +23,7 @@ public partial class AddServiceUse : Window
         
         DataContext = dataContext;
         
-        (DataContext as ServiceUseList).GetServiceUseById(serviceId, invoiceId);
+        ServiceUse!.GetServiceUseById(serviceId, invoiceId);
 
     }
 
@@ -39,5 +41,19 @@ public partial class AddServiceUse : Window
     private void SaveBtn_OnClick(object sender, RoutedEventArgs e)
     {
         this.Close();
+    }
+
+    private void ServiceBox_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        var itemVm = ServiceUse!.CurrentServiceUse.ServiceItem;
+        var index = -1;
+        
+        foreach (var item in ServiceUse.ServiceIdList.Where(item => item.ServiceId == itemVm.ServiceId))
+        {
+            index = ServiceUse.ServiceIdList.IndexOf(item);
+            break;
+        }
+
+        ServiceBox.SelectedIndex = index;
     }
 }

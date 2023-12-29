@@ -3,8 +3,8 @@ using HotelManagement.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Windows;
 using CommunityToolkit.Mvvm.Input;
+using HotelManagement.CustomControls.MessageBox;
 
 namespace HotelManagement.ViewModel.ManagementList;
 
@@ -13,7 +13,7 @@ public partial class RoomList : ObservableObject
     public ObservableCollection<RoomVM> List { get; set; }
 
     [ObservableProperty] private bool _isLoading;
-    
+
     [ObservableProperty] private List<string>? _roomTypeList;
 
     [ObservableProperty] private RoomVM _currentRoom;
@@ -24,11 +24,13 @@ public partial class RoomList : ObservableObject
     {
         List = new ObservableCollection<RoomVM>();
         RoomTypeList = new List<string>();
-        GetRoomList();
+        _ = GetRoomList();
     }
 
-    private async void GetRoomList()
+    private async Task GetRoomList()
     {
+        List.Clear();
+        
         IsLoading = true;
         await Task.Delay(1000);
         await using var context = new HotelManagementContext();
@@ -42,7 +44,7 @@ public partial class RoomList : ObservableObject
                 room.Notes,
                 room.RoomTypeId
             }).ToListAsync();
-        
+
         foreach (var item in rooms)
         {
             List.Add(new RoomVM()
@@ -53,21 +55,23 @@ public partial class RoomList : ObservableObject
                 RoomTypeID = item.RoomTypeId
             });
         }
-        
+
         RoomTypeList = await (from roomType in context.RoomTypes
             where roomType.Deleted == false
+            orderby roomType.RoomTypeId
             select roomType.RoomTypeId).ToListAsync();
-        
+
         IsLoading = false;
     }
 
     #endregion
 
     #region EditRoom
+
     public void GetRoomById(string? id)
     {
         var room = (from r in List where r.ID == id select r).FirstOrDefault();
-        
+
         CurrentRoom = new RoomVM()
         {
             ID = room.ID,
@@ -78,9 +82,11 @@ public partial class RoomList : ObservableObject
 
         CurrentRoom.PropertyChanged += (e, args) => { Add_EditRoomCommand.NotifyCanExecuteChanged(); };
     }
+
     #endregion
-    
+
     #region AddRoom
+
     public void GenerateRoomId()
     {
         using var context = new HotelManagementContext();
@@ -97,13 +103,14 @@ public partial class RoomList : ObservableObject
         {
             CurrentRoom.ID = "R0001";
         }
-        
+
         CurrentRoom.PropertyChanged += (e, args) => { Add_EditRoomCommand.NotifyCanExecuteChanged(); };
     }
+
     #endregion
-    
+
     #region Add_Edit Command
-    
+
     private bool CanAdd_EditRoom()
     {
         return CurrentRoom is
@@ -111,12 +118,12 @@ public partial class RoomList : ObservableObject
             RoomNumber: not null, RoomTypeID: not null, HasErrors: false
         };
     }
-    
+
     [RelayCommand(CanExecute = nameof(CanAdd_EditRoom))]
-    private void Add_EditRoom()
+    private async Task Add_EditRoom()
     {
-        using var context = new HotelManagementContext();
-        var room = context.Rooms.Find(CurrentRoom.ID);
+        await using var context = new HotelManagementContext();
+        var room = await context.Rooms.FindAsync(CurrentRoom.ID);
 
         if (room != null)
         {
@@ -129,14 +136,19 @@ public partial class RoomList : ObservableObject
                     break;
                 }
             }
-            
+
             if (index != -1)
                 List[index] = CurrentRoom;
-            
+
             room.RoomId = CurrentRoom.ID;
             room.RoomNumber = CurrentRoom.RoomNumber;
             room.Notes = CurrentRoom.Notes;
             room.RoomTypeId = CurrentRoom.RoomTypeID;
+
+            await context.SaveChangesAsync();
+
+            MessageBox.Show(App.ActivatedWindow, "Success", "Edit room successfully",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
         }
         else
         {
@@ -156,21 +168,28 @@ public partial class RoomList : ObservableObject
                 RoomTypeId = CurrentRoom.RoomTypeID
             };
 
-            context.Rooms.Add(entity);
-        }
+            await context.Rooms.AddAsync(entity);
 
-        context.SaveChanges();
+            await context.SaveChangesAsync();
+
+            MessageBox.Show(App.ActivatedWindow, "Success", "Add room successfully",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+        }
     }
+
     #endregion
-    
+
     #region Delete Command
+
     [RelayCommand]
     private void Delete(string id)
     {
-        var result = MessageBox.Show("Are you sure you want to delete this room?", "Delete Room",
-            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Delete Room",
+            "Are you sure you want to delete this room?",
+            msgImage: MessageBoxImage.WARNING, msgButton: MessageBoxButton.YesNo);
 
-        if (result == MessageBoxResult.Yes)
+        if (result == MessageBoxResult.YES)
         {
             int index = -1;
             foreach (var item in List)
@@ -193,26 +212,123 @@ public partial class RoomList : ObservableObject
             context.SaveChanges();
         }
     }
+
     #endregion
     
+    #region Restore Command
+
+    [RelayCommand]
+    private async Task RestoreLast7Days()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Room",
+            "Restore all rooms that have been deleted in the last 7 days?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var rooms = await context.Rooms.Where(e => e.DeletedDate >= DateTime.Now.AddDays(-7)).ToListAsync();
+
+            foreach (var room in rooms)
+            {
+                room.Deleted = false;
+                room.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore rooms successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetRoomList();
+        }
+    }
+    
+    [RelayCommand]
+    private async Task RestoreLast30Days()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Room",
+            "Restore all rooms that have been deleted in the last 30 days?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var rooms = await context.Rooms.Where(e => e.DeletedDate >= DateTime.Now.AddDays(-30)).ToListAsync();
+
+            foreach (var room in rooms)
+            {
+                room.Deleted = false;
+                room.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore rooms successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetRoomList();
+        }
+    }
+    
+    [RelayCommand]
+    private async Task RestoreAll()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Room",
+            "Restore all rooms that have been deleted?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var rooms = await context.Rooms.Where(e => e.Deleted == true).ToListAsync();
+
+            foreach (var room in rooms)
+            {
+                room.Deleted = false;
+                room.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore rooms successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetRoomList();
+        }
+    }
+    
+    #endregion
+
     public partial class RoomVM : ObservableValidator
     {
+        #region Properties
+
         // ID
         public string? ID { get; set; }
-        
+
         // RoomNumber
         [ObservableProperty]
         [NotifyDataErrorInfo]
-        [Required (ErrorMessage = "Room number is required")]
+        [Required(ErrorMessage = "Room number is required")]
         [RegularExpression(@"^[0-9]{3}$", ErrorMessage = "Room number must be 3 digits")]
         private string? _roomNumber;
-        
+
         // Notes
         public string? Notes { get; set; }
-        
+
         // RoomTypeID
-        [ObservableProperty] 
-        [Required]
-        private string? _roomTypeID;
+        [ObservableProperty] [Required] private string? _roomTypeID;
+
+        #endregion
     }
 }

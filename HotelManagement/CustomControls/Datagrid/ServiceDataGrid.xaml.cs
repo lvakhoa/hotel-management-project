@@ -21,7 +21,7 @@ public partial class ServiceDataGrid : UserControl
         var addService = new AddService(this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addService.ShowDialog();
     }
@@ -33,7 +33,7 @@ public partial class ServiceDataGrid : UserControl
         var addService = new AddService(btn.Tag.ToString(), this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addService.ShowDialog();
     }
@@ -93,5 +93,18 @@ public partial class ServiceDataGrid : UserControl
         return item.ID!.ToLower().Contains(text) ||
                item.ServiceName!.ToLower().Contains(text) ||
                item.ServiceType!.ToLower().Contains(text);
+    }
+
+    private void RestoreBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        RestoreMenu.IsOpen = true;
+    }
+    
+    private void OnOpened(object sender, RoutedEventArgs e)
+    {
+        var contextMenu = (ContextMenu)sender;
+        ((MenuItem)contextMenu.Items[0]!).Command = DataContext is ServiceList serviceList ? serviceList.RestoreLast7DaysCommand : null;
+        ((MenuItem)contextMenu.Items[1]!).Command = DataContext is ServiceList serviceList1 ? serviceList1.RestoreLast30DaysCommand : null;
+        ((MenuItem)contextMenu.Items[2]!).Command = DataContext is ServiceList serviceList2 ? serviceList2.RestoreAllCommand : null;
     }
 }

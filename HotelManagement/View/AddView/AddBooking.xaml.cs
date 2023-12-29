@@ -21,13 +21,15 @@ namespace HotelManagement.View.AddView
     /// </summary>
     public partial class AddBooking : Window
     {
+        private BookingList? Booking => DataContext as BookingList;
+        
         public AddBooking(object dataContext)
         {
             InitializeComponent();
             
             DataContext = dataContext;
 
-            (DataContext as BookingList).GenerateBookingId();
+            Booking!.GenerateBookingId();
         }
         
         public AddBooking(string? id, object dataContext)
@@ -37,7 +39,7 @@ namespace HotelManagement.View.AddView
             DataContext = dataContext;
             
             if(id != null)
-                (DataContext as BookingList).GetBookingById(id);
+                Booking!.GetBookingById(id);
         }
 
         private void AddBooking_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -62,6 +64,20 @@ namespace HotelManagement.View.AddView
                 CheckInBox.SelectedDate = DateTime.Now;
             if(CheckOutBox.SelectedDate == null)
                 CheckOutBox.SelectedDate = DateTime.Now.AddDays(1);
+        }
+
+        private void RoomIdBox_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var itemVm = Booking!.CurrentBooking.RoomItem;
+            var index = -1;
+        
+            foreach (var item in Booking.RoomIdList.Where(item => item.RoomID == itemVm.RoomID))
+            {
+                index = Booking.RoomIdList.IndexOf(item);
+                break;
+            }
+
+            RoomIdBox.SelectedIndex = index;
         }
     }
 }

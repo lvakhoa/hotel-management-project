@@ -1,38 +1,41 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HotelManagement.Model;
 using Microsoft.EntityFrameworkCore;
+using HotelManagement.CustomControls.MessageBox;
 
 namespace HotelManagement.ViewModel.ManagementList;
 
 public partial class StaffList : ObservableObject
 {
     public ObservableCollection<StaffVM> List { get; set; }
-    
+
     [ObservableProperty] private List<string> _genderList;
 
     [ObservableProperty] private bool _isLoading;
 
     [ObservableProperty] private StaffVM _currentStaff;
-    
+
     #region Constructor
+
     public StaffList()
     {
         List = new ObservableCollection<StaffVM>();
         GenderList = new List<string>();
-        GetStaffList();
+        _ = GetStaffList();
     }
 
-    private async void GetStaffList()
+    private async Task GetStaffList()
     {
+        List.Clear();
+        
         IsLoading = true;
         await Task.Delay(1000);
         await using var context = new HotelManagementContext();
-        
-        var staffs = await (from staff in context.Staff 
+
+        var staffs = await (from staff in context.Staff
             where staff.Deleted == false
             select new
             {
@@ -49,31 +52,35 @@ public partial class StaffList : ObservableObject
                 Birthday = item.Birthday, Gender = item.Gender, Salary = item.Salary.ToString()
             });
         }
-        
+
         GenderList.Add("male");
         GenderList.Add("female");
 
         IsLoading = false;
     }
+
     #endregion
 
     #region EditStaff
+
     public void GetStaffById(string id)
     {
         var staff = (from s in List where s.ID == id select s).FirstOrDefault();
-        
+
         CurrentStaff = new StaffVM()
         {
             ID = staff.ID, FullName = staff.FullName, Position = staff.Position,
             ContactNumber = staff.ContactNumber, Email = staff.Email, Address = staff.Address,
             Birthday = staff.Birthday, Gender = staff.Gender, Salary = staff.Salary
         };
-        
+
         CurrentStaff.PropertyChanged += (_, _) => Add_EditStaffCommand.NotifyCanExecuteChanged();
     }
+
     #endregion
 
     #region AddStaff
+
     public void GenerateStaffId()
     {
         using var context = new HotelManagementContext();
@@ -88,14 +95,15 @@ public partial class StaffList : ObservableObject
         }
         else
             CurrentStaff.ID = "ST001";
-        
-        
+
+
         CurrentStaff.PropertyChanged += (_, _) => Add_EditStaffCommand.NotifyCanExecuteChanged();
     }
+
     #endregion
 
     #region Add_Edit Command
-    
+
     private bool CanAdd_EditStaff()
     {
         return CurrentStaff is
@@ -110,12 +118,12 @@ public partial class StaffList : ObservableObject
             HasErrors: false
         };
     }
-    
+
     [RelayCommand(CanExecute = nameof(CanAdd_EditStaff))]
-    private void Add_EditStaff()
+    private async Task Add_EditStaff()
     {
-        using var context = new HotelManagementContext();
-        var staff = context.Staff.Find(CurrentStaff.ID);
+        await using var context = new HotelManagementContext();
+        var staff = await context.Staff.FindAsync(CurrentStaff.ID);
 
         if (staff != null)
         {
@@ -131,7 +139,7 @@ public partial class StaffList : ObservableObject
 
             if (index != -1)
                 List[index] = CurrentStaff;
-        
+
             staff.StaffId = CurrentStaff.ID!;
             staff.FullName = CurrentStaff.FullName!;
             staff.Position = CurrentStaff.Position!;
@@ -141,6 +149,13 @@ public partial class StaffList : ObservableObject
             staff.Birthday = CurrentStaff.Birthday;
             staff.Gender = CurrentStaff.Gender!;
             staff.Salary = decimal.Parse(CurrentStaff.Salary!);
+            
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Edit staff successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
         }
         else
         {
@@ -163,22 +178,32 @@ public partial class StaffList : ObservableObject
                 Gender = CurrentStaff.Gender!,
                 Salary = decimal.Parse(CurrentStaff.Salary!)
             };
+
+            await context.Staff.AddAsync(entity);
             
-            context.Staff.Add(entity);
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Add staff successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+
         }
-        
-        context.SaveChanges();
     }
+
     #endregion
 
     #region Delete Command
+
     [RelayCommand]
     private void Delete(string id)
     {
-        var result = MessageBox.Show("Are you sure you want to delete this staff?", "Delete Staff",
-            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Delete Staff",
+            "Are you sure you want to delete this staff?",
+            msgImage: MessageBoxImage.WARNING, msgButton: MessageBoxButton.YesNo);
 
-        if (result == MessageBoxResult.Yes)
+        if (result == MessageBoxResult.YES)
         {
             int index = -1;
             foreach (var item in List)
@@ -189,9 +214,10 @@ public partial class StaffList : ObservableObject
                     break;
                 }
             }
+
             if (index != -1)
                 List.RemoveAt(index);
-        
+
             using var context = new HotelManagementContext();
             var staff = context.Staff.Find(id);
             staff.Deleted = true;
@@ -199,55 +225,182 @@ public partial class StaffList : ObservableObject
             context.SaveChanges();
         }
     }
+
+    #endregion
+    
+    #region Restore Command
+
+    [RelayCommand]
+    private async Task RestoreLast7Days()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Staff",
+            "Restore all staffs that have been deleted in the last 7 days?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var staffs = await context.Staff.Where(e => e.DeletedDate >= DateTime.Now.AddDays(-7)).ToListAsync();
+
+            foreach (var staff in staffs)
+            {
+                staff.Deleted = false;
+                staff.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore staffs successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetStaffList();
+        }
+    }
+    
+    [RelayCommand]
+    private async Task RestoreLast30Days()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Staff",
+            "Restore all staff that have been deleted in the last 30 days?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var staffs = await context.Staff.Where(e => e.DeletedDate >= DateTime.Now.AddDays(-30)).ToListAsync();
+
+            foreach (var staff in staffs)
+            {
+                staff.Deleted = false;
+                staff.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore staffs successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetStaffList();
+        }
+    }
+    
+    [RelayCommand]
+    private async Task RestoreAll()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Staff",
+            "Restore all staffs that have been deleted?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var staffs = await context.Staff.Where(e => e.Deleted == true).ToListAsync();
+
+            foreach (var staff in staffs)
+            {
+                staff.Deleted = false;
+                staff.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore staffs successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetStaffList();
+        }
+    }
+    
     #endregion
 
     public partial class StaffVM : ObservableValidator
     {
+        #region Properties
         public string? ID { get; set; }
+
         // FullName
-        [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [Required (ErrorMessage = "Full Name is required")]
         private string? _fullName;
-        
+
+        [Required(ErrorMessage = "Full Name is required")]
+        public string? FullName
+        {
+            get => _fullName;
+            set => SetProperty(ref _fullName, value, true);
+        }
+
         // ContactNumber
-        [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [Required (ErrorMessage = "Phone Number is required")]
-        [Phone(ErrorMessage = "Invalid Phone Number")]
         private string? _contactNumber;
-        
+
+        [Required(ErrorMessage = "Contact Number is required")]
+        [Phone(ErrorMessage = "Invalid Contact Number")]
+        [CustomValidation(typeof(StaffVM), "ValidateContactNumber")]
+        public string? ContactNumber
+        {
+            get => _contactNumber;
+            set => SetProperty(ref _contactNumber, value, true);
+        }
+
         // Email
-        [ObservableProperty] 
-        [NotifyDataErrorInfo] 
-        [Required (ErrorMessage = "Email is required")] 
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         private string? _email;
 
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [CustomValidation(typeof(StaffVM), "ValidateEmail")]
+        public string? Email
+        {
+            get => _email;
+            set => SetProperty(ref _email, value, true);
+        }
+
         // Address
-        [ObservableProperty] 
-        [NotifyDataErrorInfo] 
-        [Required (ErrorMessage = "Address is required")]
         private string? _address;
 
-        // Gender
-        [ObservableProperty] 
-        [Required] 
-        private string? _gender;
+        [Required(ErrorMessage = "Address is required")]
+        public string? Address
+        {
+            get => _address;
+            set => SetProperty(ref _address, value, true);
+        }
 
-        [ObservableProperty]  
-        [NotifyDataErrorInfo]
-        [Required(ErrorMessage = "Position is required")]
+        // Gender
+        [ObservableProperty] [Required] private string? _gender;
+
+        // Position
         private string? _position;
+
+        [Required(ErrorMessage = "Position is required")]
+        public string? Position
+        {
+            get => _position;
+            set => SetProperty(ref _position, value, true);
+        }
 
         [ObservableProperty] private DateTime? _birthday;
 
-        [ObservableProperty]
-        [NotifyDataErrorInfo]
+        // Salary
+        private string? _salary;
+
         [Required(ErrorMessage = "Salary is required")]
         [CustomValidation(typeof(StaffVM), "ValidateSalary")]
-        private string? _salary; 
+        public string? Salary
+        {
+            get => _salary;
+            set => SetProperty(ref _salary, value, true);
+        }
         
+        #endregion
+        
+        #region Custom Validation
+
         public static ValidationResult ValidateSalary(string? salary, ValidationContext context)
         {
             using var hotelContext = new HotelManagementContext();
@@ -260,5 +413,31 @@ public partial class StaffList : ObservableObject
 
             return ValidationResult.Success!;
         }
+
+        public static ValidationResult ValidateContactNumber(string? contactNumber, ValidationContext context)
+        {
+            var instance = context.ObjectInstance as StaffVM;
+            using var hotelContext = new HotelManagementContext();
+
+            return Enumerable.Any(hotelContext.Staff,
+                item => string.Equals(item.ContactNumber, contactNumber?.Trim(),
+                    StringComparison.CurrentCultureIgnoreCase) && item.StaffId != instance.ID)
+                ? new ValidationResult("Contact Number already exists")
+                : ValidationResult.Success!;
+        }
+
+        public static ValidationResult ValidateEmail(string? email, ValidationContext context)
+        {
+            var instance = context.ObjectInstance as StaffVM;
+            using var hotelContext = new HotelManagementContext();
+
+            return Enumerable.Any(hotelContext.Staff,
+                item => string.Equals(item.Email, email?.Trim(), StringComparison.CurrentCultureIgnoreCase) &&
+                        item.StaffId != instance.ID)
+                ? new ValidationResult("Email already exists")
+                : ValidationResult.Success!;
+        }
+        
+        #endregion
     }
 }

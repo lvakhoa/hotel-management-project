@@ -32,7 +32,8 @@
         <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}" />
     </Window.Visibility>
 
-    <Border CornerRadius="10"
+    <Border x:Name="WindowBorder"
+            CornerRadius="10"
             Background="#FFF"
             BorderBrush="#231F20"
             BorderThickness="1">
@@ -55,14 +56,23 @@
                         <ColumnDefinition Width="40" />
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0"
-                                Orientation="Horizontal">
-                        <TextBlock Text="LOG IN"
+                    <Grid Grid.Column="0" 
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Center"
+                          Margin="10,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                            
+                        <Image Grid.Column="0" Source="/HotelManagement;component/Assets/Images/hotel_icon.png" Width="24"/>
+                        
+                        <TextBlock Grid.Column="1" Text="LOG IN"
                                    Foreground="#1E1E1E"
                                    VerticalAlignment="Center"
-                                   Margin="15,0,0,0"
+                                   Margin="8,0,0,0"
                                    FontSize="14" />
-                    </StackPanel>
+                    </Grid>
 
                     <ui:Button Grid.Column="1"
                                Width="40"
@@ -73,19 +83,22 @@
                                BorderThickness="0"
                                MouseOverBackground="#D4D2D2"
                                PressedBackground="#CAC9C9"
-                               CornerRadius="0" />
+                               CornerRadius="0" 
+                               Click="MinimizeBtn_OnClick"/>
 
                     <ui:Button Grid.Column="2"
                                Width="40"
                                Height="40"
-                               Icon="SquareMultiple24"
+                               Icon="Square24"
                                Appearance="Transparent"
                                BorderThickness="0"
                                MouseOverBackground="#D4D2D2"
                                PressedBackground="#CAC9C9"
-                               CornerRadius="0" />
+                               CornerRadius="0" 
+                               Click="MaximizeBtn_OnClick"/>
 
                     <ui:Button Grid.Column="3"
+                               x:Name="CloseBtn"
                                Width="40"
                                Height="40"
                                Icon="Dismiss28"
@@ -94,7 +107,10 @@
                                BorderThickness="0"
                                MouseOverBackground="#EE4242"
                                PressedBackground="#FF2525"
-                               CornerRadius="0, 10, 0, 0">
+                               PressedForeground="#FFF"
+                               CornerRadius="0, 10, 0, 0"
+                               Click="CloseBtn_OnClick">
+                        
                         <ui:Button.Style>
                             <Style TargetType="{x:Type ui:Button}" BasedOn="{StaticResource {x:Type ui:Button}}">
                                 <Style.Triggers>
@@ -178,8 +194,7 @@
                             Width="260"
                             VerticalAlignment="Center"
                             CornerRadius="10"
-                            Command="{Binding LoginCommand}" 
-                            Click="Login_OnClicked"/>
+                            Command="{Binding LoginCommand}" />
                     
                     <Border x:Name="Error" Width="300" Height="44" Background="#EF4040"
                             CornerRadius="5" Margin="0 5 20 0">

@@ -1,14 +1,9 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using HotelManagement.View;
+using Wpf.Ui.Common;
+using Wpf.Ui.Controls;
+using UIBtn = Wpf.Ui.Controls.Button;
 
 namespace HotelManagement;
 
@@ -34,16 +29,47 @@ public partial class MainWindow : Window
     private void LogoutBtn_OnChecked(object sender, RoutedEventArgs e)
     {
         var loginView = new LoginView();
+        App.ActivatedWindow = loginView;
         loginView.Show();
         loginView.IsVisibleChanged += (s, ev) =>
         {
             if (loginView.IsVisible == false && loginView.IsLoaded)
             {
                 var mainView = new MainWindow();
+                App.ActivatedWindow = mainView;
                 mainView.Show();
                 loginView.Close();
             }
         };
         this.Close();
+    }
+
+    private void MinimizeBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        WindowState = WindowState.Minimized;
+    }
+
+    private void MaximizeBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        var btn = sender as UIBtn;
+        if (WindowState == WindowState.Normal)
+        {
+            WindowState = WindowState.Maximized;
+            btn!.Icon = SymbolRegular.SquareMultiple24;
+            CloseBtn.CornerRadius = new CornerRadius(0);
+            WindowBorder.CornerRadius = new CornerRadius(0);
+        }
+        else
+        {
+            WindowState = WindowState.Normal;
+            btn!.Icon = SymbolRegular.Square24;
+            CloseBtn.CornerRadius = new CornerRadius(0, 10, 0, 0);
+            WindowBorder.CornerRadius = new CornerRadius(10);
+        }
+    }
+
+    private void CloseBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        Close();
     }
 }

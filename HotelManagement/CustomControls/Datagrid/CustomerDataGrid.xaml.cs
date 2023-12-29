@@ -21,7 +21,7 @@ public partial class CustomerDataGrid : UserControl
         var addCustomer = new AddCustomer(this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addCustomer.ShowDialog();
     }
@@ -33,7 +33,7 @@ public partial class CustomerDataGrid : UserControl
         var addCustomer = new AddCustomer(btn.Tag.ToString(), this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addCustomer.ShowDialog();
     }
@@ -98,5 +98,18 @@ public partial class CustomerDataGrid : UserControl
                item.Gender!.ToLower().Contains(text) ||
                item.CreditCard!.ToLower().Contains(text) ||
                item.ProofID!.ToLower().Contains(text);
+    }
+
+    private void RestoreBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        RestoreMenu.IsOpen = true;
+    }
+    
+    private void OnOpened(object sender, RoutedEventArgs e)
+    {
+        var contextMenu = (ContextMenu)sender;
+        ((MenuItem)contextMenu.Items[0]!).Command = DataContext is CustomerList customerList ? customerList.RestoreLast7DaysCommand : null;
+        ((MenuItem)contextMenu.Items[1]!).Command = DataContext is CustomerList customerList1 ? customerList1.RestoreLast30DaysCommand : null;
+        ((MenuItem)contextMenu.Items[2]!).Command = DataContext is CustomerList customerList2 ? customerList2.RestoreAllCommand : null;
     }
 }

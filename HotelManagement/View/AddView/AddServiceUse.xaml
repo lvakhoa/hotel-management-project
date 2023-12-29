@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
+        xmlns:management="clr-namespace:HotelManagement.ViewModel.ManagementList"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
         Title="Addcustomer" Height="340" Width="700"
@@ -13,7 +12,8 @@
         AllowsTransparency="True"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        MouseDown="AddServiceUse_OnMouseDown">
+        MouseDown="AddServiceUse_OnMouseDown"
+        x:Name="AddService">
 
     <Border CornerRadius="10"
             Background="#FFF"
@@ -35,7 +35,7 @@
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="30,0">
                     <ui:SymbolIcon Symbol="ServiceBell20" Filled="True" FontSize="40" Margin="0,0,10,0" />
                     <TextBlock VerticalAlignment="Center"
-                               FontSize="24" FontWeight="Bold" Text="Add Customer" />
+                               FontSize="24" FontWeight="Bold" Text="Add/Edit Service Use" />
                 </StackPanel>
 
                 <ui:Button Grid.Column="1"
@@ -87,19 +87,38 @@
                             <ComboBox BorderThickness="2"
                                       BorderBrush="#767676"
                                       FontSize="16"
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                      MaxDropDownHeight="140" x:Name="ServiceBox" Loaded="ServiceBox_OnLoaded"
                                       ItemsSource="{Binding ServiceIdList}"
-                                      SelectedItem="{Binding CurrentServiceUse.ServiceId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                      SelectedItem="{Binding CurrentServiceUse.ServiceItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                
+                                <ComboBox.Resources>
+                                    <ControlTemplate x:Key="SelectTemplate">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding ServiceId}" Margin="0 0 5 0" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding ServiceName}" />
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                    <ControlTemplate x:Key="DropdownTemplate">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding ServiceId}" Margin="0 0 0 5" FontWeight="SemiBold" />
+                                            <TextBlock Text="{Binding ServiceName}" />
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </ComboBox.Resources>
 
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsFocused" Value="True">
-                                                <Setter Property="BorderBrush"
-                                                        Value="#767676" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ComboBox.Style>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Control x:Name="TemplateControl" Focusable="False" Template="{StaticResource DropdownTemplate}" />
+                                        
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBoxItem}}, Path=IsSelected}" Value="{x:Null}">
+                                                <Setter TargetName="TemplateControl" Property="Template" Value="{StaticResource SelectTemplate}" />
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
                                 
                             </ComboBox>
                         </StackPanel>
@@ -112,6 +131,8 @@
                             <ComboBox BorderThickness="2"
                                       BorderBrush="#767676"
                                       FontSize="16"
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                      MaxDropDownHeight="140"
                                       ItemsSource="{Binding InvoiceIdList}"
                                       SelectedItem="{Binding CurrentServiceUse.InvoiceId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 

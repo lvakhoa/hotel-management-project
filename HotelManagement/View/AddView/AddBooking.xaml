@@ -114,19 +114,39 @@
                                       BorderThickness="2"
                                       BorderBrush="#767676"
                                       FontSize="16"
-                                      SelectedItem="{Binding CurrentBooking.RoomID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      MaxDropDownHeight="140"
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                      Loaded="RoomIdBox_OnLoaded"
+                                      SelectedItem="{Binding CurrentBooking.RoomItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       ItemsSource="{Binding RoomIdList}">
+                                
+                                <ComboBox.Resources>
+                                    <ControlTemplate x:Key="SelectTemplate">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding RoomID}" Margin="0 0 5 0" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding RoomType}" />
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                    <ControlTemplate x:Key="DropdownTemplate">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding RoomID}" Margin="0 0 0 5" FontWeight="SemiBold" />
+                                            <TextBlock Text="{Binding RoomType}" />
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </ComboBox.Resources>
 
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsFocused" Value="True">
-                                                <Setter Property="BorderBrush"
-                                                        Value="#767676" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ComboBox.Style>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Control x:Name="TemplateControl" Focusable="False" Template="{StaticResource DropdownTemplate}" />
+                                        
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBoxItem}}, Path=IsSelected}" Value="{x:Null}">
+                                                <Setter TargetName="TemplateControl" Property="Template" Value="{StaticResource SelectTemplate}" />
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
 
                             </ComboBox>
 
@@ -148,6 +168,8 @@
                                       BorderThickness="2"
                                       BorderBrush="#767676"
                                       FontSize="16"
+                                      MaxDropDownHeight="140"
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                                       SelectedItem="{Binding CurrentBooking.InvoiceID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       ItemsSource="{Binding InvoiceIdList}">
 
@@ -175,6 +197,8 @@
                                       BorderThickness="2"
                                       BorderBrush="#767676"
                                       FontSize="16"
+                                      MaxDropDownHeight="140"
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                                       SelectedItem="{Binding CurrentBooking.CustomerID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       ItemsSource="{Binding CustomerIdList}">
 
@@ -356,6 +380,8 @@
                                       BorderThickness="2"
                                       BorderBrush="#767676"
                                       FontSize="16"
+                                      MaxDropDownHeight="100"
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                                       SelectedItem="{Binding CurrentBooking.StaffID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       ItemsSource="{Binding StaffIdList}">
 

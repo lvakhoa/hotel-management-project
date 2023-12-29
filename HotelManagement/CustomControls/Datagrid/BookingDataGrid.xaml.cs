@@ -21,7 +21,7 @@ public partial class BookingDataGrid : UserControl
         var addBooking = new AddBooking(this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         addBooking.ShowDialog();
     }
@@ -33,7 +33,7 @@ public partial class BookingDataGrid : UserControl
         var addBooking = new AddBooking(btn.Tag.ToString(), this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true,
+            Owner = Window.GetWindow(this),
         };
         addBooking.ShowDialog();
     }
@@ -92,6 +92,19 @@ public partial class BookingDataGrid : UserControl
         var item = (BookingList.BookingVM)obj;
         return item.BookingID!.ToLower().Contains(text) ||
                item.InvoiceID!.ToLower().Contains(text) ||
-               item.RoomID!.ToLower().Contains(text);
+               item.RoomItem!.RoomID!.ToLower().Contains(text);
+    }
+
+    private void RestoreBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        RestoreMenu.IsOpen = true;
+    }
+    
+    private void OnOpened(object sender, RoutedEventArgs e)
+    {
+        var contextMenu = (ContextMenu)sender;
+        ((MenuItem)contextMenu.Items[0]!).Command = DataContext is BookingList bookingList ? bookingList.RestoreLast7DaysCommand : null;
+        ((MenuItem)contextMenu.Items[1]!).Command = DataContext is BookingList bookingList1 ? bookingList1.RestoreLast30DaysCommand : null;
+        ((MenuItem)contextMenu.Items[2]!).Command = DataContext is BookingList bookingList2 ? bookingList2.RestoreAllCommand : null;
     }
 }

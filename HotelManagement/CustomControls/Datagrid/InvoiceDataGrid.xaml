@@ -21,7 +21,7 @@
 
     <Grid Margin="20,0,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
+            <RowDefinition Height="80" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -32,7 +32,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Orientation="Horizontal">
-                <ui:TextBox x:Name="SearchBox" Icon="Search12" FontSize="18" PlaceholderText="Search" Width="320"
+                <ui:TextBox x:Name="SearchBox" Icon="Search12" FontSize="18" PlaceholderText="Search" Width="320" Height="40"
                             KeyDown="TextBox_OnSearch" TextChanged="SearchBox_OnTextChanged"/>
 
                 <ui:Button Appearance="Dark"
@@ -43,8 +43,24 @@
                            Content="Search"
                            FontSize="16"
                            FontWeight="Bold"
-                           Margin="10,0,0,0"
+                           Margin="10,0,10,0"
                            Click="SearchBtn_OnClick"/>
+                
+                <ui:Button Width="42" Height="42" BorderThickness="0" CornerRadius="50" Cursor="Hand"
+                           Icon="History16" FontSize="26" Foreground="#4F4A4A" Background="Transparent"
+                           MouseOverBackground="#E1E5EA" PressedBackground="#E1E5EA" PressedForeground="#4F4A4A"
+                           ToolTip="Click here to restore" ToolTipService.InitialShowDelay="500"
+                           Click="RestoreBtn_OnClick">
+                    
+                    <ui:Button.ContextMenu>
+                        <ContextMenu x:Name="RestoreMenu" Opened="OnOpened" StaysOpen="True">
+                            <MenuItem Header="Restore Last 7 Days" />
+                            <MenuItem Header="Restore Last 30 Days" />
+                            <MenuItem Header="Restore All" />
+                        </ContextMenu>
+                    </ui:Button.ContextMenu>
+                    
+                </ui:Button>
             </StackPanel>
         </Grid>
 
@@ -95,7 +111,7 @@
                                                Padding="5" Background="#D9D9D9"
                                                MouseOverBackground="#DFDFDF" PressedBackground="#D9D9D9" 
                                                Command="{Binding ElementName=DatagridView, Path=DataContext.DeleteCommand}"
-                                               CommandParameter="{Binding ID}"
+                                               CommandParameter="{Binding InvoiceID}"
                                                ToolTip="Click here to delete invoice"
                                                ToolTipService.InitialShowDelay="500"/>
                                 </StackPanel>

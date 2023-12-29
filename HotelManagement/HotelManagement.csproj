@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+        <ApplicationIcon>Assets\Images\hotel_icon.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,6 +22,7 @@
       </PackageReference>
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
       <PackageReference Include="Microsoft.Extensions.Azure" Version="1.7.1" />
+      <PackageReference Include="SweetAlertSharp" Version="1.3.0" />
       <PackageReference Include="WPF-UI" Version="2.1.0" />
     </ItemGroup>
 
@@ -38,6 +40,8 @@
       <Resource Include="Assets\Images\login.png" />
       <None Remove="Assets\Images\hotel_img.png" />
       <Resource Include="Assets\Images\hotel_img.png" />
+      <None Remove="Assets\Images\hotel_icon.ico" />
+      <Resource Include="Assets\Images\hotel_icon.ico" />
     </ItemGroup>
 
     <ItemGroup>
@@ -77,6 +81,11 @@
         <SubType>Designer</SubType>
       </Page>
       <Page Update="CustomControls\Datagrid\DataGrid.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="CustomControls\MessageBox\MessageBox.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>

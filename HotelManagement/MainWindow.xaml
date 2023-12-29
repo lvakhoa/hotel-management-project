@@ -22,7 +22,8 @@
     <Border CornerRadius="12">
         <!-- Window Border -->
         
-        <Border BorderBrush="#231F20" 
+        <Border x:Name="WindowBorder"
+                BorderBrush="#231F20" 
                 CornerRadius="10"
                 BorderThickness="1"
                 Background="#fff">
@@ -56,7 +57,7 @@
                             </Grid.ColumnDefinitions>
                             
                             <Image Grid.Column="0" Source="/HotelManagement;component/Assets/Images/hotel_icon.png" Width="24"/>
-                            <TextBlock FontSize="14" Grid.Column="1" Text="Hotel Management" VerticalAlignment="Center" Margin="8, 0,0,0" />
+                            <TextBlock Grid.Column="1" FontSize="14" Foreground="#1E1E1E" Text="Hotel Management" VerticalAlignment="Center" Margin="8, 0,0,0" />
                         </Grid>
                         
                         <ui:Button Grid.Column="1"
@@ -68,19 +69,22 @@
                                    BorderThickness="0"
                                    MouseOverBackground="#D4D2D2"
                                    PressedBackground="#CAC9C9"
-                                   CornerRadius="0"/>
+                                   CornerRadius="0"
+                                   Click="MinimizeBtn_OnClick"/>
                         
                         <ui:Button Grid.Column="2"
                                    Width="40"
                                    Height="40"
-                                   Icon="SquareMultiple24"
+                                   Icon="Square24"
                                    Appearance="Transparent"
                                    BorderThickness="0"
                                    MouseOverBackground="#D4D2D2"
                                    PressedBackground="#CAC9C9"
-                                   CornerRadius="0"/>
+                                   CornerRadius="0"
+                                   Click="MaximizeBtn_OnClick"/>
                         
                         <ui:Button Grid.Column="3"
+                                   x:Name="CloseBtn"
                                    Width="40"
                                    Height="40"
                                    Icon="Dismiss28"
@@ -90,7 +94,8 @@
                                    MouseOverBackground="#EE4242"
                                    PressedBackground="#FF2525" 
                                    PressedForeground="#FFF"
-                                   CornerRadius="0, 10, 0, 0">
+                                   CornerRadius="0, 10, 0, 0"
+                                   Click="CloseBtn_OnClick">
                             
                             <ui:Button.Style>
                                 <Style TargetType="{x:Type ui:Button}" BasedOn="{StaticResource {x:Type ui:Button}}">

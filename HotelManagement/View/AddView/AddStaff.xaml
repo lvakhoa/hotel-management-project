@@ -34,7 +34,7 @@
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="30,0">
                     <ui:SymbolIcon Symbol="PersonAdd20" FontSize="40" Margin="0,0,10,0" />
                     <TextBlock VerticalAlignment="Center"
-                               FontSize="24" FontWeight="Bold" Text="Add Staff " />
+                               FontSize="24" FontWeight="Bold" Text="Add/Edit Staff " />
                 </StackPanel>
 
                 <ui:Button Grid.Column="1"
@@ -84,7 +84,7 @@
                             <ui:TextBox x:Name="NameBox"
                                         Validation.ErrorTemplate="{x:Null}"
                                         FontSize="16"
-                                        Text="{Binding CurrentStaff.FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        Text="{Binding CurrentStaff.FullName, NotifyOnValidationError=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                                 <ui:TextBox.Style>
                                     <Style TargetType="{x:Type ui:TextBox}"
@@ -150,7 +150,7 @@
                             <ui:TextBox x:Name="EmailBox"
                                         Validation.ErrorTemplate="{x:Null}"
                                         FontSize="16"
-                                        Text="{Binding CurrentStaff.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        Text="{Binding CurrentStaff.Email, ValidatesOnDataErrors=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                                 <ui:TextBox.Style>
                                     <Style TargetType="{x:Type ui:TextBox}"
@@ -192,7 +192,7 @@
                             <ui:TextBox x:Name="PhoneBox"
                                         Validation.ErrorTemplate="{x:Null}"
                                         FontSize="16"
-                                        Text="{Binding CurrentStaff.ContactNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        Text="{Binding CurrentStaff.ContactNumber, ValidatesOnDataErrors=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                                 <ui:TextBox.Style>
                                     <Style TargetType="{x:Type ui:TextBox}"
@@ -259,7 +259,7 @@
                             <ui:TextBox x:Name="AddressBox"
                                         Validation.ErrorTemplate="{x:Null}"
                                         FontSize="16"
-                                        Text="{Binding CurrentStaff.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        Text="{Binding CurrentStaff.Address, ValidatesOnDataErrors=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                                 <ui:TextBox.Style>
                                     <Style TargetType="{x:Type ui:TextBox}"
@@ -295,7 +295,7 @@
                                         FontSize="16"
                                         Focusable="False"
                                         SelectedDateFormat="Short"
-                                        SelectedDate="{Binding CurrentStaff.Birthday, NotifyOnValidationError=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }">
+                                        SelectedDate="{Binding CurrentStaff.Birthday, ValidatesOnDataErrors=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }">
                                 <DatePicker.Style>
                                     <Style TargetType="{x:Type DatePicker}"
                                            BasedOn="{StaticResource {x:Type DatePicker}}">
@@ -334,7 +334,7 @@
                             <ui:TextBox x:Name="PosBox"
                                         Validation.ErrorTemplate="{x:Null}"
                                         FontSize="16"
-                                        Text="{Binding CurrentStaff.Position, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        Text="{Binding CurrentStaff.Position, ValidatesOnDataErrors=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                                 <ui:TextBox.Style>
                                     <Style TargetType="{x:Type ui:TextBox}"
@@ -367,7 +367,7 @@
                             <ui:TextBox x:Name="SalBox"
                                         Validation.ErrorTemplate="{x:Null}"
                                         FontSize="16"
-                                        Text="{Binding CurrentStaff.Salary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        Text="{Binding CurrentStaff.Salary, ValidatesOnDataErrors=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                                 <ui:TextBox.Style>
                                     <Style TargetType="{x:Type ui:TextBox}"
