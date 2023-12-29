@@ -15,15 +15,18 @@ public partial class InvoiceList : ObservableObject
 
     [ObservableProperty] private bool _isLoading;
 
+    #region Constructor
     public InvoiceList()
     {
         List = new ObservableCollection<InvoiceVM>();
 
-        GetInvoiceList();
+        _ = GetInvoiceList();
     }
 
-    private async void GetInvoiceList()
+    private async Task GetInvoiceList()
     {
+        List.Clear();
+        
         IsLoading = true;
         await Task.Delay(1000);
         await using var context = new HotelManagementContext();
@@ -55,6 +58,8 @@ public partial class InvoiceList : ObservableObject
 
         IsLoading = false;
     }
+    
+    #endregion
 
     #region EditRoomType
 
@@ -120,9 +125,104 @@ public partial class InvoiceList : ObservableObject
     }
 
     #endregion
+    
+    #region Restore Command
+
+    [RelayCommand]
+    private async Task RestoreLast7Days()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Invoice",
+            "Restore all invoices that have been deleted in the last 7 days?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var invoices = await context.Invoices.Where(e => e.DeletedDate >= DateTime.Now.AddDays(-7)).ToListAsync();
+
+            foreach (var invoice in invoices)
+            {
+                invoice.Deleted = false;
+                invoice.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore invoices successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetInvoiceList();
+        }
+    }
+    
+    [RelayCommand]
+    private async Task RestoreLast30Days()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Invoice",
+            "Restore all invoices that have been deleted in the last 30 days?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var invoices = await context.Invoices.Where(e => e.DeletedDate >= DateTime.Now.AddDays(-30)).ToListAsync();
+
+            foreach (var invoice in invoices)
+            {
+                invoice.Deleted = false;
+                invoice.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore invoices successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetInvoiceList();
+        }
+    }
+    
+    [RelayCommand]
+    private async Task RestoreAll()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Invoice",
+            "Restore all invoices that have been deleted?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var invoices = await context.Invoices.Where(e => e.Deleted == true).ToListAsync();
+
+            foreach (var invoice in invoices)
+            {
+                invoice.Deleted = false;
+                invoice.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore invoices successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetInvoiceList();
+        }
+    }
+    
+    #endregion
 
     public class InvoiceVM
     {
+        #region Properties
         public string? InvoiceID { get; set; }
 
         public string? CustomerId { get; set; }
@@ -132,5 +232,6 @@ public partial class InvoiceList : ObservableObject
         public DateTime InvoiceDate { get; set; }
         public decimal? TotalAmount { get; set; }
         public string? PaymentType { get; set; }
+        #endregion
     }
 }

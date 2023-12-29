@@ -24,16 +24,18 @@ public partial class ServiceUseList : ObservableObject
 
     public ServiceUseList()
     {
-        GetServiceUseList();
+        List = new ObservableCollection<ServiceUseVM>();
+        
+        _ = GetServiceUseList();
 
         InvoiceIdList = new List<string>();
         ServiceIdList = new List<ServiceInfo>();
     }
 
-    private async void GetServiceUseList()
+    private async Task GetServiceUseList()
     {
-        List = new ObservableCollection<ServiceUseVM>();
-
+        List.Clear();
+        
         IsLoading = true;
         await Task.Delay(1000);
         await using var context = new HotelManagementContext();
@@ -254,6 +256,100 @@ public partial class ServiceUseList : ObservableObject
         }
     }
 
+    #endregion
+    
+    #region Restore Command
+
+    [RelayCommand]
+    private async Task RestoreLast7Days()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Service Use",
+            "Restore all service uses that have been deleted in the last 7 days?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var serviceUses = await context.ServiceUses.Where(e => e.DeletedDate >= DateTime.Now.AddDays(-7)).ToListAsync();
+
+            foreach (var serviceUse in serviceUses)
+            {
+                serviceUse.Deleted = false;
+                serviceUse.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore service uses successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetServiceUseList();
+        }
+    }
+    
+    [RelayCommand]
+    private async Task RestoreLast30Days()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Service Use",
+            "Restore all service uses that have been deleted in the last 30 days?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var serviceUses = await context.ServiceUses.Where(e => e.DeletedDate >= DateTime.Now.AddDays(-30)).ToListAsync();
+
+            foreach (var serviceUse in serviceUses)
+            {
+                serviceUse.Deleted = false;
+                serviceUse.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore service uses successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetServiceUseList();
+        }
+    }
+    
+    [RelayCommand]
+    private async Task RestoreAll()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Service Use",
+            "Restore all service uses that have been deleted?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var serviceUses = await context.ServiceUses.Where(e => e.Deleted == true).ToListAsync();
+
+            foreach (var serviceUse in serviceUses)
+            {
+                serviceUse.Deleted = false;
+                serviceUse.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore service uses successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetServiceUseList();
+        }
+    }
+    
     #endregion
 
     public partial class ServiceUseVM : ObservableValidator

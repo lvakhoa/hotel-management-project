@@ -93,4 +93,17 @@ public partial class ServiceUseDataGrid : UserControl
         return item.InvoiceId!.ToLower().Contains(text) ||
                item.ServiceItem!.ServiceId.ToLower().Contains(text);
     }
+
+    private void RestoreBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        RestoreMenu.IsOpen = true;
+    }
+    
+    private void OnOpened(object sender, RoutedEventArgs e)
+    {
+        var contextMenu = (ContextMenu)sender;
+        ((MenuItem)contextMenu.Items[0]!).Command = DataContext is ServiceUseList serviceUseList ? serviceUseList.RestoreLast7DaysCommand : null;
+        ((MenuItem)contextMenu.Items[1]!).Command = DataContext is ServiceUseList serviceUseList1 ? serviceUseList1.RestoreLast30DaysCommand : null;
+        ((MenuItem)contextMenu.Items[2]!).Command = DataContext is ServiceUseList serviceUseList2 ? serviceUseList2.RestoreAllCommand : null;
+    }
 }

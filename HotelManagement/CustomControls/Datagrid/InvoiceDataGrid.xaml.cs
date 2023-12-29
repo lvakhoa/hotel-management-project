@@ -70,4 +70,17 @@ public partial class InvoiceDataGrid : UserControl
                item.CustomerId!.ToLower().Contains(text) ||
                item.StaffId!.ToLower().Contains(text);
     }
+
+    private void RestoreBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        RestoreMenu.IsOpen = true;
+    }
+    
+    private void OnOpened(object sender, RoutedEventArgs e)
+    {
+        var contextMenu = (ContextMenu)sender;
+        ((MenuItem)contextMenu.Items[0]!).Command = DataContext is InvoiceList invoiceList ? invoiceList.RestoreLast7DaysCommand : null;
+        ((MenuItem)contextMenu.Items[1]!).Command = DataContext is InvoiceList invoiceList1 ? invoiceList1.RestoreLast30DaysCommand : null;
+        ((MenuItem)contextMenu.Items[2]!).Command = DataContext is InvoiceList invoiceList2 ? invoiceList2.RestoreAllCommand : null;
+    }
 }

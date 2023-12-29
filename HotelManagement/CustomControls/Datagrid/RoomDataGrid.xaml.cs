@@ -94,4 +94,17 @@ public partial class RoomDataGrid : UserControl
                item.RoomNumber!.ToLower().Contains(text) ||
                item.RoomTypeID!.ToLower().Contains(text);
     }
+    
+    private void RestoreBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        RestoreMenu.IsOpen = true;
+    }
+    
+    private void OnOpened(object sender, RoutedEventArgs e)
+    {
+        var contextMenu = (ContextMenu)sender;
+        ((MenuItem)contextMenu.Items[0]!).Command = DataContext is RoomList roomList ? roomList.RestoreLast7DaysCommand : null;
+        ((MenuItem)contextMenu.Items[1]!).Command = DataContext is RoomList roomList1 ? roomList1.RestoreLast30DaysCommand : null;
+        ((MenuItem)contextMenu.Items[2]!).Command = DataContext is RoomList roomList2 ? roomList2.RestoreAllCommand : null;
+    }
 }

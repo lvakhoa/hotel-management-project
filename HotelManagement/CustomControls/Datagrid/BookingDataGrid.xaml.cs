@@ -94,4 +94,17 @@ public partial class BookingDataGrid : UserControl
                item.InvoiceID!.ToLower().Contains(text) ||
                item.RoomItem!.RoomID!.ToLower().Contains(text);
     }
+
+    private void RestoreBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        RestoreMenu.IsOpen = true;
+    }
+    
+    private void OnOpened(object sender, RoutedEventArgs e)
+    {
+        var contextMenu = (ContextMenu)sender;
+        ((MenuItem)contextMenu.Items[0]!).Command = DataContext is BookingList bookingList ? bookingList.RestoreLast7DaysCommand : null;
+        ((MenuItem)contextMenu.Items[1]!).Command = DataContext is BookingList bookingList1 ? bookingList1.RestoreLast30DaysCommand : null;
+        ((MenuItem)contextMenu.Items[2]!).Command = DataContext is BookingList bookingList2 ? bookingList2.RestoreAllCommand : null;
+    }
 }

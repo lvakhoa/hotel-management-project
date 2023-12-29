@@ -26,11 +26,13 @@ public partial class ServiceList : ObservableObject
         List = new ObservableCollection<ServiceVM>();
 
         ServiceTypeList = new List<string>();
-        GetServiceList();
+        _ = GetServiceList();
     }
 
-    private async void GetServiceList()
+    private async Task GetServiceList()
     {
+        List.Clear();
+        
         IsLoading = true;
         await Task.Delay(1000);
         await using var context = new HotelManagementContext();
@@ -231,6 +233,100 @@ public partial class ServiceList : ObservableObject
         }
     }
 
+    #endregion
+    
+    #region Restore Command
+
+    [RelayCommand]
+    private async Task RestoreLast7Days()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Service",
+            "Restore all services that have been deleted in the last 7 days?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var services = await context.Services.Where(e => e.DeletedDate >= DateTime.Now.AddDays(-7)).ToListAsync();
+
+            foreach (var service in services)
+            {
+                service.Deleted = false;
+                service.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore services successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetServiceList();
+        }
+    }
+    
+    [RelayCommand]
+    private async Task RestoreLast30Days()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Service",
+            "Restore all services that have been deleted in the last 30 days?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var services = await context.Services.Where(e => e.DeletedDate >= DateTime.Now.AddDays(-30)).ToListAsync();
+
+            foreach (var service in services)
+            {
+                service.Deleted = false;
+                service.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore services successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetServiceList();
+        }
+    }
+    
+    [RelayCommand]
+    private async Task RestoreAll()
+    {
+        var result = MessageBox.Show(
+            App.ActivatedWindow, "Restore Service",
+            "Restore all services that have been deleted?",
+            msgImage: MessageBoxImage.QUESTION, msgButton: MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.YES)
+        {
+            await using var context = new HotelManagementContext();
+            var services = await context.Services.Where(e => e.Deleted == true).ToListAsync();
+
+            foreach (var service in services)
+            {
+                service.Deleted = false;
+                service.DeletedDate = null;
+            }
+
+            await context.SaveChangesAsync();
+            
+            MessageBox.Show(
+                App.ActivatedWindow, "Success",
+                "Restore services successfully!",
+                msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+                
+            await GetServiceList();
+        }
+    }
+    
     #endregion
 
     public partial class ServiceVM : ObservableValidator
