@@ -23,7 +23,7 @@ public partial class HomeVM : ObservableObject
     private bool _isLoading;
     [ObservableProperty]
     private ObservableCollection<BookingDisplay> _recentBookings;
-    
+
     public class BookingDisplay
     {
         public string RoomType { get; set; }
@@ -100,7 +100,7 @@ public partial class HomeVM : ObservableObject
         InitializeCharts();
         IsLoading = false;
     }
-    
+
     private void InitializeCharts()
     {
         SeriesCollection = new SeriesCollection
@@ -115,11 +115,11 @@ public partial class HomeVM : ObservableObject
                     HomeData.TotalBookingWednesday,
                     HomeData.TotalBookingThursday,
                     HomeData.TotalBookingFriday,
-                    HomeData.TotalBookingSaturday, 
+                    HomeData.TotalBookingSaturday,
                     HomeData.TotalBookingSunday
                 },
-                DataLabels = true, 
-                Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#66CDAA"))
+                DataLabels = true,
+                Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#C2FCC1"))
             },
         };
         PieSeriesCollection = new SeriesCollection
@@ -182,35 +182,35 @@ public partial class HomeVM : ObservableObject
                             .CountAsync(b => b.CheckInDate.Value.Date == today);
         return temp;
     }
-    
+
     private async Task<int> GetTotalBooking(HotelManagementContext context)
     {
         var temp = await context.Bookings
              .CountAsync();
         return temp;
     }
-    
+
     private async Task<int> GetTotalAvailableRoom(HotelManagementContext context, RoomMap rm)
     {
         await Task.Delay(200);
         var temp = (from r in rm.List where r.Status == "Available" select r).Count();
         return temp;
     }
-    
+
     private async Task<int> GetTotalBlockedRoom(HotelManagementContext context, RoomMap rm)
     {
         await Task.Delay(200);
         var temp = (from r in rm.List where r.Status == "Out of Order" select r).Count();
         return temp;
     }
-    
+
     private async Task<int> GetTotalOccupiedRoom(HotelManagementContext context, RoomMap rm)
     {
         await Task.Delay(200);
         var temp = (from r in rm.List where r.Status == "Occupied" select r).Count();
         return temp;
     }
-    
+
     private async Task<int> GetTotalCheckInToday(HotelManagementContext context)
     {
         var today = DateTime.Today;
@@ -218,7 +218,7 @@ public partial class HomeVM : ObservableObject
             .CountAsync(b => b.CheckInDate.Value.Date == today);
         return temp;
     }
-    
+
     private async Task<int> GetTotalCheckOutToday(HotelManagementContext context)
     {
         var today = DateTime.Today;
@@ -241,7 +241,7 @@ public partial class HomeVM : ObservableObject
     {
         return await context.Rooms.CountAsync();
     }
-    
+
     public partial class HomeItemProperty : ObservableObject
     {
         [ObservableProperty] private int _totalBookingMonday;

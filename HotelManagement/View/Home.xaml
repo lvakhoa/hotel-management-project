@@ -51,13 +51,13 @@
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
-                            Margin="0 10 0 10">
+                            Margin="30 10 0 10">
                     <Border Background="#E8EFFF"
                             Padding="10"
                             Height="80"
                             Width="200"
                             CornerRadius="10"
-                            Margin="10 0 10 0">
+                            Margin="0 0 15 0">
                         <Grid>
                             <StackPanel VerticalAlignment="Center"
                                         Orientation="Horizontal">
@@ -95,7 +95,7 @@
                             Height="80"
                             Width="200"
                             CornerRadius="10"
-                            Margin="10 0 10 0">
+                            Margin="15 0 15 0">
                         <Grid>
                             <StackPanel VerticalAlignment="Center"
                                         Orientation="Horizontal">
@@ -133,7 +133,7 @@
                             Height="80"
                             Width="200"
                             CornerRadius="10"
-                            Margin="10 0 10 0">
+                            Margin="15 0 15 0">
                         <Grid>
                             <StackPanel VerticalAlignment="Center"
                                         Orientation="Horizontal">
@@ -171,7 +171,7 @@
                             Height="80"
                             Width="200"
                             CornerRadius="10"
-                            Margin="10 0 10 0">
+                            Margin="15 0 15 0">
                         <Grid>
                             <StackPanel VerticalAlignment="Center"
                                         Orientation="Horizontal">
@@ -205,7 +205,7 @@
                     </Border>
                 </StackPanel>
                 
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" Margin="20,0,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.6*"/>
                         <ColumnDefinition />
@@ -232,11 +232,11 @@
                                               Margin="0 10 0 0">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Border Margin="5" 
+                                            <Border Margin="5,10,5,5" 
                                                     Padding="10" 
-                                                    Background="#E6E6E6" 
+                                                    Background="#E8EFFF" 
                                                     CornerRadius="5"
-                                                    BorderBrush="Gray" 
+                                                   BorderBrush="#E8EFFF"
                                                     BorderThickness="1">
                                                 <Grid>
                                                     <Grid.RowDefinitions>
@@ -259,7 +259,7 @@
                                                     </TextBlock>
                                                     <StackPanel Grid.Row="1"
                                                                 Margin="10 0 0 0">
-                                                        <TextBlock FontSize="10"
+                                                        <TextBlock FontSize="12"
                                                                    Text="{Binding CustomerName}"/>
                                                         <TextBlock FontSize="10"
                                                                    Text="{Binding BookingDate, StringFormat='dd/MM/yyyy - hh:mm tt'}" />
@@ -271,17 +271,26 @@
                                 </ItemsControl>
                             </StackPanel>
                         </Border>
+                        <Border Grid.Row="1" 
+          Padding="20"
+          Margin="20 0 10 20"
+          BorderThickness="2" 
+          CornerRadius="20"
+          Height="330"
+          VerticalAlignment="Top"
+          BorderBrush="LightGray">
+                        </Border>
                         <Grid Grid.Row="1"
                               Margin="20 0 20 20">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition />
+                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
                             
                             <TextBlock Text="Total"
                                        Foreground="#373434"
                                        FontSize="22" 
-                                       Margin="20"
+                                       Margin="20,20,20,20"
                                        FontWeight="Bold"/>
                             <Grid Grid.Row="1">
                                 <StackPanel VerticalAlignment="Center"
@@ -386,7 +395,7 @@
                                            FontSize="22" 
                                            FontWeight="Bold" />
                                 <wpf:PieChart LegendLocation="Left"
-                                              Height="200"
+                                              Height="250"
                                               Width="300"
                                               Hoverable="True"
                                               DataClick="PieChart_DataClick_1"
