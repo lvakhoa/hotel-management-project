@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+        <ApplicationIcon>Assets\Images\hotel_icon.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -39,6 +40,8 @@
       <Resource Include="Assets\Images\login.png" />
       <None Remove="Assets\Images\hotel_img.png" />
       <Resource Include="Assets\Images\hotel_img.png" />
+      <None Remove="Assets\Images\hotel_icon.ico" />
+      <Resource Include="Assets\Images\hotel_icon.ico" />
     </ItemGroup>
 
     <ItemGroup>
