@@ -6,10 +6,9 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d"
              d:DesignHeight="638" d:DesignWidth="1010"
-             Background="Transparent">
+             Background="Transparent" Width="1010" Height="638">
     
     <Grid Background="#FFF">
-        
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="56" />
@@ -35,8 +34,8 @@
             <!-- Account section -->
             <Grid Grid.Row="2" VerticalAlignment="Top" Margin="0 10 0 0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="52" />
-                    <RowDefinition Height="86" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="95" />
                 </Grid.RowDefinitions>
 
                 <Grid>
@@ -47,32 +46,48 @@
                                HorizontalAlignment="Left"
                                FontWeight="Bold" />
                 </Grid>
-
-                <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top">
-                    <Ellipse Width="70" Height="70"
-                             Margin="100,0,0,0">
-                        <Ellipse.Stroke>
-                            <SolidColorBrush Color="#FF3B3C32" />
-                        </Ellipse.Stroke>
-                    </Ellipse>
-                    <StackPanel HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Margin="10,0,0,0">
-                        <TextBlock FontSize="20"
-                                   Foreground="#373434"
-                                   HorizontalAlignment="Left"
-                                   FontWeight="Bold"
-                                   Text="{Binding FullName}" />
-                        
-                        <TextBlock Text="{Binding Position}"
-                                   FontSize="17"
-                                   HorizontalAlignment="Left"
-                                   FontWeight="Medium"
-                                   Foreground="Gray" />
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0" 
+                                Orientation="Horizontal" 
+                                VerticalAlignment="Top"
+                                Margin="60 10 0 0">
+                        <Border CornerRadius="70"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                Width="70"
+                                Height="70">
+                            <Border.Background>
+                                <ImageBrush x:Name="Avatar"
+                                            ImageSource="{Binding StaffAvatar}"/>
+                            </Border.Background>
+                        </Border>
+                        <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Margin="10,0,0,0">
+                            <TextBlock FontSize="20"
+                                       Foreground="#373434"
+                                       HorizontalAlignment="Left"
+                                       FontWeight="Bold"
+                                       Text="{Binding Staff.FullName}" />
+                            <TextBlock Text="{Binding Staff.Position}"
+                                       FontSize="17"
+                                       HorizontalAlignment="Left"
+                                       FontWeight="Medium"
+                                       Foreground="Gray" />
+                        </StackPanel>
                     </StackPanel>
-                    <ui:SymbolIcon Symbol="Edit24" Margin="320,0,10,0" />
-                        <Button BorderThickness="0"
-                                Click="ButtonEdit_Click">
+                    <Button BorderThickness="0"
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Click="ButtonEdit_Click">
+                        <WrapPanel>
+                            <ui:SymbolIcon Symbol="Edit24"
+                                           Margin="0 0 10 0"/>
                             <TextBlock x:Name="EditTb" Text="Edit Profile"
                                        FontSize="17"
                                        LineHeight="20"
@@ -82,9 +97,9 @@
                                        FontWeight="Bold"
                                        MouseEnter="EditTb_OnMouseEnter"
                                        MouseLeave="EditTb_OnMouseLeave" />
-                        </Button>
-
-                </StackPanel>
+                        </WrapPanel>
+                    </Button>
+                </Grid>
             </Grid>
 
             <GridSplitter Grid.Row="3" Height="2" IsEnabled="False" 

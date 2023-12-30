@@ -25,15 +25,15 @@ public partial class Settings : UserControl
 
     private void EditTb_OnMouseEnter(object sender, MouseEventArgs e)
     {
-            TextDecoration myUnderline = new TextDecoration
-            {
-                Pen = new Pen(new BrushConverter().ConvertFrom("#373434") as SolidColorBrush, 1),
-                PenThicknessUnit = TextDecorationUnit.FontRecommended,
-                PenOffset = 3
-            };
+        TextDecoration myUnderline = new TextDecoration
+        {
+            Pen = new Pen(new BrushConverter().ConvertFrom("#373434") as SolidColorBrush, 1),
+            PenThicknessUnit = TextDecorationUnit.FontRecommended,
+            PenOffset = 3
+        };
 
-            TextDecorationCollection myCollection = new TextDecorationCollection { myUnderline };
-            EditTb.TextDecorations = myCollection;
+        TextDecorationCollection myCollection = new TextDecorationCollection { myUnderline };
+        EditTb.TextDecorations = myCollection;
     }
 
     private void EditTb_OnMouseLeave(object sender, MouseEventArgs e)
@@ -43,10 +43,10 @@ public partial class Settings : UserControl
 
     private void ButtonEdit_Click(object sender, RoutedEventArgs e)
     {
-        var edit = new UserInfo()
+        var edit = new UserInfo(this.DataContext)
         {
             ShowInTaskbar = false,
-            Topmost = true
+            Owner = Window.GetWindow(this)
         };
         edit.ShowDialog();
     }
