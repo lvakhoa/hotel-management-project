@@ -30,7 +30,7 @@ public partial class RoomList : ObservableObject
     private async Task GetRoomList()
     {
         List.Clear();
-        
+        RoomTypeList.Clear();
         IsLoading = true;
         await Task.Delay(1000);
         await using var context = new HotelManagementContext();
@@ -149,6 +149,8 @@ public partial class RoomList : ObservableObject
 
             MessageBox.Show(App.ActivatedWindow, "Success", "Edit room successfully",
                 msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+
+            await GetRoomList();
         }
         else
         {
@@ -174,6 +176,8 @@ public partial class RoomList : ObservableObject
 
             MessageBox.Show(App.ActivatedWindow, "Success", "Add room successfully",
                 msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+
+            await GetRoomList();
         }
     }
 

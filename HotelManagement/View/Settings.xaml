@@ -6,7 +6,7 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d"
              d:DesignHeight="638" d:DesignWidth="1010"
-             Background="Transparent" Width="1010" Height="638">
+             Background="Transparent">
     
     <Grid Background="#FFF">
         
@@ -30,8 +30,7 @@
             </Grid>
 
             <GridSplitter Grid.Row="1" Height="2" IsEnabled="False" VerticalAlignment="Top"
-                          Width="910"
-                          HorizontalAlignment="Left" Margin="50,10,0,0" />
+                          HorizontalAlignment="Stretch" Margin="50,10,50,0" />
 
             <!-- Account section -->
             <Grid Grid.Row="2" VerticalAlignment="Top" Margin="0 10 0 0">
@@ -87,8 +86,8 @@
             </Grid>
 
             <GridSplitter Grid.Row="3" Height="2" IsEnabled="False" 
-                          VerticalAlignment="Top" Width="910"
-                          HorizontalAlignment="Left" Margin="50,10,0,0" />
+                          VerticalAlignment="Top"
+                          HorizontalAlignment="Stretch" Margin="50,10,50,0" />
 
             <!-- Preferences section -->
             <Grid Grid.Row="4">

@@ -173,6 +173,8 @@ public partial class RoomtypeList : ObservableObject
                 App.ActivatedWindow, "Success",
                 "Edit room type successfully!",
                 msgButton: MessageBoxButton.OK, msgImage: MessageBoxImage.SUCCESS);
+
+            await GetRoomtypeList();
         }
         else
         {
@@ -206,6 +208,8 @@ public partial class RoomtypeList : ObservableObject
                 App.ActivatedWindow, "Success",
                 "Add room type successfully!",
                 msgButton: MessageBoxButton.OK, msgImage: MessageBoxImage.SUCCESS);
+
+            await GetRoomtypeList();
         }
 
     }

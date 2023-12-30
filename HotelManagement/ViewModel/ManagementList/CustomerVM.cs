@@ -30,7 +30,7 @@ public partial class CustomerList : ObservableObject
     private async Task GetCustomerList()
     {
         List.Clear();
-        
+        GenderList.Clear();
         IsLoading = true;
         await Task.Delay(1000);
         await using var context = new HotelManagementContext();
@@ -166,6 +166,8 @@ public partial class CustomerList : ObservableObject
             MessageBox.Show(
                 App.ActivatedWindow, "Success", "Edit customer successfully",
                 msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+
+            await GetCustomerList();
         }
         else
         {
@@ -198,6 +200,8 @@ public partial class CustomerList : ObservableObject
                 App.ActivatedWindow, "Success",
                 "Add customer successfully!",
                 msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+
+            await GetCustomerList();
         }
     }
 

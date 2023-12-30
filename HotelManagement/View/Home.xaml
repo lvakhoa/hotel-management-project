@@ -7,11 +7,11 @@
              xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:uti="clr-namespace:HotelManagement.Utilities" 
              xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d"
              d:DesignHeight="900" 
              d:DesignWidth="1010"
              Background="White" 
-             Width="1010" 
              Height="Auto">
     <UserControl.Resources>
         <uti:BooleanToVisibilityConverter x:Key="InvertVisibilityConverter"
@@ -33,8 +33,7 @@
                        FontWeight="Bold"/>
         </Grid>
         <GridSplitter Grid.Row="0" Height="2" IsEnabled="False" VerticalAlignment="Bottom"
-                      Width="920"
-                      HorizontalAlignment="Left" Margin="50,10,0,0" />
+                      HorizontalAlignment="Stretch" Margin="50,10,50,0" />
 
         <fa:ImageAwesome Grid.Row="1" Icon="Spinner" Spin="{Binding IsLoading}"
                          Visibility="{Binding Path=IsLoading, Converter={StaticResource VisibilityConverter}}"
@@ -50,9 +49,9 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center"
-                            Margin="0 10 0 10">
-                    <Border Background="#E8EFFF"
+                            HorizontalAlignment="Left"
+                            Margin="30 10 30 10">
+                    <Border Background="#BACFFF"
                             Padding="10"
                             Height="80"
                             Width="200"
@@ -90,7 +89,7 @@
                         </Grid>
                     </Border>
                     
-                    <Border Background="#E4FFE0"
+                    <Border Background="#AAFF9D"
                             Padding="10"
                             Height="80"
                             Width="200"
@@ -120,7 +119,7 @@
                                                FontSize="15"
                                                FontWeight="SemiBold"
                                                HorizontalAlignment="Right"/>
-                                    <TextBlock Text="{Binding HomeData.TotalBookingToday, StringFormat='${0}'}"
+                                    <TextBlock Text="{Binding HomeData.TotalBookingToday}"
                                                FontSize="15"
                                                Foreground="#373434"/>
                                 </StackPanel>
@@ -128,7 +127,7 @@
                         </Grid>
                     </Border>
 
-                    <Border Background="#FFFCE0"
+                    <Border Background="#FFF596"
                             Padding="10"
                             Height="80"
                             Width="200"
@@ -146,10 +145,10 @@
                                                           Direction="270"
                                                           Color="whitesmoke" />
                                     </Border.Effect>
-                                    <ui:SymbolIcon Symbol="SignOut20"
+                                    <ui:SymbolIcon Symbol="DoorArrowRight16"
                                                    Margin="5"
                                                    Foreground="#EDDA2A"
-                                                   FontSize="35"/>
+                                                   FontSize="30"/>
                                 </Border>
                                 <StackPanel VerticalAlignment="Center"
                                             Margin="10 0 0 0">
@@ -166,7 +165,7 @@
                         </Grid>
                     </Border>
                     
-                    <Border Background="#F3D5E2"
+                    <Border Background="#FF9DC8"
                             Padding="10"
                             Height="80"
                             Width="200"
@@ -176,7 +175,7 @@
                             <StackPanel VerticalAlignment="Center"
                                         Orientation="Horizontal">
                                 <Border Margin="0 0 0 0"
-                                        CornerRadius="35"
+                                        CornerRadius="30"
                                         Background="White">
                                     <Border.Effect>
                                         <DropShadowEffect BlurRadius="20"
@@ -184,7 +183,7 @@
                                                           Direction="270"
                                                           Color="whitesmoke" />
                                     </Border.Effect>
-                                    <ui:SymbolIcon Symbol="SignOut20"
+                                    <ui:SymbolIcon Symbol="DoorArrowLeft16"
                                                    Margin="5"
                                                    Foreground="#BF6289"
                                                    FontSize="35"/>
@@ -273,17 +272,12 @@
                         </Border>
                         <Grid Grid.Row="1"
                               Margin="20 0 20 20">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            
-                            <TextBlock Text="Total"
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Total"
                                        Foreground="#373434"
                                        FontSize="22" 
                                        Margin="20"
                                        FontWeight="Bold"/>
-                            <Grid Grid.Row="1">
                                 <StackPanel VerticalAlignment="Center"
                                             Orientation="Horizontal"
                                             HorizontalAlignment="Center">
@@ -360,11 +354,9 @@
                                                        Text="Total Booking"/>
                                             
                                         </WrapPanel>
-                                        
                                     </StackPanel>  
-                                    
                                 </StackPanel>
-                            </Grid>
+                            </StackPanel>
                         </Grid>
                     </Grid>
                     
@@ -413,9 +405,14 @@
                                             <wpf:Axis Labels="{Binding Labels}"/>
                                         </wpf:CartesianChart.AxisX>
                                         <wpf:CartesianChart.AxisY>
-                                            <wpf:Axis Title="Number Booking" />
+                                            <wpf:Axis Title="Number Booking"
+                                                      MinValue="0">
+                                                <wpf:Axis.Separator>
+                                                    <wpf:Separator Step="1" />
+                                                </wpf:Axis.Separator>
+                                            </wpf:Axis>
                                         </wpf:CartesianChart.AxisY>
-                                    </wpf:CartesianChart>     
+                                </wpf:CartesianChart>     
                             </StackPanel>
                         </Border>
                     </Grid>
