@@ -3,7 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using HotelManagement.View;
 using HotelManagement.ViewModel.ManagementList;
+using UIBtn = Wpf.Ui.Controls.Button;
 
 namespace HotelManagement.CustomControls.Datagrid;
 
@@ -82,5 +84,17 @@ public partial class InvoiceDataGrid : UserControl
         ((MenuItem)contextMenu.Items[0]!).Command = DataContext is InvoiceList invoiceList ? invoiceList.RestoreLast7DaysCommand : null;
         ((MenuItem)contextMenu.Items[1]!).Command = DataContext is InvoiceList invoiceList1 ? invoiceList1.RestoreLast30DaysCommand : null;
         ((MenuItem)contextMenu.Items[2]!).Command = DataContext is InvoiceList invoiceList2 ? invoiceList2.RestoreAllCommand : null;
+    }
+    
+    private void ButtonPrint_OnClick(object sender, RoutedEventArgs e)
+    {
+        var btn = (UIBtn) sender;
+        
+        var printInvoice = new PrintInvoice(btn.Tag.ToString(), this.DataContext)
+        {
+            ShowInTaskbar = false,
+            Owner = Window.GetWindow(this)
+        };
+        printInvoice.ShowDialog();
     }
 }

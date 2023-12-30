@@ -12,6 +12,7 @@
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True"
+        MouseDown="Print_OnMouseDown"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None">
     <Window.DataContext>
@@ -160,9 +161,12 @@
                                                   Color="#D9D9D9"/>
                             </Border.Effect>
                             <customcontrols:Invoice x:Name="InvoiceViewer"
-                                                    Height="800"
                                                     Margin="10"
-                                                    CustomerInfo="{Binding Info}"/>
+                                                    Height="Auto"
+                                                    InvoiceInfo="{Binding CurrentInvoice}"
+                                                    CustomerInfo="{Binding CurrentCustomer}"
+                                                    BookingList="{Binding BookingInvoiceList}"
+                                                    ServiceList="{Binding ServiceInvoiceList}"/>
                         </Border>
                     </ScrollViewer>
                 </Grid>

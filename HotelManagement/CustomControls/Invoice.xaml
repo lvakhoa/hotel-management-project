@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:local="clr-namespace:HotelManagement.CustomControls"
+             xmlns:managementlist="clr-namespace:HotelManagement.ViewModel.ManagementList"
              mc:Ignorable="d" 
-             d:DesignHeight="950" d:DesignWidth="600"
+             d:DesignHeight="Auto" d:DesignWidth="Auto"
              x:Name="_Invoice"
              Background="#FFF">
 
@@ -66,7 +67,6 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
@@ -85,20 +85,11 @@
                                 BorderBrush="Black"
                                 BorderThickness="0 0 1 0">
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0"
-                                            VerticalAlignment="Center"
+                                <StackPanel VerticalAlignment="Center"
                                             Margin="10 0 0 0">
-                                    <TextBlock Text="Invoice ID: "/>
-                                    <TextBlock Text="Invoice Date: "/>
-                                    <TextBlock Text="Check-in: "/>
-                                    <TextBlock Text="Check-out: "/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding InvoiceInfo.StaffId, ElementName=_Invoice, StringFormat='Staff ID: {0}'}"/>
+                                    <TextBlock Text="{Binding InvoiceInfo.InvoiceID, ElementName=_Invoice, StringFormat='Invoice ID: {0}'}"/>
+                                    <TextBlock Text="{Binding InvoiceDate, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat='Invoice Print Date: {0}'}"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -122,12 +113,12 @@
                                 BorderBrush="Black"
                                 BorderThickness="1 0 0 0">
                             <Grid>
-                                <StackPanel Grid.Column="0"
-                                            VerticalAlignment="Center"
+                                <StackPanel VerticalAlignment="Center"
                                             Margin="10 0 10 0">
                                     <TextBlock Text="{Binding CustomerInfo.FullName, ElementName=_Invoice, StringFormat='Name: {0}'}"/>
-                                    <TextBlock Text="Gender: "/>
-                                    <TextBlock Text="Customer ID: "/>
+                                    <TextBlock Text="{Binding CustomerInfo.Gender, ElementName=_Invoice, StringFormat='Gender: {0}'}"/>
+                                    <TextBlock Text="{Binding CustomerInfo.ID, ElementName=_Invoice, StringFormat='Customer ID: {0}'}"/>
+                                    <TextBlock Text="{Binding CustomerInfo.ContactNumber, ElementName=_Invoice, StringFormat='Contact Number: {0}'}"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -137,18 +128,57 @@
             <Border Grid.Row="2"
                     BorderBrush="Black"
                     BorderThickness="2 0 2 2">
-                <StackPanel>
-                    <ListView>
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="No." Width="80"/>
-                                <GridViewColumn Header="RoomType" Width="280"/>
-                                <GridViewColumn Header="Amount" Width="150"/>
-                                <GridViewColumn Header="Total" Width="100"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ui:DataGrid ItemsSource="{Binding ElementName=_Invoice, Path=BookingList}"
+                              AutoGenerateColumns="False"
+                              GridLinesVisibility="Horizontal"
+                              BorderThickness="0"
+                              Grid.Column="0"
+                              IsReadOnly="True"
+                              SelectionMode="Single"
+                              HorizontalAlignment="Stretch"
+                              FontSize="10"
+                              CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False"
+                              CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="False">
+                        <ui:DataGrid.RowStyle>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <EventSetter Event="MouseLeftButtonDown" Handler="DataGrid_MouseLeftButtonDown" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#DFDFDF" />
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#DFDFDF" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ui:DataGrid.RowStyle>
+
+                        <ui:DataGrid.RowHeaderStyle>
+                            <Style TargetType="{x:Type DataGridRowHeader}">
+                                <Setter Property="Background" Value="#F9F9F9" />
+                            </Style>
+                        </ui:DataGrid.RowHeaderStyle>
+                        <ui:DataGrid.Columns>
+                            <DataGridTemplateColumn Visibility="Hidden" />
+                            
+                            <DataGridTextColumn Header="Room Number" Binding="{Binding RoomNumber}" />
+
+                            <DataGridTextColumn Header="Room Type" Binding="{Binding RoomType}" />
+
+                            <DataGridTextColumn Header="Check In" Binding="{Binding CheckIn}" />
+
+                            <DataGridTextColumn Header="Check Out" Binding="{Binding CheckOut}" />
+                            
+                            <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount}" />                    
+                            
+                        </ui:DataGrid.Columns>
+
+                    </ui:DataGrid>
+                </Grid>
             </Border>
             <Border Grid.Row="3"
                     BorderBrush="Black"
@@ -156,23 +186,54 @@
                 <WrapPanel HorizontalAlignment="Right"
                            VerticalAlignment="Center"
                            Margin="0 0 10 0">
-                    <TextBlock Text="Total: " />
+                    <TextBlock Text="{Binding InvoiceInfo.TotalBooking, ElementName=_Invoice, StringFormat='Total: ${0:F2}'}" />
                 </WrapPanel>
             </Border>
             <Border Grid.Row="4"
                     BorderBrush="Black"
                     BorderThickness="2 0 2 2">
                 <StackPanel>
-                    <ListView>
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="No." Width="80"/>
-                                <GridViewColumn Header="Service" Width="280"/>
-                                <GridViewColumn Header="Amount" Width="150"/>
-                                <GridViewColumn Header="Total" Width="100"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <ui:DataGrid ItemsSource="{Binding ElementName=_Invoice, Path=ServiceList}"
+                              AutoGenerateColumns="False"
+                              BorderThickness="0"
+                              IsReadOnly="True"
+                              GridLinesVisibility="Horizontal"
+                              SelectionMode="Single"
+                              FontSize="10"
+                              CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False"
+                              CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="False">
+                        <ui:DataGrid.RowStyle>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <EventSetter Event="MouseLeftButtonDown" Handler="DataGrid_MouseLeftButtonDown" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#DFDFDF" />
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#DFDFDF" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ui:DataGrid.RowStyle>
+
+                        <ui:DataGrid.RowHeaderStyle>
+                            <Style TargetType="{x:Type DataGridRowHeader}">
+                                <Setter Property="Background" Value="#F9F9F9" />
+                            </Style>
+                        </ui:DataGrid.RowHeaderStyle>
+                        <ui:DataGrid.Columns>
+                            <DataGridTemplateColumn Visibility="Hidden"/>
+
+                            <DataGridTextColumn Header="Service Name" Binding="{Binding ServiceName}" />
+
+                            <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
+
+                            <DataGridTextColumn Header="Service Price" Binding="{Binding ServicePrice}" />
+
+                            <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount}" />
+                            
+                        </ui:DataGrid.Columns>
+                    </ui:DataGrid>
                 </StackPanel>
             </Border>
             <Border Grid.Row="5"
@@ -181,7 +242,7 @@
                 <WrapPanel HorizontalAlignment="Right"
                            VerticalAlignment="Center"
                            Margin="0 0 10 0">
-                    <TextBlock Text="Total: " />
+                    <TextBlock Text="{Binding InvoiceInfo.TotalService, ElementName=_Invoice, StringFormat='Total: ${0:F2}'}" />
                 </WrapPanel>
             </Border>
             <Border Grid.Row="6"
@@ -196,25 +257,31 @@
                           Margin="10">
                         <StackPanel>
                             <TextBlock TextWrapping="Wrap"
-                                       Text="Dear [Guest's Name]"/>
+                                       Text="{Binding CustomerInfo.FullName, ElementName=_Invoice, StringFormat='Dear {0}'}"/>
                             <TextBlock TextWrapping="Wrap"
-                                       Text="Thank you for choosing [Hotel Name] for your recent stay"/>
+                                       Text="Thank you for choosing Tripple K for your recent stay"/>
                         </StackPanel>
                     </Grid>
                     <Border Background="#b3cfff"
                             Grid.Column="1"
                             BorderBrush="Black"
                             BorderThickness="2 0 0 0">
-                            <Grid>
-                                <StackPanel Grid.Column="0"
-                                            Margin="10"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top">
+                            <StackPanel VerticalAlignment="Top">
+                                <StackPanel Margin="10"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
                                     <TextBlock Text="Total Amount: "
-                                               FontSize="18"
+                                               FontSize="15"
+                                               VerticalAlignment="Center"
                                                FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding InvoiceInfo.TotalAmount, ElementName=_Invoice, StringFormat='${0:F2}'}"
+                                               FontSize="18"
+                                               VerticalAlignment="Center"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Center"/>
                                 </StackPanel>
-                            </Grid>
+                            </StackPanel>
                     </Border>
                 </Grid>
             </Border>

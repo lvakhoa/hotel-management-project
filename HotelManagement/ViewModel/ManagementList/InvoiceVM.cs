@@ -11,7 +11,13 @@ public partial class InvoiceList : ObservableObject
 {
     public ObservableCollection<InvoiceVM> List { get; set; }
 
+    public ObservableCollection<BookingInvoice> BookingInvoiceList { get; set; }
+    
+    public ObservableCollection<ServiceInvoice> ServiceInvoiceList { get; set; }
+    
     [ObservableProperty] private InvoiceVM _currentInvoice;
+    
+    [ObservableProperty] private CustomerList.CustomerVM _currentCustomer;
 
     [ObservableProperty] private bool _isLoading;
 
@@ -19,7 +25,8 @@ public partial class InvoiceList : ObservableObject
     public InvoiceList()
     {
         List = new ObservableCollection<InvoiceVM>();
-
+        BookingInvoiceList = new ObservableCollection<BookingInvoice>();
+        ServiceInvoiceList = new ObservableCollection<ServiceInvoice>();
         _ = GetInvoiceList();
     }
 
@@ -60,11 +67,17 @@ public partial class InvoiceList : ObservableObject
     }
     
     #endregion
-
-    #region EditRoomType
-
+    
+    #region PrintInvoice
     public void GetInvoiceById(string? id)
     {
+        if (BookingInvoiceList.Count() != 0 || ServiceInvoiceList.Count() != 0)
+        {
+            BookingInvoiceList.Clear();
+            ServiceInvoiceList.Clear();
+        }
+        decimal? totalService = 0;
+        decimal? totalBooking = 0;
         var invoice = (from i in List
             where i.InvoiceID == id
             select new
@@ -76,7 +89,58 @@ public partial class InvoiceList : ObservableObject
                 i.TotalAmount,
                 i.PaymentType,
             }).FirstOrDefault();
-
+        
+        var context = new HotelManagementContext();
+        var bookings = (from b in context.Bookings
+            join r in context.Rooms on b.RoomId equals r.RoomId
+            join rt in context.RoomTypes on r.RoomTypeId equals rt.RoomTypeId
+            where b.InvoiceId == id
+            select new
+            {
+                r.RoomNumber,
+                rt.RoomTypeName,
+                b.TotalAmount,
+                b.CheckInDate,
+                b.CheckOutDate
+            }).ToList();
+        foreach (var item in bookings)
+        {
+            string[] checkin = item.CheckInDate.ToString().Split(' ');
+            string[] checkout = item.CheckOutDate.ToString().Split(' ');
+            
+            BookingInvoiceList.Add(new BookingInvoice()
+            {
+                RoomType = item.RoomTypeName,
+                RoomNumber = item.RoomNumber,
+                TotalAmount = item.TotalAmount,
+                CheckIn = checkin[0],
+                CheckOut = checkout[0]
+            });
+            totalBooking += item.TotalAmount;
+        }
+        
+        var services = (from su in context.ServiceUses
+            join s in context.Services on su.ServiceId equals s.ServiceId
+            where su.InvoiceId == id
+            select new
+            {
+                s.ServiceName,
+                su.ServiceQuantity,
+                su.TotalAmount,
+                s.ServicePrice
+            }).ToList();
+        foreach (var item in services)
+        {
+            ServiceInvoiceList.Add(new ServiceInvoice()
+            {
+                ServiceName = item.ServiceName,
+                Quantity = item.ServiceQuantity,
+                TotalAmount = item.TotalAmount,
+                ServicePrice = item.ServicePrice
+            });
+            totalService += item.TotalAmount;
+        }
+        
         CurrentInvoice = new InvoiceVM()
         {
             InvoiceID = invoice.InvoiceID,
@@ -85,9 +149,22 @@ public partial class InvoiceList : ObservableObject
             InvoiceDate = invoice.InvoiceDate,
             TotalAmount = invoice.TotalAmount,
             PaymentType = invoice.PaymentType,
+            TotalBooking = totalBooking,
+            TotalService = totalService
+        };
+
+        var customer = (from i in context.Invoices
+            join c in context.Customers on i.CustomerId equals c.CustomerId
+            select c).FirstOrDefault();
+        
+        CurrentCustomer = new CustomerList.CustomerVM()
+        {
+            FullName = customer.FullName,
+            ID = customer.CustomerId,
+            Gender = customer.Gender,
+            ContactNumber = customer.ContactNumber
         };
     }
-
     #endregion
 
     #region Delete Command
@@ -233,5 +310,26 @@ public partial class InvoiceList : ObservableObject
         public decimal? TotalAmount { get; set; }
         public string? PaymentType { get; set; }
         #endregion
+        
+        public decimal? TotalBooking { get; set; }
+        public decimal? TotalService { get; set; }
+        
+    }
+    
+    public class ServiceInvoice
+    {
+        public string? ServiceName { get; set; }
+        public int? Quantity { get; set; }
+        public decimal? ServicePrice { get; set; }
+        public decimal? TotalAmount { get; set; }
+    }
+
+    public class BookingInvoice
+    {
+        public string? RoomNumber { get; set; }
+        public string? RoomType { get; set; }
+        public decimal? TotalAmount { get; set; }
+        public string? CheckIn { get; set; }
+        public string? CheckOut { get; set; }
     }
 }
