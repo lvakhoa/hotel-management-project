@@ -41,6 +41,10 @@ public partial class BookingList : ObservableObject
     private async Task GetBookingList()
     {
         List.Clear();
+        RoomIdList.Clear();
+        CustomerIdList.Clear();
+        StaffIdList.Clear();
+        PaymentTypeList.Clear();
         IsLoading = true;
         await Task.Delay(1000);
         await using var context = new HotelManagementContext();
@@ -267,6 +271,8 @@ public partial class BookingList : ObservableObject
                 App.ActivatedWindow, "Success",
                 "Edit booking successfully!",
                 msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+
+            await GetBookingList();
         }
         else if (booking == null && invoice != null)
         {
@@ -309,6 +315,8 @@ public partial class BookingList : ObservableObject
                 App.ActivatedWindow, "Success",
                 "Add booking successfully!",
                 msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+            
+            await GetBookingList();
         }
         else
         {
@@ -363,6 +371,8 @@ public partial class BookingList : ObservableObject
                 App.ActivatedWindow, "Success",
                 "Add booking successfully!",
                 msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+            
+            await GetBookingList();
         }
     }
 
@@ -632,7 +642,7 @@ public partial class BookingList : ObservableObject
                     where room.RoomId == instance.RoomItem.RoomID
                     select roomType.Capacity).FirstOrDefault();
 
-            if (instance.RoomItem == null)
+            if (instance.RoomItem.RoomID == null)
                 return new ValidationResult("Select Room ID before changing guest quantity!");
 
             if (string.IsNullOrEmpty(guestQuantity))

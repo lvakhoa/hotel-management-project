@@ -4,7 +4,7 @@
                     xmlns:view="clr-namespace:HotelManagement.View">
     
     <DataTemplate DataType="{x:Type vm:HomeVM}">
-        <view:Home />
+        <view:Home DataContext="{Binding}" />
     </DataTemplate>
     
     <DataTemplate DataType="{x:Type vm:RoomMapVM}">

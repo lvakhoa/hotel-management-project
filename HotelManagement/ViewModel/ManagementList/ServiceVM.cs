@@ -32,7 +32,7 @@ public partial class ServiceList : ObservableObject
     private async Task GetServiceList()
     {
         List.Clear();
-        
+        ServiceTypeList.Clear();
         IsLoading = true;
         await Task.Delay(1000);
         await using var context = new HotelManagementContext();
@@ -166,6 +166,8 @@ public partial class ServiceList : ObservableObject
                 App.ActivatedWindow, "Success",
                 "Edit service successfully!",
                 msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+
+            await GetServiceList();
         }
         else
         {
@@ -193,6 +195,8 @@ public partial class ServiceList : ObservableObject
                 App.ActivatedWindow, "Success",
                 "Add service successfully!",
                 msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+
+            await GetServiceList();
         }
 
     }

@@ -25,17 +25,16 @@ public partial class ServiceUseList : ObservableObject
     public ServiceUseList()
     {
         List = new ObservableCollection<ServiceUseVM>();
-        
-        _ = GetServiceUseList();
-
         InvoiceIdList = new List<string>();
         ServiceIdList = new List<ServiceInfo>();
+        _ = GetServiceUseList();
     }
 
     private async Task GetServiceUseList()
     {
         List.Clear();
-        
+        InvoiceIdList.Clear();
+        ServiceIdList.Clear();  
         IsLoading = true;
         await Task.Delay(1000);
         await using var context = new HotelManagementContext();
@@ -175,6 +174,8 @@ public partial class ServiceUseList : ObservableObject
                 App.ActivatedWindow, "Success",
                 "Edit service use successfully!",
                 msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+
+            await GetServiceUseList();
         }
         else
         {
@@ -212,7 +213,9 @@ public partial class ServiceUseList : ObservableObject
                 App.ActivatedWindow, "Success",
                 "Add service use successfully!",
                 msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
-            
+
+            await GetServiceUseList();
+
         }
     }
 

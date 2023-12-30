@@ -30,7 +30,7 @@ public partial class StaffList : ObservableObject
     private async Task GetStaffList()
     {
         List.Clear();
-        
+        GenderList.Clear();
         IsLoading = true;
         await Task.Delay(1000);
         await using var context = new HotelManagementContext();
@@ -156,6 +156,8 @@ public partial class StaffList : ObservableObject
                 App.ActivatedWindow, "Success",
                 "Edit staff successfully!",
                 msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
+
+            await GetStaffList();
         }
         else
         {
@@ -188,6 +190,7 @@ public partial class StaffList : ObservableObject
                 "Add staff successfully!",
                 msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
 
+            await GetStaffList();
         }
     }
 

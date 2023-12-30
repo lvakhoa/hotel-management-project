@@ -1,12 +1,423 @@
-<UserControl x:Class="HotelManagement.View.Home"
+﻿<UserControl x:Class="HotelManagement.View.Home"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:HotelManagement.View"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:uti="clr-namespace:HotelManagement.Utilities" 
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="900" 
+             d:DesignWidth="1010"
+             Background="White" 
+             Height="Auto">
+    <UserControl.Resources>
+        <uti:BooleanToVisibilityConverter x:Key="InvertVisibilityConverter"
+                                          True="Hidden"
+                                          False="Visible" />
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
-        <TextBlock>Home</TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"
+              Margin="50 10 0 10">
+            <TextBlock Text="Overview"
+                       FontSize="32"
+                       Foreground="#373434"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold"/>
+        </Grid>
+        <GridSplitter Grid.Row="0" Height="2" IsEnabled="False" VerticalAlignment="Bottom"
+                      HorizontalAlignment="Stretch" Margin="50,10,50,0" />
+
+        <fa:ImageAwesome Grid.Row="1" Icon="Spinner" Spin="{Binding IsLoading}"
+                         Visibility="{Binding Path=IsLoading, Converter={StaticResource VisibilityConverter}}"
+                         Height="48" Width="48" />
+        
+        <ScrollViewer Grid.Row="1"
+                      Height="Auto"
+                      Visibility="{Binding Path=IsLoading, Converter={StaticResource InvertVisibilityConverter}}"
+                      VerticalScrollBarVisibility="Visible">
+            <Grid Margin="20 0 20 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            Margin="30 10 30 10">
+                    <Border Background="#BACFFF"
+                            Padding="10"
+                            Height="80"
+                            Width="200"
+                            CornerRadius="10"
+                            Margin="10 0 10 0">
+                        <Grid>
+                            <StackPanel VerticalAlignment="Center"
+                                        Orientation="Horizontal">
+                                <Border Margin="0 0 0 0"
+                                        CornerRadius="35"
+                                        Background="White">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="20"
+                                                          ShadowDepth="5"
+                                                          Direction="270"
+                                                          Color="whitesmoke" />
+                                    </Border.Effect>
+                                    <ui:SymbolIcon Symbol="Money16"
+                                                   Margin="5"
+                                                   Foreground="#4b8bfa"
+                                                   FontSize="35"/>
+                                </Border>
+                                <StackPanel VerticalAlignment="Center"
+                                            Margin="10 0 0 0">
+                                    <TextBlock Text="Today's Revenue"
+                                               Foreground="Black"
+                                               FontSize="15"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{Binding HomeData.TotalRevenueToday, StringFormat='${0}'}"
+                                               FontSize="15"
+                                               Foreground="#373434"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    
+                    <Border Background="#AAFF9D"
+                            Padding="10"
+                            Height="80"
+                            Width="200"
+                            CornerRadius="10"
+                            Margin="10 0 10 0">
+                        <Grid>
+                            <StackPanel VerticalAlignment="Center"
+                                        Orientation="Horizontal">
+                                <Border Margin="0 0 0 0"
+                                        CornerRadius="35"
+                                        Background="White">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="20"
+                                                          ShadowDepth="5"
+                                                          Direction="270"
+                                                          Color="whitesmoke" />
+                                    </Border.Effect>
+                                    <ui:SymbolIcon Symbol="CalendarRtl16"
+                                                   Margin="5"
+                                                   Foreground="#3AEC57"
+                                                   FontSize="35"/>
+                                </Border>
+                                <StackPanel VerticalAlignment="Center"
+                                            Margin="10 0 0 0">
+                                    <TextBlock Text="Today's Booking"
+                                               Foreground="Black"
+                                               FontSize="15"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{Binding HomeData.TotalBookingToday}"
+                                               FontSize="15"
+                                               Foreground="#373434"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <Border Background="#FFF596"
+                            Padding="10"
+                            Height="80"
+                            Width="200"
+                            CornerRadius="10"
+                            Margin="10 0 10 0">
+                        <Grid>
+                            <StackPanel VerticalAlignment="Center"
+                                        Orientation="Horizontal">
+                                <Border Margin="0 0 0 0"
+                                        CornerRadius="35"
+                                        Background="White">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="20"
+                                                          ShadowDepth="5"
+                                                          Direction="270"
+                                                          Color="whitesmoke" />
+                                    </Border.Effect>
+                                    <ui:SymbolIcon Symbol="DoorArrowRight16"
+                                                   Margin="5"
+                                                   Foreground="#EDDA2A"
+                                                   FontSize="30"/>
+                                </Border>
+                                <StackPanel VerticalAlignment="Center"
+                                            Margin="10 0 0 0">
+                                    <TextBlock Text="Today's Check-in"
+                                               Foreground="Black"
+                                               FontSize="15"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{Binding HomeData.TotalCheckinToday}"
+                                               FontSize="15"
+                                               Foreground="#373434"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    
+                    <Border Background="#FF9DC8"
+                            Padding="10"
+                            Height="80"
+                            Width="200"
+                            CornerRadius="10"
+                            Margin="10 0 10 0">
+                        <Grid>
+                            <StackPanel VerticalAlignment="Center"
+                                        Orientation="Horizontal">
+                                <Border Margin="0 0 0 0"
+                                        CornerRadius="30"
+                                        Background="White">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="20"
+                                                          ShadowDepth="5"
+                                                          Direction="270"
+                                                          Color="whitesmoke" />
+                                    </Border.Effect>
+                                    <ui:SymbolIcon Symbol="DoorArrowLeft16"
+                                                   Margin="5"
+                                                   Foreground="#BF6289"
+                                                   FontSize="35"/>
+                                </Border>
+                                <StackPanel VerticalAlignment="Center"
+                                            Margin="10 0 0 0">
+                                    <TextBlock Text="Today's Check-out"
+                                               Foreground="Black"
+                                               FontSize="15"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{Binding HomeData.TotalCheckoutToday}"
+                                               FontSize="15"
+                                               Foreground="#373434"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+                
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        
+                        <Border Grid.Row="0" 
+                                Padding="20"
+                                Margin="20 20 10 20"
+                                BorderThickness="2" 
+                                CornerRadius="20"
+                                BorderBrush="LightGray">
+                            <StackPanel Grid.Row="0">
+                                <TextBlock Foreground="#373434"
+                                           Text="Recent Booking" 
+                                           FontSize="22" 
+                                           FontWeight="Bold" />
+                                <ItemsControl ItemsSource="{Binding RecentBookings}"
+                                              Margin="0 10 0 0">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Margin="5" 
+                                                    Padding="10" 
+                                                    Background="#E6E6E6" 
+                                                    CornerRadius="5"
+                                                    BorderBrush="Gray" 
+                                                    BorderThickness="1">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0"
+                                                               FontWeight="SemiBold"
+                                                               FontSize="15">
+                                                        <TextBlock.Inlines>
+                                                            <Run>
+                                                                <Run.Text>
+                                                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                                                        <Binding Path="RoomType"/>
+                                                                        <Binding Path="RoomNumber"/>
+                                                                    </MultiBinding>
+                                                                </Run.Text>
+                                                            </Run>
+                                                        </TextBlock.Inlines>
+                                                    </TextBlock>
+                                                    <StackPanel Grid.Row="1"
+                                                                Margin="10 0 0 0">
+                                                        <TextBlock FontSize="10"
+                                                                   Text="{Binding CustomerName}"/>
+                                                        <TextBlock FontSize="10"
+                                                                   Text="{Binding BookingDate, StringFormat='dd/MM/yyyy - hh:mm tt'}" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                        <Grid Grid.Row="1"
+                              Margin="20 0 20 20">
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Total"
+                                       Foreground="#373434"
+                                       FontSize="22" 
+                                       Margin="20"
+                                       FontWeight="Bold"/>
+                                <StackPanel VerticalAlignment="Center"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Vertical"
+                                                HorizontalAlignment="Center">
+                                        <WrapPanel Orientation="Vertical"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="10">
+                                            
+                                            <TextBlock Text="{Binding HomeData.TotalRevenue, StringFormat='{}${0:0}'}"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="22"
+                                                       Foreground="#373434"
+                                                       FontWeight="Bold" />
+                                            
+                                            <TextBlock Foreground="#747474"
+                                                       FontSize="16"
+                                                       HorizontalAlignment="Center"
+                                                       Text="Total Revenue"/>
+                                            
+                                        </WrapPanel>
+                                        
+                                        <WrapPanel Orientation="Vertical"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="10">
+                                            
+                                            <TextBlock Text="{Binding HomeData.TotalRoom}"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="22"
+                                                       Foreground="#373434"
+                                                       FontWeight="Bold" />
+                                            
+                                            <TextBlock Foreground="#747474"
+                                                       FontSize="16"
+                                                       HorizontalAlignment="Center"
+                                                       Text="Total Room"/>
+                                            
+                                        </WrapPanel>
+                                        
+                                    </StackPanel>
+                                    
+                                    <StackPanel Orientation="Vertical"
+                                                HorizontalAlignment="Center">
+                                        <WrapPanel Orientation="Vertical"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="10">
+                                            
+                                            <TextBlock Text="{Binding HomeData.TotalStaff}"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="22"
+                                                       Foreground="#373434"
+                                                       FontWeight="Bold" />
+                                            
+                                            <TextBlock Foreground="#747474"
+                                                       FontSize="16"
+                                                       HorizontalAlignment="Center"
+                                                       Text="Total Staff"/>
+                                            
+                                        </WrapPanel>
+                                        
+                                        <WrapPanel Orientation="Vertical"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="10">
+                                            
+                                            <TextBlock Text="{Binding HomeData.TotalBooking}"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="22"
+                                                       Foreground="#373434"
+                                                       FontWeight="Bold" />
+                                            
+                                            <TextBlock Foreground="#747474"
+                                                       FontSize="16"
+                                                       HorizontalAlignment="Center"
+                                                       Text="Total Booking"/>
+                                            
+                                        </WrapPanel>
+                                    </StackPanel>  
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    
+                    <Grid Grid.Column="1">
+                         <Grid.RowDefinitions>
+                             <RowDefinition Height="0.8*"/>
+                             <RowDefinition />
+                         </Grid.RowDefinitions>
+                        
+                        <Border Grid.Row="0"
+                                Padding="20"
+                                Margin="10 20 20 10"
+                                BorderThickness="2" 
+                                CornerRadius="20"
+                                BorderBrush="LightGray">
+                            <StackPanel Grid.Row="0">
+                                <TextBlock Foreground="#373434"
+                                           Text="Room Status" 
+                                           FontSize="22" 
+                                           FontWeight="Bold" />
+                                <wpf:PieChart LegendLocation="Left"
+                                              Height="200"
+                                              Width="300"
+                                              Hoverable="True"
+                                              DataClick="PieChart_DataClick_1"
+                                              Foreground="Black"
+                                              Series="{Binding PieSeriesCollection}">
+                                </wpf:PieChart>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Row="1"
+                                Padding="20"
+                                Margin="10 10 20 20"
+                                BorderThickness="2" 
+                                CornerRadius="20"
+                                BorderBrush="LightGray">
+                            <StackPanel Grid.Row="0">
+                                <TextBlock Foreground="#373434"
+                                           Text="Reservation Stats" 
+                                           FontSize="22" 
+                                           FontWeight="Bold" />
+                                <wpf:CartesianChart Height="320"
+                                                    Margin="0 10 0 0"
+                                                    Series="{Binding SeriesCollection}">
+                                        <wpf:CartesianChart.AxisX>
+                                            <wpf:Axis Labels="{Binding Labels}"/>
+                                        </wpf:CartesianChart.AxisX>
+                                        <wpf:CartesianChart.AxisY>
+                                            <wpf:Axis Title="Number Booking"
+                                                      MinValue="0">
+                                                <wpf:Axis.Separator>
+                                                    <wpf:Separator Step="1" />
+                                                </wpf:Axis.Separator>
+                                            </wpf:Axis>
+                                        </wpf:CartesianChart.AxisY>
+                                </wpf:CartesianChart>     
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </UserControl>
