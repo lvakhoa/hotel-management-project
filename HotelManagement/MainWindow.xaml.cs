@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using HotelManagement.Themes;
 using HotelManagement.View;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
@@ -26,6 +27,19 @@ public partial class MainWindow : Window
         }
     }
 
+    private void Themes_Click(object sender, RoutedEventArgs e)
+    {
+        if (Themes.IsChecked == true)
+        {
+            ThemesController.SetTheme(ThemesController.ThemeTypes.Dark);
+        }
+        else
+        {
+            ThemesController.SetTheme(ThemesController.ThemeTypes.Light);
+        }
+            
+    }
+    
     private void LogoutBtn_OnChecked(object sender, RoutedEventArgs e)
     {
         var loginView = new LoginView();

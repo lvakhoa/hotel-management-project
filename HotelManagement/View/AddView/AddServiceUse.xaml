@@ -16,7 +16,7 @@
         x:Name="AddService">
 
     <Border CornerRadius="10"
-            Background="#FFF"
+            Background="{DynamicResource TertiaryBackgroundColor}"
             BorderBrush="#231F20"
             BorderThickness="1">
         <Grid>
@@ -33,8 +33,11 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="30,0">
-                    <ui:SymbolIcon Symbol="ServiceBell20" Filled="True" FontSize="40" Margin="0,0,10,0" />
+                    <ui:SymbolIcon Symbol="ServiceBell20" Filled="True" FontSize="40" 
+                                   Foreground="{DynamicResource TextColor}"
+                                   Margin="0,0,10,0" />
                     <TextBlock VerticalAlignment="Center"
+                               Foreground="{DynamicResource TextColor}"
                                FontSize="24" FontWeight="Bold" Text="Add/Edit Service Use" />
                 </StackPanel>
 
@@ -44,6 +47,7 @@
                            Height="40"
                            Icon="Dismiss28"
                            IconFilled="True"
+                           Foreground="{DynamicResource ControlButton}"
                            Appearance="Transparent"
                            BorderThickness="0"
                            MouseOverBackground="#EE4242"
@@ -81,7 +85,7 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Service ID"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ComboBox BorderThickness="2"
@@ -125,7 +129,7 @@
                         
                         <StackPanel Grid.Column="1" Margin="30 0 30 0">
                             <TextBlock Text="Invoice ID"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ComboBox BorderThickness="2"
@@ -159,7 +163,7 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Service Quantity"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ui:NumberBox x:Name="QuantityBox"
@@ -201,13 +205,14 @@
                 </Grid>
 
             </Grid>
-            <Border Grid.Row="2" Background="#EEEEEE"
+            <Border Grid.Row="2" 
+                    Background="{DynamicResource SBackground}"
                     CornerRadius="0 0 10 10">
                 <ui:Button Margin="0,0,30,0"
-                           Background="#373434"
-                           MouseOverBackground="#2D2B2B"
-                           PressedBackground="#2D2B2B"
-                           Foreground="#FFF"
+                           Background="{DynamicResource SButtonBackground}"
+                           PressedBackground="{DynamicResource SButtonPressed}"
+                           MouseOverBackground="{DynamicResource SButtonMouseOver}"
+                           Foreground="{DynamicResource SButtonTextColor}"
                            PressedForeground="#FFF"
                            Content="Save"
                            FontSize="18"

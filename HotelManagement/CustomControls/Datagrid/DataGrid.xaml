@@ -33,9 +33,10 @@
                 <ui:TextBox Icon="Search12" FontSize="18" PlaceholderText="Search" Width="320" />
 
                 <ui:Button Appearance="Dark"
-                           Background="#4F4A4A"
-                           PressedBackground="#4F4A4A"
-                           MouseOverBackground="#5E5858"
+                           Background="{DynamicResource SButtonBackground}"
+                           PressedBackground="{DynamicResource SButtonPressed}"
+                           MouseOverBackground="{DynamicResource SButtonMouseOver}"
+                           Foreground="{DynamicResource SButtonTextColor}"
                            CornerRadius="8"
                            Content="Search"
                            FontSize="16"
@@ -46,9 +47,10 @@
             <Grid Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,20,0">
                 <ui:Button x:Name="AddBtn"
                            Appearance="Dark"
-                           Background="#4F4A4A"
-                           PressedBackground="#4F4A4A"
-                           MouseOverBackground="#5E5858"
+                           Background="{DynamicResource SButtonBackground}"
+                           PressedBackground="{DynamicResource SButtonPressed}"
+                           MouseOverBackground="{DynamicResource SButtonMouseOver}"
+                           Foreground="{DynamicResource SButtonTextColor}"
                            CornerRadius="8"
                            Icon="Add12"
                            IconFilled="True"

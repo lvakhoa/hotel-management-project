@@ -15,7 +15,7 @@
         Loaded="AddStaff_OnLoaded">
 
     <Border CornerRadius="10"
-            Background="#FFF"
+            Background="{DynamicResource TertiaryBackgroundColor}"
             BorderBrush="#231F20"
             BorderThickness="1">
         <Grid>
@@ -32,10 +32,13 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="30,0">
-                    <ui:SymbolIcon Symbol="PersonAdd20" FontSize="40" Margin="0,0,10,0" />
+                    <ui:SymbolIcon Symbol="PersonAdd20" FontSize="40" 
+                                   Foreground="{DynamicResource TextColor}"
+                                   Margin="0,0,10,0" />
                     <TextBlock VerticalAlignment="Center"
+                               Foreground="{DynamicResource TextColor}"
                                FontSize="24" FontWeight="Bold" Text="Add/Edit Staff " />
-                </StackPanel>
+                    </StackPanel>
 
                 <ui:Button Grid.Column="1"
                            VerticalAlignment="Top"
@@ -44,6 +47,7 @@
                            Icon="Dismiss28"
                            IconFilled="True"
                            Appearance="Transparent"
+                           Foreground="{DynamicResource ControlButton}"
                            BorderThickness="0"
                            MouseOverBackground="#EE4242"
                            PressedBackground="#FF2525"
@@ -78,7 +82,7 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Full Name"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ui:TextBox x:Name="NameBox"
@@ -118,13 +122,14 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Customer ID"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ui:TextBox BorderThickness="2"
                                         BorderBrush="#767676"
                                         FontSize="16"
                                         IsEnabled="False"
+                                        Foreground="{DynamicResource STextColor}"
                                         Text="{Binding CurrentStaff.ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                                 <ui:TextBox.Style>
@@ -144,7 +149,7 @@
 
                         <StackPanel Grid.Column="1" Margin="30 0 30 0">
                             <TextBlock Text="Email"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ui:TextBox x:Name="EmailBox"
@@ -186,7 +191,7 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Phone Number"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ui:TextBox x:Name="PhoneBox"
@@ -219,7 +224,7 @@
 
                         <StackPanel Grid.Column="1" Margin="30 0 30 0">
                             <TextBlock Text="Gender"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ComboBox x:Name="GenderBox"
@@ -253,7 +258,7 @@
 
                         <StackPanel Grid.Column="0" Margin="30 0 30 0">
                             <TextBlock Text="Address"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ui:TextBox x:Name="AddressBox"
@@ -286,7 +291,7 @@
 
                         <StackPanel Grid.Column="1" Margin="30 0 30 0">
                             <TextBlock Text="Birthday"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
 
@@ -328,7 +333,7 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Position"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ui:TextBox x:Name="PosBox"
@@ -361,7 +366,7 @@
 
                         <StackPanel Grid.Column="1" Margin="30 0 30 0">
                             <TextBlock Text="Salary"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ui:TextBox x:Name="SalBox"
@@ -399,13 +404,14 @@
 
             </Grid>
 
-            <Border Grid.Row="2" Background="#EEEEEE"
+            <Border Grid.Row="2" 
+                    Background="{DynamicResource SBackground}"
                     CornerRadius="0 0 10 10">
                 <ui:Button Margin="0,0,30,0"
-                           Background="#373434"
-                           MouseOverBackground="#2D2B2B"
-                           PressedBackground="#2D2B2B"
-                           Foreground="#FFF"
+                           Background="{DynamicResource SButtonBackground}"
+                           PressedBackground="{DynamicResource SButtonPressed}"
+                           MouseOverBackground="{DynamicResource SButtonMouseOver}"
+                           Foreground="{DynamicResource SButtonTextColor}"
                            PressedForeground="#FFF"
                            Content="Save"
                            FontSize="18"

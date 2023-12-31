@@ -15,7 +15,7 @@
         MouseDown="UserInfo_OnMouseDown"
         ResizeMode="NoResize">
     <Border CornerRadius="10"
-            Background="White"
+            Background="{DynamicResource TertiaryBackgroundColor}" 
             BorderBrush="Black"
             BorderThickness="1">
     <Grid>

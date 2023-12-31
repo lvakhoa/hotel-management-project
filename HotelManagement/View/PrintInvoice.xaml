@@ -23,154 +23,75 @@
         <Border BorderBrush="#231F20" 
                 CornerRadius="10"
                 BorderThickness="1"
-                Background="#fff">
+                Background="{DynamicResource TertiaryBackgroundColor}">
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                
-                <Border Grid.Row="0" 
-                        BorderBrush="#000000" 
-                        BorderThickness="0,0,0, 0.5"
-                        CornerRadius="10, 10, 0, 0" 
-                        Background="#fff">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="40" />
-                            <ColumnDefinition Width="40" />
-                            <ColumnDefinition Width="40" />
-                        </Grid.ColumnDefinitions>
-                
-                        <Grid Grid.Column="0" 
-                                   HorizontalAlignment="Left"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <StackPanel VerticalAlignment="Top"
+                                Margin="20">
+                        <TextBlock Text="Print"
+                                   FontSize="30"
+                                   Foreground="{DynamicResource PrimaryTextColor}"
+                                   FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center"
+                                Margin="10">
+                        <ui:Button Content="Print"
+                                   Background="{DynamicResource ButtonBackgroundColor}"
+                                   MouseOverBackground="{DynamicResource ButtonMouseOver}"
+                                   PressedBackground="{DynamicResource ButtonPressed}"
+                                   Foreground="{DynamicResource ButtonTextColor}"
+                                   PressedForeground="{DynamicResource ButtonTextColor}"
+                                   FontSize="15"
+                                   Padding="20 10 20 10"
+                                   FontWeight="Bold"
+                                   Cursor="Hand"
                                    VerticalAlignment="Center"
-                                   Margin="10,0,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            
-                            <Image Grid.Column="0" Source="/HotelManagement;component/Assets/Images/hotel_icon.png" Width="24"/>
-                            <TextBlock Grid.Column="1" Text="Hotel Management" VerticalAlignment="Center" Margin="8, 0,0,0" />
-                        </Grid>
-                        
-                        <ui:Button Grid.Column="1"
-                                   Width="40"
-                                   Height="40"
-                                   Icon="Subtract20"
-                                   IconFilled="True"
-                                   Appearance="Transparent"
-                                   BorderThickness="0"
-                                   MouseOverBackground="#D4D2D2"
-                                   PressedBackground="#CAC9C9"
-                                   CornerRadius="0"/>
-                        
-                        <ui:Button Grid.Column="2"
-                                   Width="40"
-                                   Height="40"
-                                   Icon="SquareMultiple24"
-                                   Appearance="Transparent"
-                                   BorderThickness="0"
-                                   MouseOverBackground="#D4D2D2"
-                                   PressedBackground="#CAC9C9"
-                                   CornerRadius="0"/>
-                        
-                        <ui:Button Grid.Column="3"
-                                   Width="40"
-                                   Height="40"
-                                   Icon="Dismiss28"
-                                   IconFilled="True"
-                                   Appearance="Transparent"
-                                   BorderThickness="0"
-                                   MouseOverBackground="#EE4242"
-                                   PressedBackground="#FF2525" 
-                                   CornerRadius="0, 10, 0, 0">
-                            
-                            <ui:Button.Style>
-                                <Style TargetType="{x:Type ui:Button}" BasedOn="{StaticResource {x:Type ui:Button}}">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Foreground" Value="#fff"></Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ui:Button.Style>
-                            
-                        </ui:Button>
-                    </Grid>
-                </Border>
-                
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.4*"/>
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                
-                    <Grid Grid.Column="0">
-                        <StackPanel VerticalAlignment="Top"
-                                    Margin="20">
-                            <TextBlock Text="Print"
-                                       FontSize="30"
-                                       FontWeight="SemiBold"/>
+                                   HorizontalAlignment="Right"
+                                   CornerRadius="5"
+                                   Margin="5"
+                                   Click="PrintButton_OnClick"/>
+                        <ui:Button Content="Cancel"
+                                   Background="#D9D9D9"
+                                   MouseOverBackground="#D9D9D9"
+                                   PressedBackground="#D9D9D9"
+                                   Foreground="#373434"
+                                   PressedForeground="#373734"
+                                   FontSize="15"
+                                   Padding="20 10 20 10"
+                                   FontWeight="Bold"
+                                   Cursor="Hand"
+                                   Margin="5"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"
+                                   CornerRadius="5"
+                                   Click="CancelButton_OnClick"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal"
-                                    VerticalAlignment="Bottom"
-                                    HorizontalAlignment="Center"
-                                    Margin="10">
-                            <ui:Button Content="Print"
-                                       Background="#373434"
-                                       MouseOverBackground="#2D2B2B"
-                                       PressedBackground="#2D2B2B"
-                                       Foreground="#FFF"
-                                       PressedForeground="#FFF"
-                                       FontSize="15"
-                                       Padding="20 10 20 10"
-                                       FontWeight="Bold"
-                                       Cursor="Hand"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Right"
-                                       CornerRadius="5"
-                                       Margin="5"
-                                       Click="PrintButton_OnClick"/>
-                            <ui:Button Content="Cancel"
-                                       Background="#D9D9D9"
-                                       MouseOverBackground="#D9D9D9"
-                                       PressedBackground="#D9D9D9"
-                                       Foreground="#373434"
-                                       PressedForeground="#373734"
-                                       FontSize="15"
-                                       Padding="20 10 20 10"
-                                       FontWeight="Bold"
-                                       Cursor="Hand"
-                                       Margin="5"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Right"
-                                       CornerRadius="5"
-                                       Click="CancelButton_OnClick"/>
-                        </StackPanel>
-                    </Grid>
-                    <ScrollViewer Grid.Column="1"
-                                  VerticalScrollBarVisibility="Visible">
-                        <Border>
-                            <Border.Effect>
-                                <DropShadowEffect BlurRadius="20" 
-                                                  ShadowDepth="5" 
-                                                  Direction="270"
-                                                  Color="#D9D9D9"/>
-                            </Border.Effect>
-                            <customcontrols:Invoice x:Name="InvoiceViewer"
-                                                    Margin="10"
-                                                    Height="Auto"
-                                                    InvoiceInfo="{Binding CurrentInvoice}"
-                                                    CustomerInfo="{Binding CurrentCustomer}"
-                                                    BookingList="{Binding BookingInvoiceList}"
-                                                    ServiceList="{Binding ServiceInvoiceList}"/>
-                        </Border>
-                    </ScrollViewer>
                 </Grid>
-            </Grid>    
+                <ScrollViewer Grid.Column="1"
+                              VerticalScrollBarVisibility="Visible">
+                    <Border>
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="20" 
+                                              ShadowDepth="5" 
+                                              Direction="270"
+                                              Color="#D9D9D9"/>
+                        </Border.Effect>
+                        <customcontrols:Invoice x:Name="InvoiceViewer"
+                                                Margin="10"
+                                                Height="Auto"
+                                                InvoiceInfo="{Binding CurrentInvoice}"
+                                                CustomerInfo="{Binding CurrentCustomer}"
+                                                BookingList="{Binding BookingInvoiceList}"
+                                                ServiceList="{Binding ServiceInvoiceList}"/>
+                    </Border>
+                </ScrollViewer>
+            </Grid>
         </Border>
     </Border>
 </Window>

@@ -34,7 +34,7 @@
 
     <Border x:Name="WindowBorder"
             CornerRadius="10"
-            Background="#FFF"
+            Background="{DynamicResource TertiaryBackgroundColor}" 
             BorderBrush="#231F20"
             BorderThickness="1">
         <Grid>

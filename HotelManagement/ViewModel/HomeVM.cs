@@ -128,7 +128,6 @@ public partial class HomeVM : ObservableObject
             {
                 Values = new ChartValues<int> { HomeData.TotalAvailableRoom },
                 Title = "Available",
-                Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#C2FCC1")),
                 DataLabels = false,
                 LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
             },
@@ -137,7 +136,6 @@ public partial class HomeVM : ObservableObject
             {
                 Values = new ChartValues<int> { HomeData.TotalOccupiedRoom },
                 Title = "Occupied",
-                Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FCFE7C")),
                 DataLabels = false,
                 LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
             },
@@ -146,7 +144,6 @@ public partial class HomeVM : ObservableObject
             {
                 Values = new ChartValues<int> { HomeData.TotalBlockedRoom },
                 Title = "Blocked",
-                Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FCB7B7")),
                 DataLabels = false,
                 LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
             },

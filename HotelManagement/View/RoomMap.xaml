@@ -10,6 +10,7 @@
              xmlns:vm="clr-namespace:HotelManagement.ViewModel"
              mc:Ignorable="d"
              x:Name="_RoomMap"
+             Background="{DynamicResource TertiaryBackgroundColor}" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.DataContext>
         <vm:RoomMapVM/>
@@ -38,7 +39,7 @@
             <TextBlock Text="Room Map"
                        Grid.Column="0"
                        FontSize="32"
-                       Foreground="#373434"
+                       Foreground="{DynamicResource PrimaryTextColor}"
                        HorizontalAlignment="Left"
                        FontWeight="Bold"/>
             <ComboBox Grid.Column="1"
@@ -53,8 +54,8 @@
             </ComboBox>
         </Grid>
         <GridSplitter Grid.Row="1" Height="2" IsEnabled="False" VerticalAlignment="Top"
-                      Width="910"
-                      HorizontalAlignment="Left" Margin="50,10,0,0" />
+                      Background="{DynamicResource GridLineColor}"
+                      HorizontalAlignment="Stretch" Margin="50,10,50,0" />
         <ScrollViewer Grid.Row="2" 
                       x:Name="ScrollListRoom"
                       VerticalScrollBarVisibility="Visible">
@@ -84,6 +85,7 @@
                                                         <Expander.Header>
                                                             <TextBlock Text="{Binding Name, StringFormat='Floor {0}'}"
                                                                        FontSize="22"
+                                                                       Foreground="#000"
                                                                        FontWeight="SemiBold"/>
                                                         </Expander.Header>
                                                         <ItemsPresenter />
