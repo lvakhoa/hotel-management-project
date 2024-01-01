@@ -4,9 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:uti="clr-namespace:HotelManagement.Utilities"
              mc:Ignorable="d"
              d:DesignHeight="638" d:DesignWidth="1010"
              Background="{DynamicResource TertiaryBackgroundColor}">
+    
+    <UserControl.Resources>
+        <uti:LightThemeConverter x:Key="LightThemeConverter"/>
+        <uti:DarkThemeConverter x:Key="DarkThemeConverter"/>
+    </UserControl.Resources>
     
     <Grid>
         <Grid>
@@ -48,13 +54,7 @@
                                FontWeight="Bold" />
                 </Grid>
                 <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    
-                    <StackPanel Grid.Column="0" 
-                                Orientation="Horizontal" 
+                    <StackPanel Orientation="Horizontal" 
                                 VerticalAlignment="Top"
                                 Margin="60 10 0 0">
                         <Border CornerRadius="70"
@@ -82,24 +82,6 @@
                                        Foreground="{DynamicResource PrimaryTextColor}" />
                         </StackPanel>
                     </StackPanel>
-                    <Button BorderThickness="0"
-                            Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Click="ButtonEdit_Click">
-                        <WrapPanel>
-                            <ui:SymbolIcon Symbol="Edit24"
-                                           Margin="0 0 10 0"/>
-                            <TextBlock x:Name="EditTb" Text="Edit Profile"
-                                       FontSize="17"
-                                       LineHeight="20"
-                                       Foreground="#373434"
-                                       HorizontalAlignment="Left"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       MouseEnter="EditTb_OnMouseEnter"
-                                       MouseLeave="EditTb_OnMouseLeave" />
-                        </WrapPanel>
-                    </Button>
                 </Grid>
             </Grid>
 
@@ -109,23 +91,115 @@
                           HorizontalAlignment="Stretch" Margin="50,10,50,0" />
 
             <!-- Preferences section -->
-            <Grid Grid.Row="4">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="56" />
-                    <RowDefinition Height="138" />
-                    <RowDefinition Height="60" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <TextBlock Text="Preferences"
+            <ScrollViewer Grid.Row="4"
+                          VerticalScrollBarVisibility="Visible">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" 
+                               Text="Infomation"
+                               Margin="50,10,0,0"
+                               FontSize="24"
+                               Foreground="{DynamicResource PrimaryTextColor}"
+                               HorizontalAlignment="Left"
+                               FontWeight="Bold" />
+                    <Grid Grid.Row="1"
+                          Margin="50 20 50 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0"
+                                    Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Name"
+                                           FontSize="20"
+                                           Margin="10 0 10 10"
+                                           Foreground="{DynamicResource STextColor}"
+                                           FontWeight="SemiBold"/>
+                                <ui:TextBox Margin="10 0 10 10"
+                                            Width="300"
+                                            BorderThickness="1"
+                                            FontSize="18"
+                                            Text="{Binding Staff.FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Address"
+                                           FontSize="20"
+                                           Margin="10 0 10 10"
+                                           Foreground="{DynamicResource STextColor}"
+                                           FontWeight="SemiBold"/>
+                                <ui:TextBox Margin="10 0 10 10"
+                                            Width="300"
+                                            BorderThickness="1"
+                                            FontSize="18"
+                                            Text="{Binding Staff.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Row="1"
+                                    Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Phone Number"
+                                           FontSize="20"
+                                           Margin="10"
+                                           Foreground="{DynamicResource STextColor}"
+                                           FontWeight="SemiBold"/>
+                                <ui:TextBox Margin="10 0 10 10"
+                                            Width="300"
+                                            BorderThickness="1"
+                                            FontSize="18"
+                                            Text="{Binding Staff.ContactNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Date of Birth"
+                                           FontSize="20"
+                                           Margin="10"
+                                           Foreground="{DynamicResource STextColor}"
+                                           FontWeight="SemiBold"/>
+                                <DatePicker Margin="10 0 10 10"
+                                            Width="300"
+                                            BorderThickness="1"
+                                            FontSize="18"
+                                            SelectedDateFormat="Short"
+                                            SelectedDate="{Binding Staff.Birthday, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2">
+                            <ui:Button Content="Save"
+                                       Background="{DynamicResource SButtonBackground}"
+                                       PressedBackground="{DynamicResource SButtonPressed}"
+                                       MouseOverBackground="{DynamicResource SButtonMouseOver}"
+                                       Foreground="{DynamicResource SButtonTextColor}"
+                                       PressedForeground="#FFF"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       Cursor="Hand"
+                                       Height="50"
+                                       Width="180"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"
+                                       CornerRadius="10"
+                                       Command="{Binding EditUserInfoCommand}"
+                                       CommandParameter="{Binding Staff.ID}"
+                                       Margin="5 0 5 0"/>
+                        </StackPanel>
+                </Grid> 
+                
+                <TextBlock Grid.Row="2" 
+                           Text="Preferences"
                            Margin="50,10,0,0"
                            FontSize="24"
                            Foreground="{DynamicResource PrimaryTextColor}"
                            HorizontalAlignment="Left"
                            FontWeight="Bold" />
 
-                <Grid Grid.Row="1"
+                <Grid Grid.Row="3"
                       Margin="100,0,0,0">
 
                     <Grid.ColumnDefinitions>
@@ -165,6 +239,7 @@
 
                 </Grid>
             </Grid>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </UserControl>

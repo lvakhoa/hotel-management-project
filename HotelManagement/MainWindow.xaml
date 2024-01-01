@@ -241,11 +241,6 @@
                                         </Grid>
                                     </RadioButton>
                                     
-                                    <ui:ToggleSwitch x:Name="Themes"
-                                                     IsChecked="False"
-                                                     Click="Themes_Click"
-                                                     HorizontalAlignment="Center"
-                                                     Margin="10 0 10 0"/>
                                 </StackPanel>
                                 
                                 <!-- Logout -->
