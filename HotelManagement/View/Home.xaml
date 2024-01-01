@@ -39,6 +39,7 @@
                       HorizontalAlignment="Stretch" Margin="50,10,50,0" />
 
         <fa:ImageAwesome Grid.Row="1" Icon="Spinner" Spin="{Binding IsLoading}"
+                         Foreground="{DynamicResource LoadingSpinner}"
                          Visibility="{Binding Path=IsLoading, Converter={StaticResource VisibilityConverter}}"
                          Height="48" Width="48" />
         
@@ -388,7 +389,7 @@
                                               Width="300"
                                               Hoverable="True"
                                               DataClick="PieChart_DataClick_1"
-                                              Foreground="Black"
+                                              Foreground="{DynamicResource TextBoxForeground}"
                                               Series="{Binding PieSeriesCollection}">
                                     <wpf:PieChart.SeriesColors>
                                         <wpf:ColorsCollection>
@@ -412,16 +413,19 @@
                                            FontSize="22" 
                                            FontWeight="Bold" />
                                 <wpf:CartesianChart Height="320"
+                                                    Foreground="{DynamicResource TextBoxForeground}"
                                                     Margin="0 10 0 0"
                                                     Series="{Binding SeriesCollection}">
                                         <wpf:CartesianChart.AxisX>
-                                            <wpf:Axis Labels="{Binding Labels}"/>
+                                            <wpf:Axis Labels="{Binding Labels}"
+                                                      Foreground="{DynamicResource TextBoxForeground}"/>
                                         </wpf:CartesianChart.AxisX>
                                         <wpf:CartesianChart.AxisY>
                                             <wpf:Axis Title="Number Booking"
-                                                      MinValue="0">
+                                                      MinValue="0"
+                                                      Foreground="{DynamicResource TextBoxForeground}">
                                                 <wpf:Axis.Separator>
-                                                    <wpf:Separator Step="1" />
+                                                    <wpf:Separator Step="1"/>
                                                 </wpf:Axis.Separator>
                                             </wpf:Axis>
                                         </wpf:CartesianChart.AxisY>

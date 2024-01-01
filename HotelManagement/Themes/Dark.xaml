@@ -46,6 +46,15 @@
     
     <SolidColorBrush x:Key="SBackground" Color="#102341"/>
     
+    <SolidColorBrush x:Key="LoginTextColor" Color="#C0C9EA"/>
+    
+    <SolidColorBrush x:Key="LoginBoxBackground" Color="#0E1A32"/>
+    <SolidColorBrush x:Key="PlaceHolderText" Color="#C0C9EA"/>
+    <SolidColorBrush x:Key="TextBoxForeground" Color="#FFF"/>
+    <Color x:Key="Shadow">#C0C9EA</Color>
+    
+    <SolidColorBrush x:Key="LoadingSpinner" Color="#FFF"/>
+    
     <Color x:Key="AvailableColor">#00BB6E</Color>
     <Color x:Key="OccupiedColor">#FFE651</Color>
     <Color x:Key="OutOfOrderColor">#F55473</Color>

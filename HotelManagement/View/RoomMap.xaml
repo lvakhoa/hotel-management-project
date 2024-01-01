@@ -61,6 +61,7 @@
                       VerticalScrollBarVisibility="Visible">
             <Grid Grid.Row="2">
                 <fa:ImageAwesome Icon="Spinner" Spin="{Binding IsLoading}"
+                                 Foreground="{DynamicResource LoadingSpinner}"
                                  Visibility="{Binding Path=IsLoading, Converter={StaticResource VisibilityConverter}}"
                                  Height="48" Width="48" />
 

@@ -14,7 +14,7 @@
             <Setter Property="VerticalAlignment"
                     Value="Center" />
             <Setter Property="Foreground"
-                    Value="#a3a3a4" />
+                    Value="{DynamicResource PlaceHolderText}" />
             <Setter Property="FontSize"
                     Value="20" />
             <Setter Property="Text"
@@ -49,6 +49,7 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource TextBoxForeground}"/>
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Text" Value="{Binding ElementName=_usernamebox, Path=Text, UpdateSourceTrigger=PropertyChanged}" />
 
@@ -76,7 +77,7 @@
         </Style>
     </UserControl.Resources>
     <Border CornerRadius="20"
-            Background="White"
+            Background="{DynamicResource LoginBoxBackground}"
             Height="70"
             Cursor="IBeam">
 
@@ -92,7 +93,7 @@
             <DropShadowEffect BlurRadius="20"
                               ShadowDepth="5"
                               Direction="270"
-                              Color="whitesmoke" />
+                              Color="{DynamicResource Shadow}" />
         </Border.Effect>
         <Grid Margin="20,6">
             <TextBlock x:Name="titleusername"

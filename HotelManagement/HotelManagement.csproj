@@ -39,14 +39,13 @@
     <ItemGroup>
       <Resource Include="Assets\Images\hotel_icon.png" />
       <Resource Include="Assets\Images\login.png" />
-      <None Remove="Assets\Images\hotel_img.png" />
-      <Resource Include="Assets\Images\hotel_img.png" />
       <None Remove="Assets\Images\hotel_icon.ico" />
       <Resource Include="Assets\Images\hotel_icon.ico" />
       <None Remove="Assets\Images\female_placeholder_photo.png" />
       <Resource Include="Assets\Images\female_placeholder_photo.png" />
       <None Remove="Assets\Images\male_placeholder_photo.png" />
       <Resource Include="Assets\Images\male_placeholder_photo.png" />
+      <None Remove="Assets\Images\hotel_img.png" />
     </ItemGroup>
 
     <ItemGroup>

@@ -132,12 +132,13 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    <Image Source="/HotelManagement;component/Assets/Images/hotel_img.png"
+                    <Image Source="/HotelManagement;component/Assets/Images/login_hotel.png"
                            Width="500"
                            Margin="70,40,40,40" />
                 </Grid>
                 
                 <fa:ImageAwesome Grid.Column="1" Icon="Spinner" Spin="{Binding IsLoading}"
+                                 Foreground="{DynamicResource LoadingSpinner}"
                                  Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToVisibility}}"
                                  Height="48" Width="48" />
 
@@ -147,13 +148,13 @@
                             Margin="50,50,50,50"
                             Visibility="{Binding Path=IsLoading, Converter={StaticResource InvertVisibilityConverter}}">
                     <TextBlock Text="Log In"
-                               Foreground="#1E1E1E"
+                               Foreground="{DynamicResource LoginTextColor}"
                                FontSize="32"
                                FontWeight="Bold"
                                Margin="25 0 0 0" />
 
                     <TextBlock FontSize="20"
-                               Foreground="#1E1E1E"
+                               Foreground="{DynamicResource LoginTextColor}"
                                Opacity="0.7"
                                Margin="25 5 0 0">
                         Fill your information below to continue
@@ -182,8 +183,8 @@
                     <ui:Button x:Name="LoginBtn"
                             Margin="120,10,120,10"
                             Background="#373434"
-                            MouseOverBackground="#2D2B2B"
-                            PressedBackground="#2D2B2B"
+                            MouseOverBackground="{DynamicResource ButtonMouseOver}"
+                            PressedBackground="{DynamicResource ButtonMouseOver}"
                             Foreground="#FFF"
                             PressedForeground="#FFF"
                             Content="Log In"
