@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:uti="clr-namespace:HotelManagement.Utilities"
              xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
              xmlns:local="clr-namespace:HotelManagement.View"
@@ -42,16 +43,40 @@
                        Foreground="{DynamicResource HeaderText}"
                        HorizontalAlignment="Left"
                        FontWeight="Bold"/>
-            <ComboBox Grid.Column="1"
-                      Width="120"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible"
-                      HorizontalAlignment="Right"
-                      Margin="0 10 50 0"
-                      x:Name="ShowListRoom"
-                      ItemsSource="{Binding Floors}"
-                      MaxDropDownHeight="200"
-                      SelectionChanged="ComboBox_SelectionChanged">
-            </ComboBox>
+            <StackPanel Grid.Column="1"
+                        Margin="0 10 50 0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <ui:Button Width="42" Height="42" BorderThickness="0" CornerRadius="50" Cursor="Hand"
+                           Icon="Filter16" FontSize="20" 
+                           Foreground="{DynamicResource RestoreTextColor}" 
+                           Background="Transparent"
+                           MouseOverBackground="{DynamicResource RestoreMouseOver}" 
+                           PressedBackground="{DynamicResource RestorePressed}" 
+                           PressedForeground="{DynamicResource RestorePressedForeground}"
+                           ToolTip="Click here to filter" ToolTipService.InitialShowDelay="500"
+                           Click="FilterBtn_OnClick">
+                    
+                    <ui:Button.ContextMenu>
+                        <ContextMenu x:Name="Filter" StaysOpen="True">
+                            <MenuItem Header="Available" Click="AvailableMenuItem_OnClick" />
+                            <MenuItem Header="Occupied" Click="OccupiedMenuItem_OnClick" />
+                            <MenuItem Header="Out of Order" Click="OutOfOrderMenuItem_OnClick"/>
+                            <MenuItem Header="No Filter" Click="ShowAllMenuItem_OnClick"/>
+                        </ContextMenu>
+                    </ui:Button.ContextMenu>
+                    
+                </ui:Button>
+                <ComboBox Width="120"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible"
+                          HorizontalAlignment="Right"
+                          x:Name="ShowListRoom"
+                          ItemsSource="{Binding Floors}"
+                          MaxDropDownHeight="200"
+                          SelectionChanged="ComboBox_SelectionChanged">
+                </ComboBox>
+            </StackPanel>
+            
         </Grid>
         <GridSplitter Grid.Row="1" Height="2" IsEnabled="False" VerticalAlignment="Top"
                       Background="{DynamicResource GridLineColor}"
