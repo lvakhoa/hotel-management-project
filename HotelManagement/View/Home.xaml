@@ -30,7 +30,7 @@
               Margin="50 10 0 10">
             <TextBlock Text="Overview"
                        FontSize="32"
-                       Foreground="{DynamicResource PrimaryTextColor}"
+                       Foreground="{DynamicResource HeaderText}"
                        HorizontalAlignment="Left"
                        FontWeight="Bold"/>
         </Grid>
@@ -393,9 +393,9 @@
                                               Series="{Binding PieSeriesCollection}">
                                     <wpf:PieChart.SeriesColors>
                                         <wpf:ColorsCollection>
-                                            <Color>#C2FCC1</Color>
-                                            <Color>#FCFE7C</Color>
-                                            <Color>#FCB7B7</Color>
+                                            <Color>#AAFF9D</Color>
+                                            <Color>#FFF596</Color>
+                                            <Color>#FF9DC8</Color>
                                         </wpf:ColorsCollection>
                                     </wpf:PieChart.SeriesColors>
                                 </wpf:PieChart>

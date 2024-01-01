@@ -39,7 +39,7 @@
             <TextBlock Text="Room Map"
                        Grid.Column="0"
                        FontSize="32"
-                       Foreground="{DynamicResource PrimaryTextColor}"
+                       Foreground="{DynamicResource HeaderText}"
                        HorizontalAlignment="Left"
                        FontWeight="Bold"/>
             <ComboBox Grid.Column="1"

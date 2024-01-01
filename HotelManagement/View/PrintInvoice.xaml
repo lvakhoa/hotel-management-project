@@ -34,7 +34,7 @@
                                 Margin="20">
                         <TextBlock Text="Print"
                                    FontSize="30"
-                                   Foreground="{DynamicResource PrimaryTextColor}"
+                                   Foreground="{DynamicResource HeaderText}"
                                    FontWeight="SemiBold"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"

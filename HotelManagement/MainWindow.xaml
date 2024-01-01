@@ -26,7 +26,7 @@
                 BorderBrush="#231F20" 
                 CornerRadius="10"
                 BorderThickness="1"
-                Background="#fff">
+                Background="{DynamicResource TertiaryBackgroundColor}">
         
             <Grid>
                 <Grid.RowDefinitions>
@@ -35,7 +35,7 @@
                 </Grid.RowDefinitions>
                 
                 <Border Grid.Row="0" 
-                        BorderBrush="#000000" 
+                        BorderBrush="{DynamicResource BorderColor}" 
                         BorderThickness="0,0,0, 0.5"
                         CornerRadius="10, 10, 0, 0" 
                         Background="{DynamicResource PrimaryBackground}">
@@ -57,7 +57,7 @@
                             </Grid.ColumnDefinitions>
                             
                             <Image Grid.Column="0" Source="/HotelManagement;component/Assets/Images/hotel_icon.png" Width="24"/>
-                            <TextBlock Grid.Column="1" FontSize="14" Foreground="#1E1E1E" Text="Hotel Management" VerticalAlignment="Center" Margin="8, 0,0,0" />
+                            <TextBlock Grid.Column="1" FontSize="14" Foreground="{DynamicResource WindowTitle}" Text="Hotel Management" VerticalAlignment="Center" Margin="8, 0,0,0" />
                         </Grid>
                         
                         <ui:Button Grid.Column="1"
@@ -65,10 +65,11 @@
                                    Height="40"
                                    Icon="Subtract20"
                                    IconFilled="True"
+                                   Foreground="{DynamicResource ControlButton}"
                                    Appearance="Transparent"
                                    BorderThickness="0"
-                                   MouseOverBackground="#D4D2D2"
-                                   PressedBackground="#CAC9C9"
+                                   MouseOverBackground="{DynamicResource MouseOverControlButton}"
+                                   PressedBackground="{DynamicResource PressedControlButton}"
                                    CornerRadius="0"
                                    Click="MinimizeBtn_OnClick"/>
                         
@@ -76,10 +77,11 @@
                                    Width="40"
                                    Height="40"
                                    Icon="Square24"
+                                   Foreground="{DynamicResource ControlButton}"
                                    Appearance="Transparent"
                                    BorderThickness="0"
-                                   MouseOverBackground="#D4D2D2"
-                                   PressedBackground="#CAC9C9"
+                                   MouseOverBackground="{DynamicResource MouseOverControlButton}"
+                                   PressedBackground="{DynamicResource PressedControlButton}"
                                    CornerRadius="0"
                                    Click="MaximizeBtn_OnClick"/>
                         
@@ -88,6 +90,7 @@
                                    Width="40"
                                    Height="40"
                                    Icon="Dismiss28"
+                                   Foreground="{DynamicResource ControlButton}"
                                    IconFilled="True"
                                    Appearance="Transparent"
                                    BorderThickness="0"
@@ -120,7 +123,7 @@
                     
                     <Border Grid.Column="0"
                             CornerRadius="0,0,0, 10"
-                            Background="{DynamicResource SecondaryBackgroundColor}"
+                            Background="{DynamicResource SideBarBackground}"
                             HorizontalAlignment="Left"
                             Width="228">
                         <Grid>

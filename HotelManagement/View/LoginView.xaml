@@ -44,10 +44,10 @@
             </Grid.RowDefinitions>
 
             <Border Grid.Row="0"
-                    BorderBrush="#000000"
+                    BorderBrush="{DynamicResource BorderColor}"
                     BorderThickness="0,0,0, 0.5"
                     CornerRadius="10, 10, 0, 0"
-                    Background="#fff">
+                    Background="{DynamicResource TertiaryBackgroundColor}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -68,7 +68,7 @@
                         <Image Grid.Column="0" Source="/HotelManagement;component/Assets/Images/hotel_icon.png" Width="24"/>
                         
                         <TextBlock Grid.Column="1" Text="LOG IN"
-                                   Foreground="#1E1E1E"
+                                   Foreground="{DynamicResource WindowTitle}"
                                    VerticalAlignment="Center"
                                    Margin="8,0,0,0"
                                    FontSize="14" />
@@ -81,8 +81,9 @@
                                IconFilled="True"
                                Appearance="Transparent"
                                BorderThickness="0"
-                               MouseOverBackground="#D4D2D2"
-                               PressedBackground="#CAC9C9"
+                               MouseOverBackground="{DynamicResource MouseOverControlButton}"
+                               PressedBackground="{DynamicResource PressedControlButton}"
+                               Foreground="{DynamicResource ControlButton}"
                                CornerRadius="0" 
                                Click="MinimizeBtn_OnClick"/>
 
@@ -92,8 +93,9 @@
                                Icon="Square24"
                                Appearance="Transparent"
                                BorderThickness="0"
-                               MouseOverBackground="#D4D2D2"
-                               PressedBackground="#CAC9C9"
+                               MouseOverBackground="{DynamicResource MouseOverControlButton}"
+                               PressedBackground="{DynamicResource PressedControlButton}"
+                               Foreground="{DynamicResource ControlButton}"
                                CornerRadius="0" 
                                Click="MaximizeBtn_OnClick"/>
 
@@ -105,6 +107,7 @@
                                IconFilled="True"
                                Appearance="Transparent"
                                BorderThickness="0"
+                               Foreground="{DynamicResource ControlButton}"
                                MouseOverBackground="#EE4242"
                                PressedBackground="#FF2525"
                                PressedForeground="#FFF"
@@ -183,8 +186,8 @@
                     <ui:Button x:Name="LoginBtn"
                             Margin="120,10,120,10"
                             Background="{DynamicResource ButtonBackgroundColor}"
-                            MouseOverBackground="{DynamicResource ButtonMouseOver}"
-                            PressedBackground="{DynamicResource ButtonMouseOver}"
+                            MouseOverBackground="{DynamicResource SButtonMouseOver}"
+                            PressedBackground="{DynamicResource SButtonPressed}"
                             Foreground="#FFF"
                             PressedForeground="#FFF"
                             Content="Log In"

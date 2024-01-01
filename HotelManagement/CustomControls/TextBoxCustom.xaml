@@ -99,6 +99,7 @@
             <TextBlock x:Name="titleusername"
                        Style="{StaticResource usernametitlestyle}" />
             <TextBox x:Name="userbox"
+                     CaretBrush="{DynamicResource CursorColor}"
                      Style="{StaticResource usernametxtboxstyle}" />
         </Grid>
     </Border>

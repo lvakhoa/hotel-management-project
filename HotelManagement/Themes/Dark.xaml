@@ -4,6 +4,9 @@
     <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#0E1A32"/>
     <SolidColorBrush x:Key="SecondaryBackgroundColor" Color="#102341"/>
     <SolidColorBrush x:Key="TertiaryBackgroundColor" Color="#1C3254"/>
+    
+    <SolidColorBrush x:Key="SideBarBackground" Color="#102341"/>
+    
     <Color x:Key="PrimaryColorBackground">#0E1A32</Color>
     <Color x:Key="SecondaryColorBackground">#153B88</Color>
     <Color x:Key="TertiaryColorBackground">#1C3254</Color>
@@ -29,7 +32,7 @@
     
     <SolidColorBrush x:Key="SButtonBackground" Color="#153B88"/>
     <SolidColorBrush x:Key="SButtonTextColor" Color="#FFF"/>
-    <SolidColorBrush x:Key="SButtonMouseOver" Color="#102341"/>
+    <SolidColorBrush x:Key="SButtonMouseOver" Color="#2F56A3"/>
     <SolidColorBrush x:Key="SButtonPressed" Color="#0E1A32"/>
     
     <SolidColorBrush x:Key="RestorePressedForeground" Color="#FFF"/>
@@ -37,12 +40,15 @@
     <SolidColorBrush x:Key="RestoreMouseOver" Color="#153B88"/>
     <SolidColorBrush x:Key="RestorePressed" Color="#153B88"/>
     
-    <SolidColorBrush x:Key="GridLineColor" Color="#102341"/>
+    <SolidColorBrush x:Key="GridLineColor" Color="#C0C9EA"/>
     
     <SolidColorBrush x:Key="TextColor" Color="#FFF"/>
     <SolidColorBrush x:Key="STextColor" Color="#C0C9EA"/>
     
     <SolidColorBrush x:Key="ControlButton" Color="#FFF"/>
+    <SolidColorBrush x:Key="WindowTitle" Color="#FFF"/>
+    <SolidColorBrush x:Key="MouseOverControlButton" Color="#C0C9EA"/>
+    <SolidColorBrush x:Key="PressedControlButton" Color="#CAC9C9"/>
     
     <SolidColorBrush x:Key="SBackground" Color="#102341"/>
     
@@ -51,9 +57,19 @@
     <SolidColorBrush x:Key="LoginBoxBackground" Color="#0E1A32"/>
     <SolidColorBrush x:Key="PlaceHolderText" Color="#C0C9EA"/>
     <SolidColorBrush x:Key="TextBoxForeground" Color="#FFF"/>
-    <Color x:Key="Shadow">#C0C9EA</Color>
+    <Color x:Key="Shadow">#153B88</Color>
     
     <SolidColorBrush x:Key="LoadingSpinner" Color="#FFF"/>
+    
+    <SolidColorBrush x:Key="HeaderText" Color="#FFF"/>
+    
+    <SolidColorBrush x:Key="CursorColor" Color="#FFF"/>
+    
+    <SolidColorBrush x:Key="BorderColor" Color="#C0C9EA"/>
+    
+    <SolidColorBrush x:Key="ThemeButton" Color="#C0C9EA"/>
+    <Color x:Key="ThemeButtonForeground">#C0C9EA</Color>
+    <Color x:Key="ThemeButtonBorder">#C0C9EA</Color>
     
     <Color x:Key="AvailableColor">#00BB6E</Color>
     <Color x:Key="OccupiedColor">#FFE651</Color>

@@ -4,6 +4,9 @@
     <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#373734"/>
     <SolidColorBrush x:Key="SecondaryBackgroundColor" Color="#D9D9D9"/>
     <SolidColorBrush x:Key="TertiaryBackgroundColor" Color="#FFFFFF"/>
+    
+    <SolidColorBrush x:Key="SideBarBackground" Color="#C0C0C0"/>
+    
     <Color x:Key="PrimaryColorBackground">#373734</Color>
     <Color x:Key="SecondaryColorBackground">#C0C0C0</Color>
     <Color x:Key="TertiaryColorBackground">#FFFFFF</Color>
@@ -43,6 +46,9 @@
     <SolidColorBrush x:Key="STextColor" Color="#767676"/>
     
     <SolidColorBrush x:Key="ControlButton" Color="#000"/>
+    <SolidColorBrush x:Key="WindowTitle" Color="#1E1E1E"/>
+    <SolidColorBrush x:Key="MouseOverControlButton" Color="#D4D2D2"/>
+    <SolidColorBrush x:Key="PressedControlButton" Color="#CAC9C9"/>
     
     <SolidColorBrush x:Key="SBackground" Color="#EEEEEE"/>
     
@@ -54,6 +60,16 @@
     <Color x:Key="Shadow">WhiteSmoke</Color>
     
     <SolidColorBrush x:Key="LoadingSpinner" Color="#000"/>
+    
+    <SolidColorBrush x:Key="HeaderText" Color="#373734"/>
+    
+    <SolidColorBrush x:Key="CursorColor" Color="#000"/>
+    
+    <SolidColorBrush x:Key="BorderColor" Color="#1E1E1E"/>
+    
+    <SolidColorBrush x:Key="ThemeButton" Color="#747474"/>
+    <Color x:Key="ThemeButtonForeground">#373434</Color>
+    <Color x:Key="ThemeButtonBorder">#C3C3C3</Color>
     
     <Color x:Key="AvailableColor">#C2FCC1</Color>
     <Color x:Key="OccupiedColor">#FCFE7C</Color>

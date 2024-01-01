@@ -10,8 +10,6 @@
              Background="{DynamicResource TertiaryBackgroundColor}">
     
     <UserControl.Resources>
-        <uti:LightThemeConverter x:Key="LightThemeConverter"/>
-        <uti:DarkThemeConverter x:Key="DarkThemeConverter"/>
     </UserControl.Resources>
     
     <Grid>
@@ -29,7 +27,7 @@
 
                 <TextBlock Text="Settings"
                            FontSize="32"
-                           Foreground="{DynamicResource PrimaryTextColor}"
+                           Foreground="{DynamicResource HeaderText}"
                            HorizontalAlignment="Left"
                            FontWeight="Bold" />
             </Grid>
@@ -58,7 +56,7 @@
                                 VerticalAlignment="Top"
                                 Margin="60 10 0 0">
                         <Border CornerRadius="70"
-                                BorderBrush="Black"
+                                BorderBrush="{DynamicResource BorderColor}"
                                 BorderThickness="1"
                                 Width="70"
                                 Height="70">
