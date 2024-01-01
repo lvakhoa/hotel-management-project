@@ -26,19 +26,6 @@ public partial class MainWindow : Window
             e.Handled = true;
         }
     }
-
-    private void Themes_Click(object sender, RoutedEventArgs e)
-    {
-        if (Themes.IsChecked == true)
-        {
-            ThemesController.SetTheme(ThemesController.ThemeTypes.Dark);
-        }
-        else
-        {
-            ThemesController.SetTheme(ThemesController.ThemeTypes.Light);
-        }
-            
-    }
     
     private void LogoutBtn_OnChecked(object sender, RoutedEventArgs e)
     {

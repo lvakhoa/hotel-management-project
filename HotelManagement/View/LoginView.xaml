@@ -182,7 +182,7 @@
 
                     <ui:Button x:Name="LoginBtn"
                             Margin="120,10,120,10"
-                            Background="#373434"
+                            Background="{DynamicResource ButtonBackgroundColor}"
                             MouseOverBackground="{DynamicResource ButtonMouseOver}"
                             PressedBackground="{DynamicResource ButtonMouseOver}"
                             Foreground="#FFF"
