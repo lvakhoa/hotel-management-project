@@ -135,7 +135,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    <Image Source="/HotelManagement;component/Assets/Images/login_hotel.png"
+                    <Image Source="/HotelManagement;component/Assets/Images/login-img.png"
                            Width="500"
                            Margin="70,40,40,40" />
                 </Grid>

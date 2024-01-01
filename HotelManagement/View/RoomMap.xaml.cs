@@ -45,7 +45,7 @@ public partial class RoomMap : UserControl
     {
         if (RoomVM != null)
         {
-            RoomVM.StatusFilter("Out Of Order");
+            RoomVM.StatusFilter("OutOfOrder");
         }
     }
 

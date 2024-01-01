@@ -55,7 +55,7 @@
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Left"
                             Margin="30 10 30 10">
-                    <Border Background="#BACFFF"
+                    <Border Background="{DynamicResource HomeRevenue}"
                             Padding="10"
                             Height="80"
                             Width="200"
@@ -93,7 +93,7 @@
                         </Grid>
                     </Border>
                     
-                    <Border Background="#AAFF9D"
+                    <Border Background="{DynamicResource HomeBooking}"
                             Padding="10"
                             Height="80"
                             Width="200"
@@ -131,7 +131,7 @@
                         </Grid>
                     </Border>
 
-                    <Border Background="#FFF596"
+                    <Border Background="{DynamicResource HomeCheckin}"
                             Padding="10"
                             Height="80"
                             Width="200"
@@ -169,7 +169,7 @@
                         </Grid>
                     </Border>
                     
-                    <Border Background="#FF9DC8"
+                    <Border Background="{DynamicResource HomeCheckout}"
                             Padding="10"
                             Height="80"
                             Width="200"

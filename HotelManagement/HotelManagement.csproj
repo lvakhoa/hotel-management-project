@@ -47,7 +47,8 @@
       <Resource Include="Assets\Images\male_placeholder_photo.png" />
       <None Remove="Assets\Images\hotel_img.png" />
       <None Remove="Assets\Images\login_hotel.png" />
-      <Resource Include="Assets\Images\login_hotel.png" />
+      <None Remove="Assets\Images\login-img.png" />
+      <Resource Include="Assets\Images\login-img.png" />
     </ItemGroup>
 
     <ItemGroup>

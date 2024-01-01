@@ -44,11 +44,18 @@
                        HorizontalAlignment="Left"
                        FontWeight="Bold"/>
             <StackPanel Grid.Column="1"
-                        Margin="0 10 50 0"
+                        Margin="0 0 50 0"
                         Orientation="Horizontal"
                         HorizontalAlignment="Right">
+                <TextBlock Text="{Binding FilterName, StringFormat='Filter: '}"
+                           VerticalAlignment="Center"
+                           FontWeight="SemiBold"
+                           FontSize="15"
+                           Foreground="{DynamicResource PrimaryTextColor}"
+                           Margin="0 0 10 0"/>
                 <ui:Button Width="42" Height="42" BorderThickness="0" CornerRadius="50" Cursor="Hand"
                            Icon="Filter16" FontSize="20" 
+                           VerticalAlignment="Center"
                            Foreground="{DynamicResource RestoreTextColor}" 
                            Background="Transparent"
                            MouseOverBackground="{DynamicResource RestoreMouseOver}" 
@@ -70,6 +77,7 @@
                 <ComboBox Width="120"
                           ScrollViewer.VerticalScrollBarVisibility="Visible"
                           HorizontalAlignment="Right"
+                          VerticalAlignment="Center"
                           x:Name="ShowListRoom"
                           ItemsSource="{Binding Floors}"
                           MaxDropDownHeight="200"

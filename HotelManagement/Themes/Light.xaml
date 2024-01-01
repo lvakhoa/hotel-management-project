@@ -71,6 +71,13 @@
     <Color x:Key="ThemeButtonForeground">#373434</Color>
     <Color x:Key="ThemeButtonBorder">#C3C3C3</Color>
     
+    <SolidColorBrush x:Key="HomeRevenue" Color="#BACFFF"/>
+    <SolidColorBrush x:Key="HomeCheckin" Color="#FFF596"/>
+    <SolidColorBrush x:Key="HomeCheckout" Color="#FF9DC8"/>
+    <SolidColorBrush x:Key="HomeBooking" Color="#AAFF9D"/>
+    
+    <SolidColorBrush x:Key="ScrollBar" Color="#747474"/>
+    
     <Color x:Key="AvailableColor">#C2FCC1</Color>
     <Color x:Key="OccupiedColor">#FCFE7C</Color>
     <Color x:Key="OutOfOrderColor">#FCB7B7</Color>

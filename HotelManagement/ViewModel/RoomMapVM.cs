@@ -14,6 +14,9 @@ public partial class RoomMapVM : ObservableObject
     public ObservableCollection<string> Floors { get; set; }
     public ICollectionView RoomView { get; set; }
     public CollectionViewSource GroupFloor { get; set; }
+    
+    [ObservableProperty]
+    private string _filterName;
     [ObservableProperty]
     private bool _isLoading;
     public RoomMapVM()
@@ -108,15 +111,19 @@ public partial class RoomMapVM : ObservableObject
             {
                 case "Available":
                     RoomView.Filter = item => { return ((RoomMap)item).Status == "Available"; };
+                    FilterName = "Filter: " + status;
                     break;
                 case "Occupied":
                     RoomView.Filter = item => { return ((RoomMap)item).Status == "Occupied"; };
+                    FilterName = "Filter: " + status;
                     break;
-                case "Out of Order":
+                case "OutOfOrder":
                     RoomView.Filter = item => { return ((RoomMap)item).Status == "Out of Order"; };
+                    FilterName = "Filter: Out Of Order";
                     break;
                 default:
                     RoomView.Filter = null;
+                    FilterName = String.Empty;
                     break;
             }
         }

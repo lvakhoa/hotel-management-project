@@ -2,62 +2,62 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#0E1A32"/>
-    <SolidColorBrush x:Key="SecondaryBackgroundColor" Color="#102341"/>
-    <SolidColorBrush x:Key="TertiaryBackgroundColor" Color="#1C3254"/>
+    <SolidColorBrush x:Key="SecondaryBackgroundColor" Color="#2c2c2c"/>
+    <SolidColorBrush x:Key="TertiaryBackgroundColor" Color="#191919"/>
     
-    <SolidColorBrush x:Key="SideBarBackground" Color="#102341"/>
+    <SolidColorBrush x:Key="SideBarBackground" Color="#202020"/>
     
-    <Color x:Key="PrimaryColorBackground">#0E1A32</Color>
-    <Color x:Key="SecondaryColorBackground">#153B88</Color>
+    <Color x:Key="PrimaryColorBackground">#3B3B3B</Color>
+    <Color x:Key="SecondaryColorBackground">#6D6D6D</Color>
     <Color x:Key="TertiaryColorBackground">#1C3254</Color>
     
-    <SolidColorBrush x:Key="PrimaryTextColor" Color="#C0C9EA"/>
+    <SolidColorBrush x:Key="PrimaryTextColor" Color="#FFF"/>
     <SolidColorBrush x:Key="SecundaryTextColor" Color="#FFFFFF"/>
-    <SolidColorBrush x:Key="TertiaryTextColor" Color="#EDF4FF"/>
+    <SolidColorBrush x:Key="TertiaryTextColor" Color="#FFF"/>
     
-    <SolidColorBrush x:Key="ManagementButtonBackgroundColor" Color="#153B88"/>
+    <SolidColorBrush x:Key="ManagementButtonBackgroundColor" Color="#6D6D6D"/>
     <SolidColorBrush x:Key="ManagementButtonTextColor" Color="#FFF"/>
-    <SolidColorBrush x:Key="ManagementButtonMouseOver" Color="#0E1A32"/>
-    <SolidColorBrush x:Key="ManagementButtonPressed" Color="#0E1A32"/>
+    <SolidColorBrush x:Key="ManagementButtonMouseOver" Color="#3B3B3B"/>
+    <SolidColorBrush x:Key="ManagementButtonPressed" Color="#3B3B3B"/>
     
-    <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#153B88"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#3B3B3B"/>
     <SolidColorBrush x:Key="ButtonTextColor" Color="#FFF"/>
-    <SolidColorBrush x:Key="ButtonMouseOver" Color="#0E1A32"/>
-    <SolidColorBrush x:Key="ButtonPressed" Color="#0E1A32"/>
+    <SolidColorBrush x:Key="ButtonMouseOver" Color="#6D6D6D"/>
+    <SolidColorBrush x:Key="ButtonPressed" Color="#6D6D6D"/>
     
     <SolidColorBrush x:Key="CButtonBackgroundColor" Color="#D9D9D9"/>
     <SolidColorBrush x:Key="CButtonTextColor" Color="#373734"/>
     <SolidColorBrush x:Key="CButtonMouseOver" Color="#D9D9D9"/>
     <SolidColorBrush x:Key="CButtonPressed" Color="#D9D9D9"/>
     
-    <SolidColorBrush x:Key="SButtonBackground" Color="#153B88"/>
+    <SolidColorBrush x:Key="SButtonBackground" Color="#3B3B3B"/>
     <SolidColorBrush x:Key="SButtonTextColor" Color="#FFF"/>
-    <SolidColorBrush x:Key="SButtonMouseOver" Color="#2F56A3"/>
-    <SolidColorBrush x:Key="SButtonPressed" Color="#0E1A32"/>
+    <SolidColorBrush x:Key="SButtonMouseOver" Color="#6D6D6D"/>
+    <SolidColorBrush x:Key="SButtonPressed" Color="#6D6D6D"/>
     
     <SolidColorBrush x:Key="RestorePressedForeground" Color="#FFF"/>
     <SolidColorBrush x:Key="RestoreTextColor" Color="#FFF"/>
-    <SolidColorBrush x:Key="RestoreMouseOver" Color="#153B88"/>
-    <SolidColorBrush x:Key="RestorePressed" Color="#153B88"/>
+    <SolidColorBrush x:Key="RestoreMouseOver" Color="#2C2C2C"/>
+    <SolidColorBrush x:Key="RestorePressed" Color="#2C2C2C"/>
     
     <SolidColorBrush x:Key="GridLineColor" Color="#C0C9EA"/>
     
     <SolidColorBrush x:Key="TextColor" Color="#FFF"/>
-    <SolidColorBrush x:Key="STextColor" Color="#C0C9EA"/>
+    <SolidColorBrush x:Key="STextColor" Color="#FFF"/>
     
     <SolidColorBrush x:Key="ControlButton" Color="#FFF"/>
     <SolidColorBrush x:Key="WindowTitle" Color="#FFF"/>
-    <SolidColorBrush x:Key="MouseOverControlButton" Color="#C0C9EA"/>
-    <SolidColorBrush x:Key="PressedControlButton" Color="#CAC9C9"/>
+    <SolidColorBrush x:Key="MouseOverControlButton" Color="#3F3F3F"/>
+    <SolidColorBrush x:Key="PressedControlButton" Color="#3F3F3F"/>
     
-    <SolidColorBrush x:Key="SBackground" Color="#102341"/>
+    <SolidColorBrush x:Key="SBackground" Color="#202020"/>
     
-    <SolidColorBrush x:Key="LoginTextColor" Color="#C0C9EA"/>
+    <SolidColorBrush x:Key="LoginTextColor" Color="#FFF"/>
     
-    <SolidColorBrush x:Key="LoginBoxBackground" Color="#0E1A32"/>
-    <SolidColorBrush x:Key="PlaceHolderText" Color="#C0C9EA"/>
+    <SolidColorBrush x:Key="LoginBoxBackground" Color="#191919"/>
+    <SolidColorBrush x:Key="PlaceHolderText" Color="#FFF"/>
     <SolidColorBrush x:Key="TextBoxForeground" Color="#FFF"/>
-    <Color x:Key="Shadow">#153B88</Color>
+    <Color x:Key="Shadow">#202020</Color>
     
     <SolidColorBrush x:Key="LoadingSpinner" Color="#FFF"/>
     
@@ -70,6 +70,13 @@
     <SolidColorBrush x:Key="ThemeButton" Color="#C0C9EA"/>
     <Color x:Key="ThemeButtonForeground">#C0C9EA</Color>
     <Color x:Key="ThemeButtonBorder">#C0C9EA</Color>
+    
+    <SolidColorBrush x:Key="HomeRevenue" Color="#E5EDFF"/>
+    <SolidColorBrush x:Key="HomeCheckin" Color="#FFFAC6"/>
+    <SolidColorBrush x:Key="HomeCheckout" Color="#FFC6DF"/>
+    <SolidColorBrush x:Key="HomeBooking" Color="#D4FFCE"/>
+    
+    <SolidColorBrush x:Key="ScrollBar" Color="#747474"/>
     
     <Color x:Key="AvailableColor">#00BB6E</Color>
     <Color x:Key="OccupiedColor">#FFE651</Color>
