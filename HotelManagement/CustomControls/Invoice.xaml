@@ -5,14 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:local="clr-namespace:HotelManagement.CustomControls"
+             xmlns:uti="clr-namespace:HotelManagement.Utilities"
              xmlns:managementlist="clr-namespace:HotelManagement.ViewModel.ManagementList"
              mc:Ignorable="d" 
              d:DesignHeight="Auto" d:DesignWidth="Auto"
              x:Name="_Invoice"
              Background="#FFF">
-
-    <UserControl.Resources>
-    </UserControl.Resources>
     
     <Border BorderBrush="#D9D9D9"
             CornerRadius="5"
@@ -39,13 +37,13 @@
                                     Grid.Column="0"
                                     Margin="10"
                                     HorizontalAlignment="Left">
-                            <TextBlock Text="Triple K" 
+                            <TextBlock Text="{StaticResource HotelName}" 
                                        FontFamily="Forte" 
                                        FontSize="28" 
                                        VerticalAlignment="Center"/>
-                            <TextBlock Text="182 Pasteur Street"/>
-                            <TextBlock Text="Ben Nghe Ward, District 1, Ho Chi Minh City 71000"/>
-                            <TextBlock Text="Vietnam"/>
+                            <TextBlock Text="{StaticResource StreetAddress}"/>
+                            <TextBlock Text="{StaticResource LocalityAddress}"/>
+                            <TextBlock Text="{StaticResource Postcode}"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1"
                                     Margin="10"
@@ -141,6 +139,7 @@
                               SelectionMode="Single"
                               HorizontalAlignment="Stretch"
                               FontSize="10"
+                              Foreground="Black"
                               CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False"
                               CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="False">
                         <ui:DataGrid.RowStyle>
@@ -197,6 +196,7 @@
                               AutoGenerateColumns="False"
                               BorderThickness="0"
                               IsReadOnly="True"
+                              Foreground="Black"
                               GridLinesVisibility="Horizontal"
                               SelectionMode="Single"
                               FontSize="10"
@@ -259,29 +259,67 @@
                             <TextBlock TextWrapping="Wrap"
                                        Text="{Binding CustomerInfo.FullName, ElementName=_Invoice, StringFormat='Dear {0}'}"/>
                             <TextBlock TextWrapping="Wrap"
-                                       Text="Thank you for choosing Tripple K for your recent stay"/>
+                                       Text="{Binding Source={StaticResource HotelName}, StringFormat=Thank you for choosing {0} for your recent stay}"/>
                         </StackPanel>
                     </Grid>
                     <Border Background="#b3cfff"
                             Grid.Column="1"
                             BorderBrush="Black"
                             BorderThickness="2 0 0 0">
-                            <StackPanel VerticalAlignment="Top">
-                                <StackPanel Margin="10"
-                                            Orientation="Horizontal"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center">
-                                    <TextBlock Text="Total Amount: "
-                                               FontSize="15"
-                                               VerticalAlignment="Center"
-                                               FontWeight="SemiBold"/>
-                                    <TextBlock Text="{Binding InvoiceInfo.TotalAmount, ElementName=_Invoice, StringFormat='${0:F2}'}"
-                                               FontSize="18"
-                                               VerticalAlignment="Center"
-                                               FontWeight="SemiBold"
-                                               HorizontalAlignment="Center"/>
-                                </StackPanel>
-                            </StackPanel>
+                        <Grid Margin="10 0 10 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Sub Total"
+                                           FontSize="15"
+                                           VerticalAlignment="Center"
+                                           FontWeight="SemiBold"/>
+                                <TextBlock Grid.Column="1"  
+                                           Text="{Binding InvoiceInfo.TotalAmount, ElementName=_Invoice, StringFormat='${0:F2}'}"
+                                           x:Name="SubTotal"
+                                           FontSize="12"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Right"/>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Source={StaticResource Tax}, StringFormat=Sales Tax {0:F1}%}"
+                                           FontSize="15"
+                                           VerticalAlignment="Center"
+                                           FontWeight="SemiBold"/>
+                                <TextBlock Grid.Column="1"
+                                           x:Name="Total"
+                                           FontSize="12"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Right"
+                                           Text="{Binding ElementName=_Invoice, Path=InvoiceInfo.SaleTax, StringFormat='${0:F2}'}"/>
+                            </Grid> 
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="TOTAL"
+                                           FontSize="15"
+                                           VerticalAlignment="Center"
+                                           FontWeight="SemiBold"/>
+                                <TextBlock Grid.Column="1"  
+                                           FontSize="12"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Right"
+                                           Text="{Binding ElementName=_Invoice, Path=InvoiceInfo.TotalAmountTax, StringFormat='${0:F2}'}"/>
+                            </Grid>
+                        </Grid>
                     </Border>
                 </Grid>
             </Border>

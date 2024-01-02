@@ -81,6 +81,7 @@
                           x:Name="ShowListRoom"
                           ItemsSource="{Binding Floors}"
                           MaxDropDownHeight="200"
+                          ToolTip="Select floor to show" ToolTipService.InitialShowDelay="500"
                           SelectionChanged="ComboBox_SelectionChanged">
                 </ComboBox>
             </StackPanel>

@@ -9,5 +9,5 @@ internal class UISettings : ConfigurationSection
     {
         get { return (string)this["theme"]; }
         set { this["theme"] = value; }
-    }
+    }   
 }

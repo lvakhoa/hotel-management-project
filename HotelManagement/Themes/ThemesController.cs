@@ -46,6 +46,9 @@ namespace HotelManagement.Themes
                 if (!string.IsNullOrEmpty(themeName))
                 {
                     ChangeTheme(new Uri($"Themes/{themeName}.xaml", UriKind.Relative));
+                    ResourceDictionary resource = new ResourceDictionary();
+                    resource.Source = new Uri($"pack://application:,,,/Wpf.Ui;component/Styles/Theme/{themeName}.xaml");
+                    Application.Current.Resources.MergedDictionaries.Add(resource);
                 }
             }
             catch { }

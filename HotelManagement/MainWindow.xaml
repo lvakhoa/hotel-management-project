@@ -146,7 +146,7 @@
                                     </Grid.ColumnDefinitions>
                             
                                     <Image Grid.Column="0" Source="/HotelManagement;component/Assets/Images/hotel_icon.png" Width="40"/>
-                                    <TextBlock Grid.Column="1" Text="Triple K" FontFamily="Forte" FontSize="28" VerticalAlignment="Center" Margin="10, 0,0,0"
+                                    <TextBlock Grid.Column="1" Text="{StaticResource HotelName}" FontFamily="Forte" FontSize="28" VerticalAlignment="Center" Margin="10, 0,0,0"
                                                Foreground="{DynamicResource TertiaryTextColor}"/>
                                 </Grid>
                                 

@@ -150,7 +150,9 @@ public partial class InvoiceList : ObservableObject
             TotalAmount = invoice.TotalAmount,
             PaymentType = invoice.PaymentType,
             TotalBooking = totalBooking,
-            TotalService = totalService
+            TotalService = totalService,
+            TotalAmountTax = invoice.TotalAmount * ((App.Current.Resources["Tax"] as Decimal?) / 100 + 1),
+            SaleTax = invoice.TotalAmount * (App.Current.Resources["Tax"] as Decimal? / 100)
         };
 
         var customer = (from i in context.Invoices
@@ -313,6 +315,8 @@ public partial class InvoiceList : ObservableObject
         
         public decimal? TotalBooking { get; set; }
         public decimal? TotalService { get; set; }
+        public decimal? TotalAmountTax { get; set; }
+        public decimal? SaleTax { get; set; }
         
     }
     
