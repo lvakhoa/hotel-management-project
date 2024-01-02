@@ -17,7 +17,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
 
-                <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Styles/Theme/Light.xaml" />
+                <!-- <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Styles/Theme/light.xaml" /> -->
                 <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Styles/Wpf.Ui.xaml" />
                 
                 <ResourceDictionary Source="Styles/Button.xaml" />

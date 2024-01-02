@@ -9,7 +9,7 @@
     
     <Color x:Key="PrimaryColorBackground">#3B3B3B</Color>
     <Color x:Key="SecondaryColorBackground">#6D6D6D</Color>
-    <Color x:Key="TertiaryColorBackground">#1C3254</Color>
+    <Color x:Key="TertiaryColorBackground">#191919</Color>
     
     <SolidColorBrush x:Key="PrimaryTextColor" Color="#FFF"/>
     <SolidColorBrush x:Key="SecundaryTextColor" Color="#FFFFFF"/>
@@ -19,6 +19,8 @@
     <SolidColorBrush x:Key="ManagementButtonTextColor" Color="#FFF"/>
     <SolidColorBrush x:Key="ManagementButtonMouseOver" Color="#3B3B3B"/>
     <SolidColorBrush x:Key="ManagementButtonPressed" Color="#3B3B3B"/>
+    
+    <SolidColorBrush x:Key="TabButtonActive" Color="#4F4A4A" />
     
     <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#3B3B3B"/>
     <SolidColorBrush x:Key="ButtonTextColor" Color="#FFF"/>
@@ -71,16 +73,16 @@
     <Color x:Key="ThemeButtonForeground">#C0C9EA</Color>
     <Color x:Key="ThemeButtonBorder">#C0C9EA</Color>
     
-    <SolidColorBrush x:Key="HomeRevenue" Color="#E5EDFF"/>
-    <SolidColorBrush x:Key="HomeCheckin" Color="#FFFAC6"/>
-    <SolidColorBrush x:Key="HomeCheckout" Color="#FFC6DF"/>
-    <SolidColorBrush x:Key="HomeBooking" Color="#D4FFCE"/>
+    <SolidColorBrush x:Key="HomeRevenue" Color="#97b4f7"/>
+    <SolidColorBrush x:Key="HomeCheckin" Color="#fff382"/>
+    <SolidColorBrush x:Key="HomeCheckout" Color="#ff87bc"/>
+    <SolidColorBrush x:Key="HomeBooking" Color="#93fc83"/>
     
     <SolidColorBrush x:Key="ScrollBar" Color="#747474"/>
     
     <SolidColorBrush x:Key="ControlBar" Color="#202020"/>
     
-    <Color x:Key="AvailableColor">#00BB6E</Color>
-    <Color x:Key="OccupiedColor">#FFE651</Color>
-    <Color x:Key="OutOfOrderColor">#F55473</Color>
+    <SolidColorBrush x:Key="AvailableColor" Color="#00BB6E" />
+    <SolidColorBrush x:Key="OccupiedColor" Color="#FFE651" />
+    <SolidColorBrush x:Key="OutOfOrderColor" Color="#F55473" />
 </ResourceDictionary>

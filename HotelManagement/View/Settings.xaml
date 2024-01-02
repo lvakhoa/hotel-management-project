@@ -99,7 +99,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" 
-                               Text="Infomation"
+                               Text="Information"
                                Margin="50,10,0,0"
                                FontSize="24"
                                Foreground="{DynamicResource PrimaryTextColor}"

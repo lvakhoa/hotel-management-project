@@ -63,7 +63,6 @@ public partial class HomeVM : ObservableObject
     private async void LoadHomeDataAsync()
     {
         IsLoading = true;
-        await Task.Delay(100); // Simulated delay
         await using var context = new HotelManagementContext();
         var labels = new string[7];
         for (int i = -6; i <= 0; i++)
@@ -129,7 +128,8 @@ public partial class HomeVM : ObservableObject
                 Values = new ChartValues<int> { HomeData.TotalAvailableRoom },
                 Title = "Available",
                 DataLabels = false,
-                LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
+                LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})",
+                Fill = App.Current.Resources["AvailableColor"] as SolidColorBrush,
             },
             // Other PieSeries follow...new PieSeries
             new PieSeries
@@ -137,7 +137,8 @@ public partial class HomeVM : ObservableObject
                 Values = new ChartValues<int> { HomeData.TotalOccupiedRoom },
                 Title = "Occupied",
                 DataLabels = false,
-                LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
+                LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})",
+                Fill = App.Current.Resources["OccupiedColor"] as SolidColorBrush
             },
             new PieSeries
                 // Other PieSeries follow...new PieSeries
@@ -145,7 +146,8 @@ public partial class HomeVM : ObservableObject
                 Values = new ChartValues<int> { HomeData.TotalBlockedRoom },
                 Title = "Blocked",
                 DataLabels = false,
-                LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})"
+                LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})",
+                Fill = App.Current.Resources["OutOfOrderColor"] as SolidColorBrush
             },
                 // Other PieSeries follow...
         };

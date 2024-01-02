@@ -14,11 +14,11 @@
              Background="{DynamicResource TertiaryBackgroundColor}" 
              Height="Auto">
     <UserControl.Resources>
-        <SolidColorBrush x:Key="Available"
-                         Color="{DynamicResource AvailableColor}"/>
+        <!-- <SolidColorBrush x:Key="Available" -->
+        <!--                  Color="{DynamicResource AvailableColor}"/> -->
         <uti:BooleanToVisibilityConverter x:Key="InvertVisibilityConverter"
                                           True="Hidden"
-                                          False="Visible" />
+                                          False="Visible" /> 
         <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
     </UserControl.Resources>
     <Grid>
@@ -391,13 +391,16 @@
                                               DataClick="PieChart_DataClick_1"
                                               Foreground="{DynamicResource TextBoxForeground}"
                                               Series="{Binding PieSeriesCollection}">
-                                    <wpf:PieChart.SeriesColors>
-                                        <wpf:ColorsCollection>
-                                            <Color>#AAFF9D</Color>
-                                            <Color>#FFF596</Color>
-                                            <Color>#FF9DC8</Color>
-                                        </wpf:ColorsCollection>
-                                    </wpf:PieChart.SeriesColors>
+                                    <wpf:PieChart.Resources>
+                                        <SolidColorBrush x:Key="TooltipBg" 
+                                                         Color="{DynamicResource TertiaryColorBackground}" 
+                                                         Opacity="0.7"/>
+                                    </wpf:PieChart.Resources>
+                                    
+                                    <wpf:PieChart.DataTooltip>
+                                        <wpf:DefaultTooltip Background="{DynamicResource TooltipBg}"
+                                                            Foreground="{DynamicResource PrimaryTextColor}" />
+                                    </wpf:PieChart.DataTooltip>
                                 </wpf:PieChart>
                             </StackPanel>
                         </Border>

@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using HotelManagement.Model;
 using HotelManagement.Themes;
+using Wpf.Ui.Appearance;
 
 namespace HotelManagement.View;
 
@@ -34,6 +35,12 @@ public partial class Settings : UserControl
 
     private void btnLight_Checked(object sender, System.Windows.RoutedEventArgs e)
     {
+        Application.Current.Resources.MergedDictionaries.Remove(Application.Current.Resources.MergedDictionaries[^1]!);
+
+        ResourceDictionary resource = new ResourceDictionary();
+        resource.Source = new Uri("pack://application:,,,/Wpf.Ui;component/Styles/Theme/light.xaml");
+        Application.Current.Resources.MergedDictionaries.Add(resource);
+        
         ThemesController.SetTheme(ThemesController.ThemeTypes.Light);
         UISettingSection.Theme = "Light";
         btnDark.IsChecked = false;
@@ -42,6 +49,12 @@ public partial class Settings : UserControl
 
     private void btnDark_Checked(object sender, System.Windows.RoutedEventArgs e)
     {
+        Application.Current.Resources.MergedDictionaries.Remove(Application.Current.Resources.MergedDictionaries[^1]!);
+        
+        ResourceDictionary resource = new ResourceDictionary();
+        resource.Source = new Uri("pack://application:,,,/Wpf.Ui;component/Styles/Theme/dark.xaml");
+        Application.Current.Resources.MergedDictionaries.Add(resource);
+        
         ThemesController.SetTheme(ThemesController.ThemeTypes.Dark);
         UISettingSection.Theme = "Dark";
         btnLight.IsChecked = false;

@@ -20,6 +20,8 @@
     <SolidColorBrush x:Key="ManagementButtonMouseOver" Color="#4F4A4A"/>
     <SolidColorBrush x:Key="ManagementButtonPressed" Color="#4F4A4A"/>
     
+    <SolidColorBrush x:Key="TabButtonActive" Color="#FFF" />
+    
     <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#373734"/>
     <SolidColorBrush x:Key="ButtonTextColor" Color="#FFF"/>
     <SolidColorBrush x:Key="ButtonMouseOver" Color="#2D2B2B"/>
@@ -80,8 +82,8 @@
     
     <SolidColorBrush x:Key="ControlBar" Color="#FFF"/>
     
-    <Color x:Key="AvailableColor">#C2FCC1</Color>
-    <Color x:Key="OccupiedColor">#FCFE7C</Color>
-    <Color x:Key="OutOfOrderColor">#FCB7B7</Color>
+    <SolidColorBrush x:Key="AvailableColor" Color="#C2FCC1" />
+    <SolidColorBrush x:Key="OccupiedColor" Color="#FCFE7C" />
+    <SolidColorBrush x:Key="OutOfOrderColor" Color="#FCB7B7" />
     
 </ResourceDictionary>

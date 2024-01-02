@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System.Configuration;
+using System.Windows;
 using System.Windows.Input;
+using HotelManagement.Model;
 using HotelManagement.Themes;
 using HotelManagement.View;
 using Wpf.Ui.Common;
@@ -13,10 +15,28 @@ namespace HotelManagement;
 /// </summary>
 public partial class MainWindow : Window
 {
+    private Configuration AppConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
     public MainWindow()
     {
         InitializeComponent();
         this.PreviewKeyDown += MainWindowPreviewKeyDown;
+        var uISettingSection = (UISettings)AppConfig.GetSection("UISettings");
+        if (uISettingSection.Theme == "Light")
+        {
+            ResourceDictionary resource = new ResourceDictionary();
+            resource.Source = new Uri("pack://application:,,,/Wpf.Ui;component/Styles/Theme/light.xaml");
+            Application.Current.Resources.MergedDictionaries.Add(resource);
+            
+            // Wpf.Ui.Appearance.Theme.Apply(Wpf.Ui.Appearance.ThemeType.Light);
+        }
+        else
+        {
+            ResourceDictionary resource = new ResourceDictionary();
+            resource.Source = new Uri("pack://application:,,,/Wpf.Ui;component/Styles/Theme/dark.xaml");
+            Application.Current.Resources.MergedDictionaries.Add(resource);
+            
+            // Wpf.Ui.Appearance.Theme.Apply(Wpf.Ui.Appearance.ThemeType.Dark);
+        }
     }
     
     static void MainWindowPreviewKeyDown(object sender, KeyEventArgs e)
