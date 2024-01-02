@@ -119,7 +119,7 @@
                                                         <Expander.Header>
                                                             <TextBlock Text="{Binding Name, StringFormat='Floor {0}'}"
                                                                        FontSize="22"
-                                                                       Foreground="#000"
+                                                                       Foreground="{DynamicResource TertiaryTextColor}"
                                                                        FontWeight="SemiBold"/>
                                                         </Expander.Header>
                                                         <ItemsPresenter />

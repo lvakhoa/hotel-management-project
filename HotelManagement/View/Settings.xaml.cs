@@ -35,7 +35,7 @@ public partial class Settings : UserControl
 
     private void btnLight_Checked(object sender, System.Windows.RoutedEventArgs e)
     {
-        Application.Current.Resources.MergedDictionaries.Remove(Application.Current.Resources.MergedDictionaries[^1]!);
+        // Application.Current.Resources.MergedDictionaries.Remove(Application.Current.Resources.MergedDictionaries[^1]!);
 
         ResourceDictionary resource = new ResourceDictionary();
         resource.Source = new Uri("pack://application:,,,/Wpf.Ui;component/Styles/Theme/light.xaml");
@@ -49,7 +49,7 @@ public partial class Settings : UserControl
 
     private void btnDark_Checked(object sender, System.Windows.RoutedEventArgs e)
     {
-        Application.Current.Resources.MergedDictionaries.Remove(Application.Current.Resources.MergedDictionaries[^1]!);
+        // Application.Current.Resources.MergedDictionaries.Remove(Application.Current.Resources.MergedDictionaries[^1]!);
         
         ResourceDictionary resource = new ResourceDictionary();
         resource.Source = new Uri("pack://application:,,,/Wpf.Ui;component/Styles/Theme/dark.xaml");

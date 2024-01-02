@@ -29,10 +29,16 @@ public partial class App : Application
         if (theme == "Light")
         {
             ThemesController.SetTheme(ThemesController.ThemeTypes.Light);
+            ResourceDictionary resource = new ResourceDictionary();
+            resource.Source = new Uri("pack://application:,,,/Wpf.Ui;component/Styles/Theme/light.xaml");
+            Application.Current.Resources.MergedDictionaries.Add(resource);
         }
         else
         {
             ThemesController.SetTheme(ThemesController.ThemeTypes.Dark);
+            ResourceDictionary resource = new ResourceDictionary();
+            resource.Source = new Uri("pack://application:,,,/Wpf.Ui;component/Styles/Theme/dark.xaml");
+            Application.Current.Resources.MergedDictionaries.Add(resource);
         }
         
         var loginView = new LoginView();

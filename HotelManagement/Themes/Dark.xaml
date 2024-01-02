@@ -9,7 +9,7 @@
     
     <Color x:Key="PrimaryColorBackground">#3B3B3B</Color>
     <Color x:Key="SecondaryColorBackground">#6D6D6D</Color>
-    <Color x:Key="TertiaryColorBackground">#191919</Color>
+    <Color x:Key="TertiaryColorBackground">#2c2c2c</Color>
     
     <SolidColorBrush x:Key="PrimaryTextColor" Color="#FFF"/>
     <SolidColorBrush x:Key="SecundaryTextColor" Color="#FFFFFF"/>
@@ -20,7 +20,7 @@
     <SolidColorBrush x:Key="ManagementButtonMouseOver" Color="#3B3B3B"/>
     <SolidColorBrush x:Key="ManagementButtonPressed" Color="#3B3B3B"/>
     
-    <SolidColorBrush x:Key="TabButtonActive" Color="#4F4A4A" />
+    <SolidColorBrush x:Key="TabButtonActive" Color="#3B3B3B" />
     
     <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#3B3B3B"/>
     <SolidColorBrush x:Key="ButtonTextColor" Color="#FFF"/>
@@ -85,4 +85,14 @@
     <SolidColorBrush x:Key="AvailableColor" Color="#00BB6E" />
     <SolidColorBrush x:Key="OccupiedColor" Color="#FFE651" />
     <SolidColorBrush x:Key="OutOfOrderColor" Color="#F55473" />
+    
+    <SolidColorBrush x:Key="AvailableTextColor" Color="#257151" />
+    <SolidColorBrush x:Key="OccupiedTextColor" Color="#B0A226" />
+    <SolidColorBrush x:Key="OutOfOrderTextColor" Color="#A0263E" />
+    
+    <SolidColorBrush x:Key="DatagridSelectColor" Color="#3B3B3B" />
+    <SolidColorBrush x:Key="DatagridBtn" Color="#403f3f" />
+    <SolidColorBrush x:Key="DatagridRow" Color="#3B3B3B" />
+    <SolidColorBrush x:Key="DatagridHeader" Color="#FFF" />
+
 </ResourceDictionary>

@@ -86,7 +86,8 @@
                        BorderThickness="0"
                        Margin="10,0,0,0"
                        Click="ServiceBtn_OnClick"
-                       Command="{Binding ServiceCommand}" />
+                       Command="{Binding ServiceCommand}" 
+                       Visibility="{Binding Path=IsManager, Converter={StaticResource VisibilityConverter}}"/>
 
             <ui:Button Appearance="Dark"
                        Padding="20, 10"

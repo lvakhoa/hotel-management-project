@@ -21,22 +21,18 @@ public partial class MainWindow : Window
         InitializeComponent();
         this.PreviewKeyDown += MainWindowPreviewKeyDown;
         var uISettingSection = (UISettings)AppConfig.GetSection("UISettings");
-        if (uISettingSection.Theme == "Light")
-        {
-            ResourceDictionary resource = new ResourceDictionary();
-            resource.Source = new Uri("pack://application:,,,/Wpf.Ui;component/Styles/Theme/light.xaml");
-            Application.Current.Resources.MergedDictionaries.Add(resource);
-            
-            // Wpf.Ui.Appearance.Theme.Apply(Wpf.Ui.Appearance.ThemeType.Light);
-        }
-        else
-        {
-            ResourceDictionary resource = new ResourceDictionary();
-            resource.Source = new Uri("pack://application:,,,/Wpf.Ui;component/Styles/Theme/dark.xaml");
-            Application.Current.Resources.MergedDictionaries.Add(resource);
-            
-            // Wpf.Ui.Appearance.Theme.Apply(Wpf.Ui.Appearance.ThemeType.Dark);
-        }
+        // if (uISettingSection.Theme == "Light")
+        // {
+        //     ResourceDictionary resource = new ResourceDictionary();
+        //     resource.Source = new Uri("pack://application:,,,/Wpf.Ui;component/Styles/Theme/light.xaml");
+        //     Application.Current.Resources.MergedDictionaries.Add(resource);
+        // }
+        // else
+        // {
+        //     ResourceDictionary resource = new ResourceDictionary();
+        //     resource.Source = new Uri("pack://application:,,,/Wpf.Ui;component/Styles/Theme/dark.xaml");
+        //     Application.Current.Resources.MergedDictionaries.Add(resource);
+        // }
     }
     
     static void MainWindowPreviewKeyDown(object sender, KeyEventArgs e)

@@ -86,4 +86,13 @@
     <SolidColorBrush x:Key="OccupiedColor" Color="#FCFE7C" />
     <SolidColorBrush x:Key="OutOfOrderColor" Color="#FCB7B7" />
     
+    <SolidColorBrush x:Key="AvailableTextColor" Color="#3AC291" />
+    <SolidColorBrush x:Key="OccupiedTextColor" Color="#BEC128" />
+    <SolidColorBrush x:Key="OutOfOrderTextColor" Color="#F56F6F" />
+    
+    <SolidColorBrush x:Key="DatagridSelectColor" Color="#DFDFDF" />
+    <SolidColorBrush x:Key="DatagridBtn" Color="#D9D9D9" />
+    <SolidColorBrush x:Key="DatagridRow" Color="#F9F9F9" />
+    <SolidColorBrush x:Key="DatagridHeader" Color="#373434" />
+
 </ResourceDictionary>

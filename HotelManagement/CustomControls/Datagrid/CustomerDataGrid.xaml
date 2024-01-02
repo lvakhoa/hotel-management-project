@@ -126,8 +126,9 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <ui:Button Icon="Edit24" CornerRadius="8"
-                                               Padding="5" Background="#D9D9D9"
-                                               MouseOverBackground="#DFDFDF" PressedBackground="#D9D9D9"
+                                               Padding="5" Background="{DynamicResource DatagridBtn}"
+                                               MouseOverBackground="{DynamicResource DatagridSelectColor}" 
+                                               PressedBackground="{DynamicResource DatagridBtn}"
                                                Margin="0,0,10,0"
                                                Click="ButtonEdit_OnClick"
                                                Tag="{Binding ID}"
@@ -135,8 +136,9 @@
                                                 ToolTipService.InitialShowDelay="500"/>
 
                                     <ui:Button Icon="Delete12" CornerRadius="8"
-                                               Padding="5" Background="#D9D9D9"
-                                               MouseOverBackground="#DFDFDF" PressedBackground="#D9D9D9"
+                                               Padding="5" Background="{DynamicResource DatagridBtn}"
+                                               MouseOverBackground="{DynamicResource DatagridSelectColor}" 
+                                               PressedBackground="{DynamicResource DatagridBtn}"
                                                Command="{Binding ElementName=DatagridView, Path=DataContext.DeleteCommand}"
                                                CommandParameter="{Binding ID}"
                                                ToolTip="Click here to delete customer"

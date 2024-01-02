@@ -108,16 +108,19 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <ui:Button Icon="DocumentPdf20" CornerRadius="8"
-                                               Padding="5" Background="#D9D9D9" Margin="0,0,10,0" 
-                                               MouseOverBackground="#DFDFDF" PressedBackground="#D9D9D9"
+                                               Margin="0,0,10,0" 
+                                               Padding="5" Background="{DynamicResource DatagridBtn}"
+                                               MouseOverBackground="{DynamicResource DatagridSelectColor}" 
+                                               PressedBackground="{DynamicResource DatagridBtn}"
                                                Click="ButtonPrint_OnClick"
                                                Tag="{Binding InvoiceID}"
                                                ToolTip="Click here to export invoice to pdf"
                                                ToolTipService.InitialShowDelay="500"/>
                                     
                                     <ui:Button Icon="Delete12" CornerRadius="8"
-                                               Padding="5" Background="#D9D9D9"
-                                               MouseOverBackground="#DFDFDF" PressedBackground="#D9D9D9" 
+                                               Padding="5" Background="{DynamicResource DatagridBtn}"
+                                               MouseOverBackground="{DynamicResource DatagridSelectColor}" 
+                                               PressedBackground="{DynamicResource DatagridBtn}"
                                                Command="{Binding ElementName=DatagridView, Path=DataContext.DeleteCommand}"
                                                CommandParameter="{Binding InvoiceID}"
                                                ToolTip="Click here to delete invoice"
