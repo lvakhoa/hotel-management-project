@@ -8,7 +8,7 @@
         <Setter Property="HorizontalAlignment"
                 Value="Left" />
         <Setter Property="Foreground"
-                Value="#000" />
+                Value="{DynamicResource TertiaryTextColor}" />
         <Setter Property="FontSize"
                 Value="18" />
         <Setter Property="Margin"

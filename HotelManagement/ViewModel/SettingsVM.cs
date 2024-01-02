@@ -67,8 +67,7 @@ internal partial class SettingsVM : ObservableObject
             staff.ContactNumber = Staff.ContactNumber;
             staff.Address = Staff.Address;
             staff.FullName = Staff.FullName;
-            context.SaveChanges();
         }
-        
+        context.SaveChanges();
     }
 }

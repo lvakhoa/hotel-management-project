@@ -24,16 +24,9 @@ public partial class NavigationVM : ObservableObject
     
     [RelayCommand]
     private void Inbox() => CurrentView = new InboxVM();
-    
+
     [RelayCommand]
-    private void Settings()
-    {
-        if (CurrentStaff != null)
-        {
-            UpdateCurrentStaff();
-        }
-        CurrentView = new SettingsVM(CurrentStaff);
-    }
+    private void Settings() => CurrentView = new SettingsVM(CurrentStaff);
 
     private async void GetCurrentStaff()
     {
@@ -61,31 +54,6 @@ public partial class NavigationVM : ObservableObject
             CurrentStaff.ContactNumber = staff.ContactNumber;
         }
     }
-    
-    private async void UpdateCurrentStaff()
-    {
-        await using var context = new HotelManagementContext();
-
-        var staff = await (from s in context.Staff
-            where s.StaffId == CurrentStaff.ID
-            select new
-            {
-                s.StaffId, s.FullName, s.Position, s.Address, s.Email, s.Birthday, s.Gender, s.Salary, s.ContactNumber
-            }).FirstOrDefaultAsync();
-        
-        if (staff != null)
-        {
-            CurrentStaff.ID = staff.StaffId;
-            CurrentStaff.FullName = staff.FullName;
-            CurrentStaff.Position = staff.Position;
-            CurrentStaff.Address = staff.Address;
-            CurrentStaff.Email = staff.Email;
-            CurrentStaff.Birthday = staff.Birthday;
-            CurrentStaff.Gender = staff.Gender;
-            CurrentStaff.Salary = staff.Salary.ToString();
-            CurrentStaff.ContactNumber = staff.ContactNumber;
-        }
-    }
 
     public NavigationVM()
     {
@@ -95,6 +63,5 @@ public partial class NavigationVM : ObservableObject
         CurrentStaff = new StaffList.StaffVM();
         
         GetCurrentStaff();
-        
     }
 }

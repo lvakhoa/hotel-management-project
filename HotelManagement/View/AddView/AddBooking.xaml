@@ -15,7 +15,7 @@
         Loaded="AddBooking_OnLoaded">
 
     <Border CornerRadius="10"
-            Background="#FFF"
+            Background="{DynamicResource TertiaryBackgroundColor}"
             BorderBrush="#231F20"
             BorderThickness="1">
         <Grid>
@@ -32,8 +32,11 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="30,0">
-                    <ui:SymbolIcon Symbol="AddCircle28" FontSize="40" Margin="0,0,10,0" />
+                    <ui:SymbolIcon Symbol="AddCircle28" FontSize="40" 
+                                   Foreground="{DynamicResource TextColor}"
+                                   Margin="0,0,10,0" />
                     <TextBlock VerticalAlignment="Center"
+                               Foreground="{DynamicResource TextColor}"
                                FontSize="24" FontWeight="Bold" Text="Add/Edit booking" />
                 </StackPanel>
 
@@ -45,6 +48,7 @@
                            IconFilled="True"
                            Appearance="Transparent"
                            BorderThickness="0"
+                           Foreground="{DynamicResource ControlButton}"
                            MouseOverBackground="#EE4242"
                            PressedBackground="#FF2525"
                            PressedForeground="#FFF"
@@ -82,12 +86,13 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Booking ID"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ui:TextBox BorderThickness="2"
                                         BorderBrush="#767676"
                                         FontSize="16"
+                                        Foreground="{DynamicResource STextColor}"
                                         IsEnabled="False"
                                         Text="{Binding CurrentBooking.BookingID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
@@ -107,7 +112,7 @@
 
                         <StackPanel Grid.Column="1" Margin="30 0 30 0">
                             <TextBlock Text="Room ID"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ComboBox x:Name="RoomIdBox"
@@ -161,7 +166,7 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Invoice ID"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ComboBox x:Name="InvoiceIdBox"
@@ -190,7 +195,7 @@
 
                         <StackPanel Grid.Column="1" Margin="30 0 30 0">
                             <TextBlock Text="Customer ID"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ComboBox x:Name="CustomerIdBox"
@@ -227,7 +232,7 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Check-in"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <DatePicker x:Name="CheckInBox"
@@ -260,7 +265,7 @@
 
                         <StackPanel Grid.Column="1" Margin="30 0 30 0">
                             <TextBlock Text="Check-out"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <DatePicker x:Name="CheckOutBox"
@@ -300,7 +305,7 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Guest Quantity"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" /> 
                             <ui:NumberBox x:Name="QuantityBox"
@@ -336,7 +341,7 @@
 
                         <StackPanel Grid.Column="1" Margin="30 0 30 0">
                             <TextBlock Text="Payment Method"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ComboBox x:Name="PaymentBox"
@@ -373,7 +378,7 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Staff ID"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ComboBox x:Name="StaffIdBox"
@@ -402,7 +407,7 @@
                         
                         <StackPanel Grid.Column="1" Margin="30 0 30 0">
                             <TextBlock Text="Deposit Fee"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ui:TextBox BorderThickness="2"
@@ -411,20 +416,21 @@
                                         IsEnabled="False"
                                         Text="{Binding CurrentBooking.DepositFee, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBlock Text="Deposit fee plus $20 every 15 days from invoice date"
-                                       Foreground="#767676" />
+                                       Foreground="{DynamicResource STextColor}" />
                         </StackPanel>
 
                     </Grid>
                 </Grid>
 
             </Grid>
-            <Border Grid.Row="2" Background="#EEEEEE"
+            <Border Grid.Row="2" 
+                    Background="{DynamicResource SBackground}"
                     CornerRadius="0 0 10 10">
                 <ui:Button Margin="0,0,30,0"
-                           Background="#373434"
-                           MouseOverBackground="#2D2B2B"
-                           PressedBackground="#2D2B2B"
-                           Foreground="#FFF"
+                           Background="{DynamicResource SButtonBackground}"
+                           PressedBackground="{DynamicResource SButtonPressed}"
+                           MouseOverBackground="{DynamicResource SButtonMouseOver}"
+                           Foreground="{DynamicResource SButtonTextColor}"
                            PressedForeground="#FFF"
                            Content="Save"
                            FontSize="18"

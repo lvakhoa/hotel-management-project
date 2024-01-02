@@ -4,12 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:uti="clr-namespace:HotelManagement.Utilities"
              xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
              xmlns:local="clr-namespace:HotelManagement.View"
              xmlns:vm="clr-namespace:HotelManagement.ViewModel"
              mc:Ignorable="d"
              x:Name="_RoomMap"
+             Background="{DynamicResource TertiaryBackgroundColor}" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.DataContext>
         <vm:RoomMapVM/>
@@ -38,28 +40,61 @@
             <TextBlock Text="Room Map"
                        Grid.Column="0"
                        FontSize="32"
-                       Foreground="#373434"
+                       Foreground="{DynamicResource HeaderText}"
                        HorizontalAlignment="Left"
                        FontWeight="Bold"/>
-            <ComboBox Grid.Column="1"
-                      Width="120"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible"
-                      HorizontalAlignment="Right"
-                      Margin="0 10 50 0"
-                      x:Name="ShowListRoom"
-                      ItemsSource="{Binding Floors}"
-                      MaxDropDownHeight="200"
-                      SelectionChanged="ComboBox_SelectionChanged">
-            </ComboBox>
+            <StackPanel Grid.Column="1"
+                        Margin="0 0 50 0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <TextBlock Text="{Binding FilterName, StringFormat='Filter: '}"
+                           VerticalAlignment="Center"
+                           FontWeight="SemiBold"
+                           FontSize="15"
+                           Foreground="{DynamicResource PrimaryTextColor}"
+                           Margin="0 0 10 0"/>
+                <ui:Button Width="42" Height="42" BorderThickness="0" CornerRadius="50" Cursor="Hand"
+                           Icon="Filter16" FontSize="20" 
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource RestoreTextColor}" 
+                           Background="Transparent"
+                           MouseOverBackground="{DynamicResource RestoreMouseOver}" 
+                           PressedBackground="{DynamicResource RestorePressed}" 
+                           PressedForeground="{DynamicResource RestorePressedForeground}"
+                           ToolTip="Click here to filter" ToolTipService.InitialShowDelay="500"
+                           Click="FilterBtn_OnClick">
+                    
+                    <ui:Button.ContextMenu>
+                        <ContextMenu x:Name="Filter" StaysOpen="True">
+                            <MenuItem Header="Available" Click="AvailableMenuItem_OnClick" />
+                            <MenuItem Header="Occupied" Click="OccupiedMenuItem_OnClick" />
+                            <MenuItem Header="Out of Order" Click="OutOfOrderMenuItem_OnClick"/>
+                            <MenuItem Header="No Filter" Click="ShowAllMenuItem_OnClick"/>
+                        </ContextMenu>
+                    </ui:Button.ContextMenu>
+                    
+                </ui:Button>
+                <ComboBox Width="120"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Center"
+                          x:Name="ShowListRoom"
+                          ItemsSource="{Binding Floors}"
+                          MaxDropDownHeight="200"
+                          SelectionChanged="ComboBox_SelectionChanged">
+                </ComboBox>
+            </StackPanel>
+            
         </Grid>
         <GridSplitter Grid.Row="1" Height="2" IsEnabled="False" VerticalAlignment="Top"
-                      Width="910"
-                      HorizontalAlignment="Left" Margin="50,10,0,0" />
+                      Background="{DynamicResource GridLineColor}"
+                      HorizontalAlignment="Stretch" Margin="50,10,50,0" />
         <ScrollViewer Grid.Row="2" 
                       x:Name="ScrollListRoom"
                       VerticalScrollBarVisibility="Visible">
             <Grid Grid.Row="2">
                 <fa:ImageAwesome Icon="Spinner" Spin="{Binding IsLoading}"
+                                 Foreground="{DynamicResource LoadingSpinner}"
                                  Visibility="{Binding Path=IsLoading, Converter={StaticResource VisibilityConverter}}"
                                  Height="48" Width="48" />
 
@@ -84,6 +119,7 @@
                                                         <Expander.Header>
                                                             <TextBlock Text="{Binding Name, StringFormat='Floor {0}'}"
                                                                        FontSize="22"
+                                                                       Foreground="{DynamicResource TertiaryTextColor}"
                                                                        FontWeight="SemiBold"/>
                                                         </Expander.Header>
                                                         <ItemsPresenter />

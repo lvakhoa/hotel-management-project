@@ -14,7 +14,7 @@
         MouseDown="AddRoomType_OnMouseDown">
 
     <Border CornerRadius="10"
-            Background="#FFF"
+            Background="{DynamicResource TertiaryBackgroundColor}"
             BorderBrush="#231F20"
             BorderThickness="1">
         <Grid>
@@ -31,8 +31,11 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="30,0">
-                    <ui:SymbolIcon Symbol="Bed16" FontSize="40" Margin="0,0,10,0" />
+                    <ui:SymbolIcon Symbol="Bed16" FontSize="40" 
+                                   Foreground="{DynamicResource TextColor}"
+                                   Margin="0,0,10,0" />
                     <TextBlock VerticalAlignment="Center"
+                               Foreground="{DynamicResource TextColor}"
                                FontSize="24" FontWeight="Bold" Text="Add/Edit Room Type" />
                 </StackPanel>
 
@@ -42,6 +45,7 @@
                            Height="40"
                            Icon="Dismiss28"
                            IconFilled="True"
+                           Foreground="{DynamicResource ControlButton}"
                            Appearance="Transparent"
                            BorderThickness="0"
                            MouseOverBackground="#EE4242"
@@ -76,7 +80,7 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Room Type Name"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ui:TextBox x:Name="NameBox" 
@@ -116,12 +120,13 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Room Type ID"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ui:TextBox BorderThickness="2"
                                         BorderBrush="#767676"
                                         FontSize="16"
+                                        Foreground="{DynamicResource STextColor}"
                                         IsEnabled="False"
                                         Text="{Binding CurrentRoomType.ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
@@ -142,7 +147,7 @@
 
                         <StackPanel Grid.Column="1" Margin="30 0 30 0">
                             <TextBlock Text="Room Price (per day)"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             
@@ -185,7 +190,7 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Capacity"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ui:NumberBox x:Name="CapacityBox"
@@ -224,7 +229,7 @@
 
                         <StackPanel Grid.Column="1" Margin="30 0 30 0">
                             <TextBlock Text="Bed Amount"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             
@@ -267,7 +272,7 @@
 
                         <StackPanel Margin="30 0 30 0">
                             <TextBlock Text="Description"
-                                       Foreground="#767676"
+                                       Foreground="{DynamicResource STextColor}"
                                        FontSize="16"
                                        Margin="0 0 0 5" />
                             <ui:TextBox BorderThickness="5"
@@ -296,13 +301,14 @@
                 </Grid>
 
             </Grid>
-            <Border Grid.Row="2" Background="#EEEEEE"
+            <Border Grid.Row="2" 
+                    Background="{DynamicResource SBackground}"
                     CornerRadius="0 0 10 10">
                 <ui:Button Margin="0,0,30,0"
-                           Background="#373434"
-                           MouseOverBackground="#2D2B2B"
-                           PressedBackground="#2D2B2B"
-                           Foreground="#FFF"
+                           Background="{DynamicResource SButtonBackground}"
+                           PressedBackground="{DynamicResource SButtonPressed}"
+                           MouseOverBackground="{DynamicResource SButtonMouseOver}"
+                           Foreground="{DynamicResource SButtonTextColor}"
                            PressedForeground="#FFF"
                            Content="Save"
                            FontSize="18"

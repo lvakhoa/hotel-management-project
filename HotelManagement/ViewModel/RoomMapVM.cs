@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
+using CommunityToolkit.Mvvm.Input;
 
 namespace HotelManagement.ViewModel;
 
@@ -13,6 +14,9 @@ public partial class RoomMapVM : ObservableObject
     public ObservableCollection<string> Floors { get; set; }
     public ICollectionView RoomView { get; set; }
     public CollectionViewSource GroupFloor { get; set; }
+    
+    [ObservableProperty]
+    private string _filterName;
     [ObservableProperty]
     private bool _isLoading;
     public RoomMapVM()
@@ -45,9 +49,15 @@ public partial class RoomMapVM : ObservableObject
                            }).ToListAsync();
 
         var available = await (from r in context.Rooms
-                               where r.Bookings.All(b => (b.CheckOutDate < DateTime.Now || b.CheckInDate > DateTime.Now))
-                               select r).ToListAsync();
-
+            join rt in context.RoomTypes on r.RoomTypeId equals rt.RoomTypeId
+            where r.Deleted == false && string.IsNullOrEmpty(r.Notes) && string.IsNullOrWhiteSpace(r.Notes)
+            let b = from b in r.Bookings
+                where b.Deleted == false
+                select b.CheckOutDate
+            where !b.Any() || b.Max() < DateTime.Now
+            orderby r.RoomId
+            select r).Distinct().ToListAsync();
+        
         foreach (var item in rooms)
         {
             if (item.Deleted == false)
@@ -92,6 +102,31 @@ public partial class RoomMapVM : ObservableObject
             }
         }
         IsLoading = false;
+    }
+    public void StatusFilter(string? status)
+    {
+        if (RoomView != null)
+        {
+            switch (status)
+            {
+                case "Available":
+                    RoomView.Filter = item => { return ((RoomMap)item).Status == "Available"; };
+                    FilterName = "Filter: " + status;
+                    break;
+                case "Occupied":
+                    RoomView.Filter = item => { return ((RoomMap)item).Status == "Occupied"; };
+                    FilterName = "Filter: " + status;
+                    break;
+                case "OutOfOrder":
+                    RoomView.Filter = item => { return ((RoomMap)item).Status == "Out of Order"; };
+                    FilterName = "Filter: Out Of Order";
+                    break;
+                default:
+                    RoomView.Filter = null;
+                    FilterName = String.Empty;
+                    break;
+            }
+        }
     }
     public void SelectFloor(string? selectedfloor)
     {

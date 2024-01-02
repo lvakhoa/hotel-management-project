@@ -19,11 +19,12 @@
                     <Border x:Name="Border"
                             Height="40"
                             Width="190"
+                            BorderBrush="Transparent"
                             BorderThickness="0"
                             CornerRadius="8">
                         <Border.Background>
                             <SolidColorBrush x:Name="BorderBackground"
-                                             Color="Transparent" />
+                                             Color="Transparent"/>
                         </Border.Background>
 
                         <ContentPresenter />
@@ -31,40 +32,16 @@
 
                     <ControlTemplate.Triggers>
 
-                        <EventTrigger RoutedEvent="Border.MouseEnter"
-                                      SourceName="Border">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetName="BorderBackground"
-                                                    Storyboard.TargetProperty="Color"
-                                                    From="Transparent"
-                                                    To="#fff"
-                                                    Duration="0:0:0.1" />
-                                </Storyboard>
-                            </BeginStoryboard>
-
-                        </EventTrigger>
-
-                        <EventTrigger RoutedEvent="Border.MouseLeave"
-                                      SourceName="Border">
-
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetName="BorderBackground"
-                                                    Storyboard.TargetProperty="Color"
-                                                    From="#fff"
-                                                    To="Transparent"
-                                                    Duration="0:0:0.1" />
-                                </Storyboard>
-                            </BeginStoryboard>
-
-                        </EventTrigger>
-
-                        <Trigger Property="IsChecked"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    TargetName="Border"
-                                    Value="#fff" />
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{DynamicResource TabButtonActive}"/>
+                        </Trigger>
+                        
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{DynamicResource TabButtonActive}"/>
                             <Setter Property="Effect" 
                                     TargetName="Border" 
                                     Value="{StaticResource DropShadow}" />

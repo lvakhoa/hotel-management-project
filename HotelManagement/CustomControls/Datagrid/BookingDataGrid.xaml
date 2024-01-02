@@ -35,9 +35,10 @@
                             KeyDown="TextBox_OnSearch" TextChanged="SearchBox_OnTextChanged" />
 
                 <ui:Button Appearance="Dark"
-                           Background="#4F4A4A"
-                           PressedBackground="#4F4A4A"
-                           MouseOverBackground="#5E5858"
+                           Background="{DynamicResource SButtonBackground}"
+                           PressedBackground="{DynamicResource SButtonPressed}"
+                           MouseOverBackground="{DynamicResource SButtonMouseOver}"
+                           Foreground="{DynamicResource SButtonTextColor}"
                            CornerRadius="8"
                            Content="Search"
                            FontSize="16"
@@ -46,8 +47,12 @@
                            Click="SearchBtn_OnClick"/>
                 
                 <ui:Button Width="42" Height="42" BorderThickness="0" CornerRadius="50" Cursor="Hand"
-                           Icon="History16" FontSize="26" Foreground="#4F4A4A" Background="Transparent"
-                           MouseOverBackground="#E1E5EA" PressedBackground="#E1E5EA" PressedForeground="#4F4A4A"
+                           Icon="History16" FontSize="26" 
+                           Foreground="{DynamicResource RestoreTextColor}" 
+                           Background="Transparent"
+                           MouseOverBackground="{DynamicResource RestoreMouseOver}" 
+                           PressedBackground="{DynamicResource RestorePressed}" 
+                           PressedForeground="{DynamicResource RestorePressedForeground}"
                            ToolTip="Click here to restore" ToolTipService.InitialShowDelay="500"
                            Click="RestoreBtn_OnClick">
                     
@@ -65,9 +70,10 @@
             <Grid Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,20,0">
                 <ui:Button x:Name="AddBtn"
                            Appearance="Dark"
-                           Background="#4F4A4A"
-                           PressedBackground="#4F4A4A"
-                           MouseOverBackground="#5E5858"
+                           Background="{DynamicResource SButtonBackground}"
+                           PressedBackground="{DynamicResource SButtonPressed}"
+                           MouseOverBackground="{DynamicResource SButtonMouseOver}"
+                           Foreground="{DynamicResource SButtonTextColor}"
                            CornerRadius="8"
                            Icon="Add12"
                            IconFilled="True"
@@ -82,6 +88,7 @@
 
         <Grid Grid.Row="1">
             <fa:ImageAwesome Icon="Spinner" Spin="{Binding IsLoading}"
+                             Foreground="{DynamicResource LoadingSpinner}"
                              Visibility="{Binding Path=IsLoading, Converter={StaticResource VisibilityConverter}}"
                              Height="48" Width="48" />
 
@@ -118,8 +125,9 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <ui:Button Icon="Edit24" CornerRadius="8"
-                                               Padding="5" Background="#D9D9D9"
-                                               MouseOverBackground="#DFDFDF" PressedBackground="#D9D9D9"
+                                               Padding="5" Background="{DynamicResource DatagridBtn}"
+                                               MouseOverBackground="{DynamicResource DatagridSelectColor}" 
+                                               PressedBackground="{DynamicResource DatagridBtn}"
                                                Margin="0,0,10,0"
                                                Click="ButtonEdit_OnClick"
                                                Tag="{Binding BookingID}"
@@ -127,8 +135,9 @@
                                                ToolTipService.InitialShowDelay="500"/>
 
                                     <ui:Button Icon="Delete12" CornerRadius="8"
-                                               Padding="5" Background="#D9D9D9"
-                                               MouseOverBackground="#DFDFDF" PressedBackground="#D9D9D9"
+                                               Padding="5" Background="{DynamicResource DatagridBtn}"
+                                               MouseOverBackground="{DynamicResource DatagridSelectColor}" 
+                                               PressedBackground="{DynamicResource DatagridBtn}"
                                                Command="{Binding ElementName=DatagridView, Path=DataContext.DeleteCommand}"
                                                CommandParameter="{Binding BookingID}"
                                                ToolTip="Click here to delete booking"
