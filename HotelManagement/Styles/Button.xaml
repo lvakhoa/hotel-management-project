@@ -35,13 +35,13 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Border"
                                     Property="Background"
-                                    Value="{DynamicResource TertiaryBackgroundColor}"/>
+                                    Value="{DynamicResource ManagementButtonMouseOver}"/>
                         </Trigger>
                         
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Border"
                                     Property="Background"
-                                    Value="{DynamicResource TertiaryBackgroundColor}"/>
+                                    Value="{DynamicResource ManagementButtonMouseOver}"/>
                             <Setter Property="Effect" 
                                     TargetName="Border" 
                                     Value="{StaticResource DropShadow}" />

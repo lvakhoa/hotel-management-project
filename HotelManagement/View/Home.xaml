@@ -85,7 +85,7 @@
                                                FontSize="15"
                                                FontWeight="SemiBold"
                                                HorizontalAlignment="Right"/>
-                                    <TextBlock Text="{Binding HomeData.TotalRevenueToday, StringFormat='${0}'}"
+                                    <TextBlock Text="{Binding HomeData.TotalRevenueToday, StringFormat='${0:F2}'}"
                                                FontSize="15"
                                                Foreground="#373434"/>
                                 </StackPanel>

@@ -78,6 +78,8 @@
     
     <SolidColorBrush x:Key="ScrollBar" Color="#747474"/>
     
+    <SolidColorBrush x:Key="ControlBar" Color="#FFF"/>
+    
     <Color x:Key="AvailableColor">#C2FCC1</Color>
     <Color x:Key="OccupiedColor">#FCFE7C</Color>
     <Color x:Key="OutOfOrderColor">#FCB7B7</Color>

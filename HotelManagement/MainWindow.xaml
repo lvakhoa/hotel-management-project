@@ -26,7 +26,7 @@
                 BorderBrush="#231F20" 
                 CornerRadius="10"
                 BorderThickness="1"
-                Background="{DynamicResource TertiaryBackgroundColor}">
+                Background="{DynamicResource ControlBar}">
         
             <Grid>
                 <Grid.RowDefinitions>
