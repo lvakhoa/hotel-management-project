@@ -5,18 +5,12 @@
     <Compile Update="CustomControls\RoomCard.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="CustomControls\TextBoxWithPlaceHolder.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="View\LoginView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="CustomControls\RoomCard.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="CustomControls\TextBoxWithPlaceHolder.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\Text.xaml">

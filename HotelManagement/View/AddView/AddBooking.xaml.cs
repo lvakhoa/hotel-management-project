@@ -61,9 +61,15 @@ namespace HotelManagement.View.AddView
         private void AddBooking_OnLoaded(object sender, RoutedEventArgs e)
         {
             if(CheckInBox.SelectedDate == null)
+            {
+                CheckInBox.BlackoutDates.AddDatesInPast();
                 CheckInBox.SelectedDate = DateTime.Now;
+            } 
             if(CheckOutBox.SelectedDate == null)
+            {
+                CheckOutBox.BlackoutDates.AddDatesInPast();
                 CheckOutBox.SelectedDate = DateTime.Now.AddDays(1);
+            }    
         }
 
         private void RoomIdBox_OnLoaded(object sender, RoutedEventArgs e)
