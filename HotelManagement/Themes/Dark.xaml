@@ -95,4 +95,6 @@
     <SolidColorBrush x:Key="DatagridRow" Color="#3B3B3B" />
     <SolidColorBrush x:Key="DatagridHeader" Color="#FFF" />
 
+    <SolidColorBrush x:Key="ColumnChart" Color="#306955" />
+
 </ResourceDictionary>

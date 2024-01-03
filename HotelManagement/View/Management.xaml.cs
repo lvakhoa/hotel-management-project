@@ -3,7 +3,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using HotelManagement.ViewModel;
 using HotelManagement.ViewModel.ManagementList;
-using DefaultDatagrid = HotelManagement.CustomControls.DataGrid;
 using ButtonUI = Wpf.Ui.Controls.Button;
 
 namespace HotelManagement.View;

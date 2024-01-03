@@ -118,7 +118,8 @@ public partial class HomeVM : ObservableObject
                     HomeData.TotalBookingSunday
                 },
                 DataLabels = true, 
-                Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#66CDAA"))
+                Foreground = App.Current.Resources["TextBoxForeground"] as SolidColorBrush,
+                Fill = App.Current.Resources["ColumnChart"] as SolidColorBrush
             },
         };
         PieSeriesCollection = new SeriesCollection
@@ -155,15 +156,15 @@ public partial class HomeVM : ObservableObject
     }
     private async Task<decimal> GetTotalRevenueToday(HotelManagementContext context)
     {
-        return (decimal)await context.Invoices
+        return (decimal)(await context.Invoices
             .Where(i => i.InvoiceDate.Day == DateTime.Now.Day)
-            .SumAsync(i => i.TotalAmount);
+            .SumAsync(i => i.TotalAmount))!;
     }
 
     private async Task<decimal> GetTotalRevenue(HotelManagementContext context)
     {
-        return (decimal)await context.Invoices
-            .SumAsync(i => i.TotalAmount);
+        return (decimal)(await context.Invoices
+            .SumAsync(i => i.TotalAmount))!;
     }
 
     private async Task<int> GetTotalBookingToday(HotelManagementContext context)

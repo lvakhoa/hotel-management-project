@@ -23,9 +23,6 @@ public partial class NavigationVM : ObservableObject
     private void Management() => CurrentView = new ManagementVM(CurrentStaff.ID);
     
     [RelayCommand]
-    private void Inbox() => CurrentView = new InboxVM();
-
-    [RelayCommand]
     private void Settings() => CurrentView = new SettingsVM(CurrentStaff);
 
     private async void GetCurrentStaff()

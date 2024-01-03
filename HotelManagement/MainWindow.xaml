@@ -209,24 +209,6 @@
                                         </Grid>
                                     </RadioButton> 
                                     
-                                    <!-- Inbox -->
-                                    
-                                    <RadioButton Style="{StaticResource BtnStyle}"
-                                                 Command="{Binding InboxCommand}">
-                                        <Grid>
-                                            
-                                            <ui:SymbolIcon Symbol="MailInbox28"
-                                                           FontSize="24" 
-                                                           Foreground="{DynamicResource TertiaryTextColor}"
-                                                           Margin="12,0,0,0"
-                                                           HorizontalAlignment="Left"/>
-                            
-                                            <TextBlock Text="Inbox"
-                                                       Style="{StaticResource TextStyle}"/>
-                            
-                                        </Grid>
-                                    </RadioButton> 
-                                    
                                     <!-- Settings -->
                                     
                                     <RadioButton Style="{StaticResource BtnStyle}"

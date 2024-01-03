@@ -16,10 +16,6 @@
         <view:Management DataContext="{Binding}" />
     </DataTemplate>
     
-    <DataTemplate DataType="{x:Type vm:InboxVM}">
-        <view:Inbox />
-    </DataTemplate>
-    
     <DataTemplate DataType="{x:Type vm:SettingsVM}">
         <view:Settings DataContext="{Binding}" />
     </DataTemplate>

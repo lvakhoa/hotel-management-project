@@ -1,15 +1,9 @@
 using System.Windows;
 using System.Printing;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media;
-using HotelManagement.Model;
 using HotelManagement.ViewModel.ManagementList;
-using MaterialDesignThemes.Wpf;
-using Wpf.Ui.Controls;
 
 namespace HotelManagement.View;
 
