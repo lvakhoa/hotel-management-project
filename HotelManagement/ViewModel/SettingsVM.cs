@@ -1,8 +1,10 @@
 using System.Runtime.InteropServices;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using HotelManagement.CustomControls.MessageBox;
 using HotelManagement.Model;
 using HotelManagement.ViewModel.ManagementList;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace HotelManagement.ViewModel;
@@ -11,17 +13,19 @@ internal partial class SettingsVM : ObservableObject
 {
     [ObservableProperty] private StaffList.StaffVM _staff;
     [ObservableProperty] private string _staffAvatar;
+    [ObservableProperty] private string? _password;
 
-    public SettingsVM(StaffList.StaffVM CurrentStaff)
+    public SettingsVM(StaffList.StaffVM CurrentStaff, string password)
     {
         Staff = new StaffList.StaffVM();
         Staff = CurrentStaff;
+        Password = password;
         UpdateStaff();
     }
     public void UpdateStaff()
     {
         var context = new HotelManagementContext();
-        var s = context.Staff.Find(Staff.ID);
+        var s = context.Staff.Include("Account").FirstOrDefault(s => s.StaffId == Staff.ID);
         if (s != null)
         {
             Staff.FullName = s.FullName;
@@ -29,6 +33,7 @@ internal partial class SettingsVM : ObservableObject
             Staff.Birthday = s.Birthday;
             Staff.Address = s.Address;
             Staff.Gender = s.Gender;
+            Password = s.Account!.Password;
         }
         AvatarLoad(Staff);
     }
@@ -53,21 +58,27 @@ internal partial class SettingsVM : ObservableObject
             Birthday: not null,
             ContactNumber: not null,
             HasErrors: false
-        };
+        } && Password is not null;
     }
     
     [RelayCommand(CanExecute = nameof(Can_EditUserInfo))]
     private void EditUserInfo()
     {
         using var context = new HotelManagementContext();
-        var staff = context.Staff.Find(Staff.ID);
+        var staff = context.Staff.Include("Account").FirstOrDefault(s => s.StaffId == Staff.ID);
         if (staff != null)
         {
             staff.Birthday = Staff.Birthday;
-            staff.ContactNumber = Staff.ContactNumber;
-            staff.Address = Staff.Address;
-            staff.FullName = Staff.FullName;
+            staff.ContactNumber = Staff.ContactNumber!;
+            staff.Address = Staff.Address!;
+            staff.FullName = Staff.FullName!;
+            staff.Account!.Password = Password!;
         }
         context.SaveChanges();
+        
+        MessageBox.Show(
+            App.ActivatedWindow, "Success",
+            "Edit user info successfully!",
+            msgImage: MessageBoxImage.SUCCESS, msgButton: MessageBoxButton.OK);
     }
 }

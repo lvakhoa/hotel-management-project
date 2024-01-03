@@ -44,9 +44,9 @@ public partial class HomeVM : ObservableObject
              orderby i.InvoiceDate descending
              select new BookingDisplay
              {
-                 RoomType = rt.RoomTypeName, // Replace with actual property name for room type name
-                 RoomNumber = r.RoomNumber, // Replace with actual property name for room number
-                 CustomerName = c.FullName, // Replace with actual property name for customer name
+                 RoomType = rt.RoomTypeName, 
+                 RoomNumber = r.RoomNumber, 
+                 CustomerName = c.FullName, 
                  BookingDate = (DateTime)i.InvoiceDate
              }).Take(3).ToListAsync();
 
@@ -68,7 +68,7 @@ public partial class HomeVM : ObservableObject
         for (int i = -6; i <= 0; i++)
         {
             var date1 = DateTime.Today.AddDays(i);
-            labels[i + 6] = date1.ToString("dd/MM"); // Format the date as you prefer
+            labels[i + 6] = date1.ToString("dd/MM"); 
         }
         Labels = labels;
         var date = DateTime.Today;
@@ -132,7 +132,6 @@ public partial class HomeVM : ObservableObject
                 LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})",
                 Fill = App.Current.Resources["AvailableColor"] as SolidColorBrush,
             },
-            // Other PieSeries follow...new PieSeries
             new PieSeries
             {
                 Values = new ChartValues<int> { HomeData.TotalOccupiedRoom },
@@ -142,7 +141,6 @@ public partial class HomeVM : ObservableObject
                 Fill = App.Current.Resources["OccupiedColor"] as SolidColorBrush
             },
             new PieSeries
-                // Other PieSeries follow...new PieSeries
             {
                 Values = new ChartValues<int> { HomeData.TotalBlockedRoom },
                 Title = "Blocked",
@@ -150,7 +148,6 @@ public partial class HomeVM : ObservableObject
                 LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})",
                 Fill = App.Current.Resources["OutOfOrderColor"] as SolidColorBrush
             },
-                // Other PieSeries follow...
         };
         OnPropertyChanged(nameof(Labels));
     }
@@ -178,8 +175,8 @@ public partial class HomeVM : ObservableObject
     private async Task<int> GetTotalBookingsForDate(HotelManagementContext context, int x)
     {
         var today = DateTime.Today.AddDays(x);
-        var temp = await context.Bookings
-                            .CountAsync(b => b.CheckInDate.Value.Date == today);
+        var temp = await context.Bookings.Include("Invoice")
+                            .CountAsync(b => b.Invoice.InvoiceDate.Date == today);
         return temp;
     }
     

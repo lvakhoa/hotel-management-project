@@ -9,6 +9,7 @@ namespace HotelManagement.ViewModel;
 public partial class NavigationVM : ObservableObject
 {
     [ObservableProperty] private StaffList.StaffVM _currentStaff;
+    public string Password { get; set; }
     
     [ObservableProperty]
     private object _currentView;
@@ -23,13 +24,23 @@ public partial class NavigationVM : ObservableObject
     private void Management() => CurrentView = new ManagementVM(CurrentStaff.ID);
     
     [RelayCommand]
-    private void Settings() => CurrentView = new SettingsVM(CurrentStaff);
+    private void Settings() => CurrentView = new SettingsVM(CurrentStaff, Password);
 
     private async void GetCurrentStaff()
     {
         await using var context = new HotelManagementContext();
         
         string userId = Thread.CurrentPrincipal.Identity.Name;
+        
+        var user = await (from u in context.Accounts
+            where u.StaffId == userId
+            select new
+            {
+                u.Password
+            }).FirstOrDefaultAsync();
+        
+        if (user != null)
+            Password = user.Password;
         
         var staff = await (from s in context.Staff
             where s.StaffId == userId

@@ -138,6 +138,18 @@
                                             FontSize="18"
                                             Text="{Binding Staff.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Password"
+                                           FontSize="20"
+                                           Margin="10 0 10 10"
+                                           Foreground="{DynamicResource STextColor}"
+                                           FontWeight="SemiBold"/>
+                                <ui:PasswordBox Margin="10 0 10 10"
+                                            Width="200"
+                                            BorderThickness="1"
+                                            FontSize="18"
+                                            Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
                         </StackPanel>
                         
                         <StackPanel Grid.Row="1"
