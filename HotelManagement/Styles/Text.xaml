@@ -8,11 +8,24 @@
         <Setter Property="HorizontalAlignment"
                 Value="Left" />
         <Setter Property="Foreground"
-                Value="#000" />
+                Value="{DynamicResource TertiaryTextColor}" />
         <Setter Property="FontSize"
                 Value="18" />
         <Setter Property="Margin"
                 Value="44,0,0,0" />
         
+    </Style>
+    <Style x:Key="Title"
+           TargetType="TextBlock">
+
+        <Setter Property="FontSize"
+                Value="30"/>
+        <Setter Property="Foreground"
+                Value="Black"/>
+        <Setter Property="Margin"
+                Value="10"/>
+        <Setter Property="FontWeight"
+                Value="Bold"/>
+
     </Style>
 </ResourceDictionary>

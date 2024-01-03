@@ -1,0 +1,600 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style
+        TargetType="RadioButton"
+        x:Key="DarkButtonTheme">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}" CornerRadius="10"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}">
+                            <Border Background="#373434" Height="60" Width="89"
+                                    VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                                    CornerRadius="5 0 10 0">
+                                <Grid Height="50">
+                                    <TextBlock Text="Aa"
+                                               FontSize="20"
+                                               Foreground="{TemplateBinding OpacityMask}"
+                                               FontWeight="Medium"
+                                               VerticalAlignment="Center"
+                                               Margin="10,-20,0,0" />
+                                </Grid>
+                            </Border>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="False" />
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                </MultiTrigger.Conditions>
+
+                                <MultiTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color"
+                                                            From="#C3C3C3" To="#0090F8"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                            From="#373434" To="#0090F8"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness"
+                                                                From="1" To="3"
+                                                                Duration="0:0:0.2">
+                                                <ThicknessAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ThicknessAnimation.EasingFunction>
+                                            </ThicknessAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Width"
+                                                             From="120" To="123"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Height"
+                                                             From="80" To="83"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="OpacityMask.Color"
+                                                            From="#FFF" To="#0090F8"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                        </Storyboard>
+
+                                    </BeginStoryboard>
+                                </MultiTrigger.EnterActions>
+
+                                <MultiTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color"
+                                                            From="#0090F8" To="#C3C3C3"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                            From="#0090F8" To="#373434"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness"
+                                                                From="3" To="1"
+                                                                Duration="0:0:0.2">
+                                                <ThicknessAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ThicknessAnimation.EasingFunction>
+                                            </ThicknessAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Width"
+                                                             From="123" To="120"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Height"
+                                                             From="83" To="80"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="OpacityMask.Color"
+                                                            From="#0090F8" To="#FFF"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                        </Storyboard>
+
+                                    </BeginStoryboard>
+                                </MultiTrigger.ExitActions>
+
+                            </MultiTrigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="False" />
+                                    <Condition Property="IsMouseOver" Value="False" />
+                                </MultiTrigger.Conditions>
+
+                                <MultiTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color"
+                                                            From="#0090F8" To="#C3C3C3"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                            From="#0090F8" To="#373434"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness"
+                                                                From="3" To="1"
+                                                                Duration="0:0:0.2">
+                                                <ThicknessAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ThicknessAnimation.EasingFunction>
+                                            </ThicknessAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Width"
+                                                             From="123" To="120"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Height"
+                                                             From="83" To="80"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="OpacityMask.Color"
+                                                            From="#0090F8" To="#FFF"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                        </Storyboard>
+
+                                    </BeginStoryboard>
+                                </MultiTrigger.EnterActions>
+
+                                <MultiTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color"
+                                                            From="#C3C3C3" To="#0090F8"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                            From="#373434" To="#0090F8"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness"
+                                                                From="1" To="3"
+                                                                Duration="0:0:0.2">
+                                                <ThicknessAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ThicknessAnimation.EasingFunction>
+                                            </ThicknessAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Width"
+                                                             From="120" To="123"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Height"
+                                                             From="80" To="83"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="OpacityMask.Color"
+                                                            From="#FFF" To="#0090F8"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                        </Storyboard>
+
+                                    </BeginStoryboard>
+                                </MultiTrigger.ExitActions>
+
+                            </MultiTrigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="BorderBrush" Value="#C3C3C3" />
+
+            <Setter Property="Background" Value="#747474" />
+
+            <Setter Property="BorderThickness" Value="1" />
+
+            <Setter Property="Width" Value="120" />
+
+            <Setter Property="Height" Value="80" />
+
+            <Setter Property="OpacityMask" Value="#FFF" />
+
+            <Setter Property="Foreground" Value="#373434" />
+
+        </Style.Setters>
+
+    </Style>
+
+    <Style
+        TargetType="RadioButton"
+        x:Key="LightButtonTheme">
+
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}">
+                            <Border Background="White" Width="89" Height="60"
+                                    VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                                    CornerRadius="5 0 10 0">
+                                <Grid Height="50">
+                                    <TextBlock Text="Aa"
+                                               FontSize="20"
+                                               Foreground="{TemplateBinding OpacityMask}"
+
+                                               FontWeight="Medium"
+                                               VerticalAlignment="Center"
+                                               Margin="10,-20,0,0" />
+
+                                </Grid>
+                            </Border>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="False" />
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                </MultiTrigger.Conditions>
+
+                                <MultiTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color"
+                                                            From="#C3C3C3" To="#0090F8"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                            From="#373434" To="#0090F8"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness"
+                                                                From="1" To="3"
+                                                                Duration="0:0:0.2">
+                                                <ThicknessAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ThicknessAnimation.EasingFunction>
+                                            </ThicknessAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Width"
+                                                             From="120" To="123"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Height"
+                                                             From="80" To="83"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="OpacityMask.Color"
+                                                            From="#373434" To="#0090F8"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                        </Storyboard>
+
+                                    </BeginStoryboard>
+                                </MultiTrigger.EnterActions>
+
+                                <MultiTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color"
+                                                            From="#0090F8" To="#C3C3C3"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                            From="#0090F8" To="#373434"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness"
+                                                                From="3" To="1"
+                                                                Duration="0:0:0.2">
+                                                <ThicknessAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ThicknessAnimation.EasingFunction>
+                                            </ThicknessAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Width"
+                                                             From="123" To="120"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Height"
+                                                             From="83" To="80"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="OpacityMask.Color"
+                                                            From="#0090F8" To="#373434"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                        </Storyboard>
+
+                                    </BeginStoryboard>
+                                </MultiTrigger.ExitActions>
+
+                            </MultiTrigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="False" />
+                                    <Condition Property="IsMouseOver" Value="False" />
+                                </MultiTrigger.Conditions>
+
+                                <MultiTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color"
+                                                            From="#0090F8" To="#C3C3C3"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                            From="#0090F8" To="#373434"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness"
+                                                                From="3" To="1"
+                                                                Duration="0:0:0.2">
+                                                <ThicknessAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ThicknessAnimation.EasingFunction>
+                                            </ThicknessAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Width"
+                                                             From="123" To="120"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Height"
+                                                             From="83" To="80"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="OpacityMask.Color"
+                                                            From="#0090F8" To="#373434"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                        </Storyboard>
+
+                                    </BeginStoryboard>
+                                </MultiTrigger.EnterActions>
+
+                                <MultiTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color"
+                                                            From="#C3C3C3" To="#0090F8"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                            From="#373434" To="#0090F8"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness"
+                                                                From="1" To="3"
+                                                                Duration="0:0:0.2">
+                                                <ThicknessAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ThicknessAnimation.EasingFunction>
+                                            </ThicknessAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Width"
+                                                             From="120" To="123"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetProperty="Height"
+                                                             From="80" To="83"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <ColorAnimation Storyboard.TargetProperty="OpacityMask.Color"
+                                                            From="#373434" To="#0090F8"
+                                                            Duration="0:0:0.2">
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+
+                                        </Storyboard>
+
+                                    </BeginStoryboard>
+                                </MultiTrigger.ExitActions>
+
+                            </MultiTrigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Background" Value="#F6F6F6" />
+
+            <Setter Property="BorderThickness" Value="1" />
+
+            <Setter Property="Width" Value="120" />
+
+            <Setter Property="Height" Value="80" />
+
+            <Setter Property="OpacityMask" Value="#373434" />
+
+            <Setter Property="BorderBrush" Value="#C3C3C3" />
+
+            <Setter Property="Foreground" Value="#373434" />
+
+        </Style.Setters>
+        
+    </Style>
+
+</ResourceDictionary>

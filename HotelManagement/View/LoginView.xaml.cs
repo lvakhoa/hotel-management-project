@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Wpf.Ui.Common;
+using UIBtn = Wpf.Ui.Controls.Button;
 
 namespace HotelManagement.View
 {
@@ -24,12 +26,39 @@ namespace HotelManagement.View
             InitializeComponent();
         }
 
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Box_OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-                DragMove();
+            if(e.Key == Key.Enter)
+                UsernameBox.Focus();
+        }
+        
+        private void MinimizeBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
         }
 
-        
+        private void MaximizeBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as UIBtn;
+            if (WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+                btn!.Icon = SymbolRegular.SquareMultiple24;
+                CloseBtn.CornerRadius = new CornerRadius(0);
+                WindowBorder.CornerRadius = new CornerRadius(0);
+            }
+            else
+            {
+                WindowState = WindowState.Normal;
+                btn!.Icon = SymbolRegular.Square24;
+                CloseBtn.CornerRadius = new CornerRadius(0, 10, 0, 0);
+                WindowBorder.CornerRadius = new CornerRadius(10);
+            }
+        }
+
+        private void CloseBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

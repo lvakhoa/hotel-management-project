@@ -1,0 +1,397 @@
+﻿<Window x:Class="HotelManagement.View.AddView.AddCustomer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:managementList="clr-namespace:HotelManagement.ViewModel.ManagementList"
+        mc:Ignorable="d"
+        Title="AddCustomer" Height="610" Width="700"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="AddCustomer_OnMouseDown">
+
+    <!-- <Window.DataContext> -->
+    <!--     <managementList:CustomerList /> -->
+    <!-- </Window.DataContext> -->
+
+    <Border CornerRadius="10"
+            Background="{DynamicResource TertiaryBackgroundColor}"
+            BorderBrush="#231F20"
+            BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.5*" />
+                <RowDefinition Height="12*" />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="30,0">
+                    <ui:SymbolIcon Symbol="PeopleAdd16" FontSize="40" 
+                                   Foreground="{DynamicResource TextColor}"
+                                   Margin="0,0,10,0" />
+                    <TextBlock VerticalAlignment="Center"
+                               Foreground="{DynamicResource TextColor}"
+                               FontSize="24" FontWeight="Bold" Text="Add/Edit Customer" />
+                </StackPanel>
+
+                <ui:Button Grid.Column="1"
+                           VerticalAlignment="Top"
+                           Width="40"
+                           Height="40"
+                           Icon="Dismiss28"
+                           Foreground="{DynamicResource ControlButton}"
+                           IconFilled="True"
+                           Appearance="Transparent"
+                           BorderThickness="0"
+                           MouseOverBackground="#EE4242"
+                           PressedBackground="#FF2525"
+                           PressedForeground="#FFF"
+                           CornerRadius="0, 10, 0, 0"
+                           Click="CloseBtn_OnClick">
+
+                    <ui:Button.Style>
+                        <Style TargetType="{x:Type ui:Button}" BasedOn="{StaticResource {x:Type ui:Button}}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="#fff"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ui:Button.Style>
+                </ui:Button>
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+
+                        <StackPanel Margin="30 0 30 0">
+                            <TextBlock Text="Full Name"
+                                       Foreground="{DynamicResource STextColor}"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ui:TextBox x:Name="NameBox"
+                                        FontSize="16" 
+                                        Validation.ErrorTemplate="{x:Null}"
+                                        Text="{Binding CurrentCustomer.FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                                <ui:TextBox.Style>
+                                    <Style TargetType="{x:Type ui:TextBox}"
+                                           BasedOn="{StaticResource {x:Type TextBox}}">
+                                        <Setter Property="BorderThickness" Value="2" />
+                                        <Setter Property="BorderBrush" Value="#EF4040" />
+
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"
+                                                Value="{x:Null}">
+                                                <Setter Property="BorderThickness" Value="2" />
+                                                <Setter Property="BorderBrush" Value="#767676" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ui:TextBox.Style>
+
+                            </ui:TextBox>
+
+                            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=NameBox}"
+                                       Foreground="#EF4040" />
+                        </StackPanel>
+
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Margin="30 0 30 0">
+                            <TextBlock Text="Customer ID"
+                                       Foreground="{DynamicResource STextColor}"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ui:TextBox BorderThickness="2"
+                                        BorderBrush="#767676"
+                                        FontSize="16"
+                                        Foreground="{DynamicResource STextColor}"
+                                        IsEnabled="False"
+                                        Text="{Binding CurrentCustomer.ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                                <ui:TextBox.Style>
+                                    <Style TargetType="{x:Type ui:TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsFocused" Value="True">
+                                                <Setter Property="BorderBrush"
+                                                        Value="#767676" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ui:TextBox.Style>
+
+                            </ui:TextBox>
+
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="30 0 30 0">
+                            <TextBlock Text="Email"
+                                       Foreground="{DynamicResource STextColor}"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ui:TextBox x:Name="EmailBox"
+                                        FontSize="16"
+                                        Validation.ErrorTemplate="{x:Null}"
+                                        Text="{Binding CurrentCustomer.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                                <ui:TextBox.Style>
+                                    <Style TargetType="{x:Type ui:TextBox}"
+                                           BasedOn="{StaticResource {x:Type TextBox}}">
+                                        <Setter Property="BorderThickness" Value="2" />
+                                        <Setter Property="BorderBrush" Value="#EF4040" />
+
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"
+                                                Value="{x:Null}">
+                                                <Setter Property="BorderThickness" Value="2" />
+                                                <Setter Property="BorderBrush" Value="#767676" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ui:TextBox.Style>
+
+                            </ui:TextBox>
+
+                            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=EmailBox}"
+                                       Foreground="#EF4040" />
+
+                        </StackPanel>
+
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Margin="30 0 30 0">
+                            <TextBlock Text="Phone Number"
+                                       Foreground="{DynamicResource STextColor}"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ui:TextBox x:Name="PhoneBox"
+                                        Validation.ErrorTemplate="{x:Null}"
+                                        FontSize="16"
+                                        Text="{Binding CurrentCustomer.ContactNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                                <ui:TextBox.Style>
+                                    <Style TargetType="{x:Type ui:TextBox}"
+                                           BasedOn="{StaticResource {x:Type TextBox}}">
+                                        <Setter Property="BorderThickness" Value="2" />
+                                        <Setter Property="BorderBrush" Value="#EF4040" />
+
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"
+                                                Value="{x:Null}">
+                                                <Setter Property="BorderThickness" Value="2" />
+                                                <Setter Property="BorderBrush" Value="#767676" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ui:TextBox.Style>
+
+                            </ui:TextBox>
+
+                            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=PhoneBox}"
+                                       Foreground="#EF4040" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="30 0 30 0">
+                            <TextBlock Text="Gender"
+                                       Foreground="{DynamicResource STextColor}"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ComboBox x:Name="GenderBox"
+                                      BorderThickness="2"
+                                      BorderBrush="#767676"
+                                      FontSize="16"
+                                      ItemsSource="{Binding GenderList}"
+                                      SelectedItem="{Binding CurrentCustomer.Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                                <ComboBox.Style>
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsFocused" Value="True">
+                                                <Setter Property="BorderBrush"
+                                                        Value="#767676" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ComboBox.Style>
+
+                            </ComboBox>
+
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Margin="30 0 30 0">
+                            <TextBlock Text="Proof ID"
+                                       Foreground="{DynamicResource STextColor}"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ui:TextBox x:Name="ProofBox"
+                                        Validation.ErrorTemplate="{x:Null}"
+                                        FontSize="16"
+                                        Text="{Binding CurrentCustomer.ProofID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                                <ui:TextBox.Style>
+                                    <Style TargetType="{x:Type ui:TextBox}"
+                                           BasedOn="{StaticResource {x:Type TextBox}}">
+                                        <Setter Property="BorderThickness" Value="2" />
+                                        <Setter Property="BorderBrush" Value="#EF4040" />
+
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"
+                                                Value="{x:Null}">
+                                                <Setter Property="BorderThickness" Value="2" />
+                                                <Setter Property="BorderBrush" Value="#767676" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ui:TextBox.Style>
+
+                            </ui:TextBox>
+
+                            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=ProofBox}"
+                                       Foreground="#EF4040" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="30 0 30 0">
+                            <TextBlock Text="Address"
+                                       Foreground="{DynamicResource STextColor}"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ui:TextBox x:Name="AddressBox"
+                                        Validation.ErrorTemplate="{x:Null}"
+                                        FontSize="16"
+                                        Text="{Binding CurrentCustomer.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                                <ui:TextBox.Style>
+                                    <Style TargetType="{x:Type ui:TextBox}"
+                                           BasedOn="{StaticResource {x:Type TextBox}}">
+                                        <Setter Property="BorderThickness" Value="2" />
+                                        <Setter Property="BorderBrush" Value="#EF4040" />
+
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"
+                                                Value="{x:Null}">
+                                                <Setter Property="BorderThickness" Value="2" />
+                                                <Setter Property="BorderBrush" Value="#767676" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ui:TextBox.Style>
+
+                            </ui:TextBox>
+
+                            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=AddressBox}"
+                                       Foreground="#EF4040" />
+                        </StackPanel>
+
+                    </Grid>
+
+                    <Grid Grid.Row="4">
+
+                        <StackPanel Margin="30 0 30 0">
+                            <TextBlock Text="Credit Card"
+                                       Foreground="{DynamicResource STextColor}"
+                                       FontSize="16"
+                                       Margin="0 0 0 5" />
+                            <ui:TextBox x:Name="CreditBox"
+                                        Validation.ErrorTemplate="{x:Null}"
+                                        FontSize="16"
+                                        Text="{Binding CurrentCustomer.CreditCard, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                                <ui:TextBox.Style>
+                                    <Style TargetType="{x:Type ui:TextBox}"
+                                           BasedOn="{StaticResource {x:Type TextBox}}">
+                                        <Setter Property="BorderThickness" Value="2" />
+                                        <Setter Property="BorderBrush" Value="#EF4040" />
+
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"
+                                                Value="{x:Null}">
+                                                <Setter Property="BorderThickness" Value="2" />
+                                                <Setter Property="BorderBrush" Value="#767676" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ui:TextBox.Style>
+
+                            </ui:TextBox>
+
+                            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=CreditBox}"
+                                       Foreground="#EF4040" />
+
+                        </StackPanel>
+
+                    </Grid>
+                </Grid>
+
+            </Grid>
+            <Border Grid.Row="2" 
+                    Background="{DynamicResource SBackground}"
+                    CornerRadius="0 0 10 10">
+                <ui:Button Margin="0,0,30,0"
+                           Background="{DynamicResource SButtonBackground}"
+                           PressedBackground="{DynamicResource SButtonPressed}"
+                           MouseOverBackground="{DynamicResource SButtonMouseOver}"
+                           Foreground="{DynamicResource SButtonTextColor}"
+                           PressedForeground="#FFF"
+                           Content="Save"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Cursor="Hand"
+                           Height="50"
+                           Width="180"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           CornerRadius="10"
+                           Command="{Binding Add_EditCustomerCommand}"
+                           Click="SaveBtn_OnClick" />
+            </Border>
+        </Grid>
+
+    </Border>
+
+</Window>

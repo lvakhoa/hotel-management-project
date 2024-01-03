@@ -1,10 +1,11 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vm="clr-namespace:HotelManagement.ViewModel"
+                    xmlns:m="clr-namespace:HotelManagement.Model"
                     xmlns:view="clr-namespace:HotelManagement.View">
     
     <DataTemplate DataType="{x:Type vm:HomeVM}">
-        <view:Home />
+        <view:Home DataContext="{Binding}" />
     </DataTemplate>
     
     <DataTemplate DataType="{x:Type vm:RoomMapVM}">
@@ -12,7 +13,7 @@
     </DataTemplate>
     
     <DataTemplate DataType="{x:Type vm:ManagementVM}">
-        <view:Management />
+        <view:Management DataContext="{Binding}" />
     </DataTemplate>
     
     <DataTemplate DataType="{x:Type vm:InboxVM}">
@@ -20,7 +21,7 @@
     </DataTemplate>
     
     <DataTemplate DataType="{x:Type vm:SettingsVM}">
-        <view:Settings />
+        <view:Settings DataContext="{Binding}" />
     </DataTemplate>
     
 </ResourceDictionary>

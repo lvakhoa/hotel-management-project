@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-        xmlns:customcontrols="clr-namespace:HotelManagement.CustomControls"
         xmlns:vm="clr-namespace:HotelManagement.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" 
@@ -23,10 +22,11 @@
     <Border CornerRadius="12">
         <!-- Window Border -->
         
-        <Border BorderBrush="#231F20" 
+        <Border x:Name="WindowBorder"
+                BorderBrush="#231F20" 
                 CornerRadius="10"
                 BorderThickness="1"
-                Background="#fff">
+                Background="{DynamicResource ControlBar}">
         
             <Grid>
                 <Grid.RowDefinitions>
@@ -35,10 +35,10 @@
                 </Grid.RowDefinitions>
                 
                 <Border Grid.Row="0" 
-                        BorderBrush="#000000" 
+                        BorderBrush="{DynamicResource BorderColor}" 
                         BorderThickness="0,0,0, 0.5"
                         CornerRadius="10, 10, 0, 0" 
-                        Background="#fff">
+                        Background="{DynamicResource PrimaryBackground}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -57,27 +57,61 @@
                             </Grid.ColumnDefinitions>
                             
                             <Image Grid.Column="0" Source="/HotelManagement;component/Assets/Images/hotel_icon.png" Width="24"/>
-                            <TextBlock Grid.Column="1" Text="Hotel Management" VerticalAlignment="Center" Margin="8, 0,0,0" />
+                            <TextBlock Grid.Column="1" FontSize="14" Foreground="{DynamicResource WindowTitle}" Text="Hotel Management" VerticalAlignment="Center" Margin="8, 0,0,0" />
                         </Grid>
                         
-                        <customcontrols:Button Grid.Column="1"
-                                               x:Name="btnMinimize"
-                                               Icon="Subtract20"
-                                               HoveredColor="#D4D2D2"
-                                               ClickedColor="#CAC9C9" />
+                        <ui:Button Grid.Column="1"
+                                   Width="40"
+                                   Height="40"
+                                   Icon="Subtract20"
+                                   IconFilled="True"
+                                   Foreground="{DynamicResource ControlButton}"
+                                   Appearance="Transparent"
+                                   BorderThickness="0"
+                                   MouseOverBackground="{DynamicResource MouseOverControlButton}"
+                                   PressedBackground="{DynamicResource PressedControlButton}"
+                                   CornerRadius="0"
+                                   Click="MinimizeBtn_OnClick"/>
                         
-                        <customcontrols:Button Grid.Column="2"
-                                               x:Name="btnRestore"
-                                               Icon="SquareMultiple20"
-                                               HoveredColor="#D4D2D2"
-                                               ClickedColor="#CAC9C9" />
+                        <ui:Button Grid.Column="2"
+                                   Width="40"
+                                   Height="40"
+                                   Icon="Square24"
+                                   Foreground="{DynamicResource ControlButton}"
+                                   Appearance="Transparent"
+                                   BorderThickness="0"
+                                   MouseOverBackground="{DynamicResource MouseOverControlButton}"
+                                   PressedBackground="{DynamicResource PressedControlButton}"
+                                   CornerRadius="0"
+                                   Click="MaximizeBtn_OnClick"/>
                         
-                        <customcontrols:Button Grid.Column="3"
-                                               x:Name="btnClose"
-                                               Icon="Dismiss28"
-                                               HoveredColor="#EE4242"
-                                               ClickedColor="#FF2525" 
-                                               BorderRadius="0, 10, 0, 0"/>
+                        <ui:Button Grid.Column="3"
+                                   x:Name="CloseBtn"
+                                   Width="40"
+                                   Height="40"
+                                   Icon="Dismiss28"
+                                   IconFilled="True"
+                                   Appearance="Transparent"
+                                   BorderThickness="0"
+                                   MouseOverBackground="#EE4242"
+                                   PressedBackground="#FF2525" 
+                                   PressedForeground="#FFF"
+                                   CornerRadius="0, 10, 0, 0"
+                                   Click="CloseBtn_OnClick">
+                            
+                            <ui:Button.Style>
+                                <Style TargetType="{x:Type ui:Button}" BasedOn="{StaticResource {x:Type ui:Button}}">
+                                    <Setter Property="Foreground" Value="{DynamicResource ControlButton}"/>
+                                    
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground" Value="#fff"></Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ui:Button.Style>
+                            
+                        </ui:Button>
                         
                     </Grid>
                 </Border>
@@ -90,7 +124,7 @@
                     
                     <Border Grid.Column="0"
                             CornerRadius="0,0,0, 10"
-                            Background="#E7E7E7"
+                            Background="{DynamicResource SideBarBackground}"
                             HorizontalAlignment="Left"
                             Width="228">
                         <Grid>
@@ -112,7 +146,8 @@
                                     </Grid.ColumnDefinitions>
                             
                                     <Image Grid.Column="0" Source="/HotelManagement;component/Assets/Images/hotel_icon.png" Width="40"/>
-                                    <TextBlock Grid.Column="1" Text="Triple K" FontFamily="Forte" FontSize="28" VerticalAlignment="Center" Margin="10, 0,0,0" />
+                                    <TextBlock Grid.Column="1" Text="{StaticResource HotelName}" FontFamily="Forte" FontSize="28" VerticalAlignment="Center" Margin="10, 0,0,0"
+                                               Foreground="{DynamicResource TertiaryTextColor}"/>
                                 </Grid>
                                 
                                 <!-- Navigation Panel -->
@@ -127,7 +162,7 @@
                                             
                                             <ui:SymbolIcon Symbol="Home20"
                                                            FontSize="24" 
-                                                           Foreground="#000"
+                                                           Foreground="{DynamicResource TertiaryTextColor}"
                                                            Margin="12,0,0,0"
                                                            HorizontalAlignment="Left"/>
                             
@@ -146,7 +181,7 @@
                                             
                                             <ui:SymbolIcon Symbol="Map20"
                                                            FontSize="24" 
-                                                           Foreground="#000"
+                                                           Foreground="{DynamicResource TertiaryTextColor}"
                                                            Margin="12,0,0,0"
                                                            HorizontalAlignment="Left"/>
                             
@@ -164,7 +199,7 @@
                                             
                                             <ui:SymbolIcon Symbol="PersonSettings20"
                                                            FontSize="24" 
-                                                           Foreground="#000"
+                                                           Foreground="{DynamicResource TertiaryTextColor}"
                                                            Margin="12,0,0,0"
                                                            HorizontalAlignment="Left"/>
                             
@@ -182,7 +217,7 @@
                                             
                                             <ui:SymbolIcon Symbol="MailInbox28"
                                                            FontSize="24" 
-                                                           Foreground="#000"
+                                                           Foreground="{DynamicResource TertiaryTextColor}"
                                                            Margin="12,0,0,0"
                                                            HorizontalAlignment="Left"/>
                             
@@ -200,7 +235,7 @@
                                             
                                             <ui:SymbolIcon Symbol="Settings20"
                                                            FontSize="24" 
-                                                           Foreground="#000"
+                                                           Foreground="{DynamicResource TertiaryTextColor}"
                                                            Margin="12,0,0,0"
                                                            HorizontalAlignment="Left"/>
                             
@@ -209,16 +244,19 @@
                             
                                         </Grid>
                                     </RadioButton>
+                                    
                                 </StackPanel>
                                 
                                 <!-- Logout -->
                                     
-                                <RadioButton Grid.Row="2" Style="{StaticResource BtnStyle}">
+                                <RadioButton Grid.Row="2" Style="{StaticResource BtnStyle}"
+                                             Checked="LogoutBtn_OnChecked">
+                                    
                                     <Grid>
                                             
                                         <ui:SymbolIcon Symbol="ArrowExit20"
                                                        FontSize="24" 
-                                                       Foreground="#000"
+                                                       Foreground="{DynamicResource TertiaryTextColor}"
                                                        Margin="12,0,0,0"
                                                        HorizontalAlignment="Left"/>
                             
