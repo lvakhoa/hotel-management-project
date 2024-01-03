@@ -176,7 +176,7 @@ public partial class HomeVM : ObservableObject
     {
         var today = DateTime.Today.AddDays(x);
         var temp = await context.Bookings.Include("Invoice")
-                            .CountAsync(b => b.Invoice.InvoiceDate.Date == today);
+                            .CountAsync(b => b.Invoice.InvoiceDate.Date == today && b.Deleted == false);
         return temp;
     }
     

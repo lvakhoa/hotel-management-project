@@ -94,7 +94,7 @@ public partial class InvoiceList : ObservableObject
         var bookings = (from b in context.Bookings
             join r in context.Rooms on b.RoomId equals r.RoomId
             join rt in context.RoomTypes on r.RoomTypeId equals rt.RoomTypeId
-            where b.InvoiceId == id
+            where b.InvoiceId == id && b.Deleted == false
             select new
             {
                 r.RoomNumber,
@@ -121,7 +121,7 @@ public partial class InvoiceList : ObservableObject
         
         var services = (from su in context.ServiceUses
             join s in context.Services on su.ServiceId equals s.ServiceId
-            where su.InvoiceId == id
+            where su.InvoiceId == id && su.Deleted == false
             select new
             {
                 s.ServiceName,
@@ -195,10 +195,23 @@ public partial class InvoiceList : ObservableObject
                 List.RemoveAt(index);
 
             using var context = new HotelManagementContext();
-            var invoice = context.Invoices.Find(id);
+            var invoice = context.Invoices.Include("Bookings").Include("ServiceUses").FirstOrDefault(e => e.InvoiceId == id);
 
             invoice!.Deleted = true;
             invoice.DeletedDate = DateTime.Now;
+            
+            foreach(var item in invoice.Bookings)
+            {
+                item.Deleted = true;
+                item.DeletedDate = DateTime.Now;
+            }
+            
+            foreach(var item in invoice.ServiceUses)
+            {
+                item.Deleted = true;
+                item.DeletedDate = DateTime.Now;
+            }
+            
             context.SaveChanges();
         }
     }

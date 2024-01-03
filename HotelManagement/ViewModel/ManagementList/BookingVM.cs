@@ -91,7 +91,7 @@ public partial class BookingList : ObservableObject
             RoomIdList.Add(item);
         }
 
-        var customerIds = await context.Customers.OrderBy(x => x.CustomerId).Select(x => x.CustomerId).ToListAsync();
+        var customerIds = await context.Customers.Where(x => x.Deleted == false).OrderBy(x => x.CustomerId).Select(x => x.CustomerId).ToListAsync();
         foreach (var item in customerIds)
         {
             CustomerIdList.Add(item);
