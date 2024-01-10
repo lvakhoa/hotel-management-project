@@ -22,23 +22,23 @@ namespace HotelManagement.View.AddView
     public partial class AddBooking : Window
     {
         private BookingList? Booking => DataContext as BookingList;
-        
+
         public AddBooking(object dataContext)
         {
             InitializeComponent();
-            
+
             DataContext = dataContext;
 
             Booking!.GenerateBookingId();
         }
-        
+
         public AddBooking(string? id, object dataContext)
         {
             InitializeComponent();
-            
+
             DataContext = dataContext;
-            
-            if(id != null)
+
+            if (id != null)
                 Booking!.GetBookingById(id);
         }
 
@@ -50,6 +50,7 @@ namespace HotelManagement.View.AddView
 
         private void CloseBtn_OnClick(object sender, RoutedEventArgs e)
         {
+            Booking!.RoomIdList.RemoveAt(Booking.RoomIdList.Count - 1);
             this.Close();
         }
 
@@ -60,28 +61,36 @@ namespace HotelManagement.View.AddView
 
         private void AddBooking_OnLoaded(object sender, RoutedEventArgs e)
         {
-            if(CheckInBox.SelectedDate == null)
+            if (CheckInBox.SelectedDate == null)
             {
                 CheckInBox.SelectedDate = DateTime.Now;
-            } 
-            if(CheckOutBox.SelectedDate == null)
+            }
+
+            if (CheckOutBox.SelectedDate == null)
             {
                 CheckOutBox.SelectedDate = DateTime.Now.AddDays(1);
-            }    
+            }
         }
 
         private void RoomIdBox_OnLoaded(object sender, RoutedEventArgs e)
         {
             var itemVm = Booking!.CurrentBooking.RoomItem;
-            var index = -1;
-        
-            foreach (var item in Booking.RoomIdList.Where(item => item.RoomID == itemVm.RoomID))
+            
+            if (itemVm.RoomID != null)
             {
-                index = Booking.RoomIdList.IndexOf(item);
-                break;
-            }
+                (RoomIdBox.ItemsSource as List<RoomInfo>)!.Add(itemVm);
 
-            RoomIdBox.SelectedIndex = index;
+                var index = -1;
+
+                foreach (var item in (RoomIdBox.ItemsSource as List<RoomInfo>)!.Where(item =>
+                             item.RoomID == itemVm.RoomID))
+                {
+                    index = Booking.RoomIdList.IndexOf(item);
+                    break;
+                }
+
+                RoomIdBox.SelectedIndex = index;
+            }
         }
     }
 }

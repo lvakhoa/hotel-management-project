@@ -119,15 +119,15 @@ public partial class BookingList : ObservableObject
 
     #region EditBooking
 
-    public async void GetBookingById(string? id)
+    public void GetBookingById(string? id)
     {
         CurrentBooking = new BookingVM() { RoomItem = new RoomInfo() };
 
-        await using var context = new HotelManagementContext();
+        using var context = new HotelManagementContext();
 
         InvoiceIdList = new List<string>();
 
-        var invoiceIds = await context.Invoices.Select(x => x.InvoiceId).ToListAsync();
+        var invoiceIds = context.Invoices.Select(x => x.InvoiceId).ToList();
         foreach (var item in invoiceIds)
         {
             InvoiceIdList.Add(item);
@@ -278,6 +278,15 @@ public partial class BookingList : ObservableObject
         }
         else if (booking == null && invoice != null)
         {
+            if (CurrentBooking.CheckInDate < DateTime.Now)
+            {
+                MessageBox.Show(
+                    App.ActivatedWindow, "Error",
+                    "Can't add booking with check-in date before today!",
+                    msgImage: MessageBoxImage.ERROR, msgButton: MessageBoxButton.OK);
+                return;
+            }
+            
             var totalAmount = CalculateTotalAmount();
 
             List.Add(new BookingVM()
