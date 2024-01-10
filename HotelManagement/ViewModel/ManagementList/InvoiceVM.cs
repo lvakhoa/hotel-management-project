@@ -38,12 +38,13 @@ public partial class InvoiceList : ObservableObject
         await Task.Delay(1000);
         await using var context = new HotelManagementContext();
 
-        var invoices = await (from invoice in context.Invoices
+        var invoices = await (from invoice in context.Invoices.Include("Customer")
             where invoice.Deleted == false
             select new
             {
                 invoice.InvoiceId,
                 invoice.CustomerId,
+                invoice.Customer.FullName,
                 invoice.StaffId,
                 invoice.InvoiceDate,
                 invoice.TotalAmount,
@@ -56,6 +57,7 @@ public partial class InvoiceList : ObservableObject
             {
                 InvoiceID = (string)item.InvoiceId,
                 CustomerId = item.CustomerId,
+                CustomerName = item.FullName,
                 StaffId = item.StaffId,
                 InvoiceDate = item.InvoiceDate,
                 TotalAmount = item.TotalAmount,
@@ -318,6 +320,7 @@ public partial class InvoiceList : ObservableObject
         public string? InvoiceID { get; set; }
 
         public string? CustomerId { get; set; }
+        public string? CustomerName { get; set; }
 
         public string? StaffId { get; set; }
 

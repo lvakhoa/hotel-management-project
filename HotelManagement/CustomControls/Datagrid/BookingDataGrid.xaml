@@ -170,7 +170,7 @@
                                         Binding="{Binding CheckOutDate, ValidatesOnDataErrors=False}" />
 
                     <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount}" />
-
+                    
                 </ui:DataGrid.Columns>
 
             </ui:DataGrid>

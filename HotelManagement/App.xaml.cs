@@ -12,8 +12,7 @@ namespace HotelManagement;
 /// </summary>
 public partial class App : Application
 {
-    // public static LoginView LoginView { get; set; }
-    // public static MainWindow MainView { get; set; }
+    public static WindowState WinState { get; set; } = WindowState.Normal;
     public static Window ActivatedWindow {get;set;}
     private Configuration AppConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
     private void ApplicationStart(object sender, StartupEventArgs e)

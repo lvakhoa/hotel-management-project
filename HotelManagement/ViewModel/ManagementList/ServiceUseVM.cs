@@ -20,6 +20,8 @@ public partial class ServiceUseList : ObservableObject
 
     [ObservableProperty] private List<ServiceInfo> _serviceIdList;
 
+    private int previousQuantity;
+
     #region Constructor
 
     public ServiceUseList()
@@ -87,7 +89,8 @@ public partial class ServiceUseList : ObservableObject
 
     public void AddServiceUse()
     {
-        CurrentServiceUse = new ServiceUseVM() {ServiceItem = new ServiceInfo()};
+        CurrentServiceUse = new ServiceUseVM() {ServiceItem = new ServiceInfo(), ServiceQuantity = "0"};
+        previousQuantity = 0;
         CurrentServiceUse.PropertyChanged += (_, _) => Add_EditServiceUseCommand.NotifyCanExecuteChanged();
     }
 
@@ -112,6 +115,8 @@ public partial class ServiceUseList : ObservableObject
             ServiceQuantity = serviceUse.ServiceQuantity,
             TotalAmount = serviceUse.TotalAmount
         };
+
+        previousQuantity = int.Parse(CurrentServiceUse.ServiceQuantity!);
 
         CurrentServiceUse.PropertyChanged += (_, _) => Add_EditServiceUseCommand.NotifyCanExecuteChanged();
     }
@@ -152,12 +157,17 @@ public partial class ServiceUseList : ObservableObject
 
             if (index != -1)
             {
-                List[index] = CurrentServiceUse;
+                List[index].InvoiceId = CurrentServiceUse.InvoiceId;
+                List[index].ServiceItem.ServiceId = CurrentServiceUse.ServiceItem.ServiceId;
+                List[index].ServiceItem.ServiceName = CurrentServiceUse.ServiceItem.ServiceName;
+                List[index].TotalAmount = CurrentServiceUse.TotalAmount;
+                List[index].ServiceQuantity = (int.Parse(List[index].ServiceQuantity!) + int.Parse(CurrentServiceUse.ServiceQuantity!) 
+                                               - previousQuantity).ToString();
             }
 
             serviceUse.InvoiceId = CurrentServiceUse.InvoiceId!;
             serviceUse.ServiceId = CurrentServiceUse.ServiceItem.ServiceId!;
-            serviceUse.ServiceQuantity = int.Parse(CurrentServiceUse.ServiceQuantity!);
+            serviceUse.ServiceQuantity = int.Parse(List[index].ServiceQuantity!);
             serviceUse.TotalAmount = CurrentServiceUse.TotalAmount;
 
             context.ServiceUses.Update(serviceUse);
@@ -194,7 +204,7 @@ public partial class ServiceUseList : ObservableObject
             var entity = new ServiceUse()
             {
                 InvoiceId = CurrentServiceUse.InvoiceId!,
-                ServiceId = CurrentServiceUse.ServiceItem!.ServiceId,
+                ServiceId = CurrentServiceUse.ServiceItem.ServiceId!,
                 ServiceQuantity = int.Parse(CurrentServiceUse.ServiceQuantity!),
                 TotalAmount = CurrentServiceUse.TotalAmount
             };

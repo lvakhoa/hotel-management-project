@@ -139,9 +139,11 @@
                     
                     <DataGridTextColumn Header="Invoice ID" Binding="{Binding InvoiceID}" />
                     
-                    <DataGridTextColumn Header="Customer Id" Binding="{Binding CustomerId}" />
+                    <DataGridTextColumn Header="Customer ID" Binding="{Binding CustomerId}" />
                     
-                    <DataGridTextColumn Header="Staff Id" Binding="{Binding StaffId}" />
+                    <DataGridTextColumn Header="Customer Name" Binding="{Binding CustomerName}" />
+                    
+                    <DataGridTextColumn Header="Staff ID" Binding="{Binding StaffId}" />
                     
                     <DataGridTextColumn Header="Invoice Date" Binding="{Binding InvoiceDate}" />
                     

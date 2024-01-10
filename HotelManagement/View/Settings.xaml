@@ -106,7 +106,7 @@
                                HorizontalAlignment="Left"
                                FontWeight="Bold" />
                     <Grid Grid.Row="1"
-                          Margin="50 20 50 0">
+                          Margin="50 10 50 0">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -121,7 +121,7 @@
                                            Foreground="{DynamicResource STextColor}"
                                            FontWeight="SemiBold"/>
                                 <ui:TextBox Margin="10 0 10 10"
-                                            Width="300"
+                                            Width="280"
                                             BorderThickness="1"
                                             FontSize="18"
                                             Text="{Binding Staff.FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -133,7 +133,7 @@
                                            Foreground="{DynamicResource STextColor}"
                                            FontWeight="SemiBold"/>
                                 <ui:TextBox Margin="10 0 10 10"
-                                            Width="300"
+                                            Width="280"
                                             BorderThickness="1"
                                             FontSize="18"
                                             Text="{Binding Staff.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -145,7 +145,7 @@
                                            Foreground="{DynamicResource STextColor}"
                                            FontWeight="SemiBold"/>
                                 <ui:PasswordBox Margin="10 0 10 10"
-                                            Width="200"
+                                            Width="280"
                                             BorderThickness="1"
                                             FontSize="18"
                                             Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -161,7 +161,7 @@
                                            Foreground="{DynamicResource STextColor}"
                                            FontWeight="SemiBold"/>
                                 <ui:TextBox Margin="10 0 10 10"
-                                            Width="300"
+                                            Width="280"
                                             BorderThickness="1"
                                             FontSize="18"
                                             Text="{Binding Staff.ContactNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -173,7 +173,7 @@
                                            Foreground="{DynamicResource STextColor}"
                                            FontWeight="SemiBold"/>
                                 <DatePicker Margin="10 0 10 10"
-                                            Width="300"
+                                            Width="280"
                                             BorderThickness="1"
                                             FontSize="18"
                                             SelectedDateFormat="Short"

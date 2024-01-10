@@ -24,17 +24,34 @@ namespace HotelManagement.View
         public LoginView()
         {
             InitializeComponent();
+            WindowState = App.WinState;
+            
+            if (WindowState == WindowState.Normal)
+            {
+                CloseBtn.CornerRadius = new CornerRadius(0, 10, 0, 0);
+                WindowBorder.CornerRadius = new CornerRadius(10);
+            }
+            else
+            {
+                CloseBtn.CornerRadius = new CornerRadius(0);
+                WindowBorder.CornerRadius = new CornerRadius(0);
+            }
         }
 
         private void Box_OnKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
-                UsernameBox.Focus();
+            if (e.Key == Key.Enter)
+            {
+                PasswordBox.passbox.Clear();
+                PasswordBox.showpasstxtbox.Clear();
+                FocusManager.SetIsFocusScope(this, true);
+            }
         }
         
         private void MinimizeBtn_OnClick(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
+            App.WinState = WindowState.Minimized;
         }
 
         private void MaximizeBtn_OnClick(object sender, RoutedEventArgs e)
@@ -42,6 +59,7 @@ namespace HotelManagement.View
             var btn = sender as UIBtn;
             if (WindowState == WindowState.Normal)
             {
+                App.WinState = WindowState.Maximized;
                 WindowState = WindowState.Maximized;
                 btn!.Icon = SymbolRegular.SquareMultiple24;
                 CloseBtn.CornerRadius = new CornerRadius(0);
@@ -49,6 +67,7 @@ namespace HotelManagement.View
             }
             else
             {
+                App.WinState = WindowState.Normal;
                 WindowState = WindowState.Normal;
                 btn!.Icon = SymbolRegular.Square24;
                 CloseBtn.CornerRadius = new CornerRadius(0, 10, 0, 0);

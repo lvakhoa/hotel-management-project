@@ -20,19 +20,19 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         this.PreviewKeyDown += MainWindowPreviewKeyDown;
-        var uISettingSection = (UISettings)AppConfig.GetSection("UISettings");
-        // if (uISettingSection.Theme == "Light")
-        // {
-        //     ResourceDictionary resource = new ResourceDictionary();
-        //     resource.Source = new Uri("pack://application:,,,/Wpf.Ui;component/Styles/Theme/light.xaml");
-        //     Application.Current.Resources.MergedDictionaries.Add(resource);
-        // }
-        // else
-        // {
-        //     ResourceDictionary resource = new ResourceDictionary();
-        //     resource.Source = new Uri("pack://application:,,,/Wpf.Ui;component/Styles/Theme/dark.xaml");
-        //     Application.Current.Resources.MergedDictionaries.Add(resource);
-        // }
+
+        WindowState = App.WinState;
+        
+        if (WindowState == WindowState.Normal)
+        {
+            CloseBtn.CornerRadius = new CornerRadius(0, 10, 0, 0);
+            WindowBorder.CornerRadius = new CornerRadius(10);
+        }
+        else
+        {
+            CloseBtn.CornerRadius = new CornerRadius(0);
+            WindowBorder.CornerRadius = new CornerRadius(0);
+        }
     }
     
     static void MainWindowPreviewKeyDown(object sender, KeyEventArgs e)
@@ -64,6 +64,7 @@ public partial class MainWindow : Window
     private void MinimizeBtn_OnClick(object sender, RoutedEventArgs e)
     {
         WindowState = WindowState.Minimized;
+        App.WinState = WindowState.Minimized;
     }
 
     private void MaximizeBtn_OnClick(object sender, RoutedEventArgs e)
@@ -71,6 +72,7 @@ public partial class MainWindow : Window
         var btn = sender as UIBtn;
         if (WindowState == WindowState.Normal)
         {
+            App.WinState = WindowState.Maximized;
             WindowState = WindowState.Maximized;
             btn!.Icon = SymbolRegular.SquareMultiple24;
             CloseBtn.CornerRadius = new CornerRadius(0);
@@ -78,6 +80,7 @@ public partial class MainWindow : Window
         }
         else
         {
+            App.WinState = WindowState.Normal;
             WindowState = WindowState.Normal;
             btn!.Icon = SymbolRegular.Square24;
             CloseBtn.CornerRadius = new CornerRadius(0, 10, 0, 0);
