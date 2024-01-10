@@ -55,6 +55,7 @@ public partial class InvoiceList : ObservableObject
         {
             List.Add(new InvoiceVM()
             {
+                StaffName = context.Staff.Find(item.StaffId).FullName,
                 InvoiceID = (string)item.InvoiceId,
                 CustomerId = item.CustomerId,
                 CustomerName = item.FullName,
@@ -323,6 +324,7 @@ public partial class InvoiceList : ObservableObject
         public string? CustomerName { get; set; }
 
         public string? StaffId { get; set; }
+        public string? StaffName { get; set; }
 
         public DateTime InvoiceDate { get; set; }
         public decimal? TotalAmount { get; set; }

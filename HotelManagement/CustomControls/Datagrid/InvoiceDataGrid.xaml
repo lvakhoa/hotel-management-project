@@ -145,6 +145,8 @@
                     
                     <DataGridTextColumn Header="Staff ID" Binding="{Binding StaffId}" />
                     
+                    <DataGridTextColumn Header="Staff Name" Binding="{Binding StaffName}" />
+                    
                     <DataGridTextColumn Header="Invoice Date" Binding="{Binding InvoiceDate}" />
                     
                     <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount}" />
