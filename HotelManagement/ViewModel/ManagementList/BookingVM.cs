@@ -260,6 +260,7 @@ public partial class BookingList : ObservableObject
             booking.CheckOutDate = CurrentBooking.CheckOutDate;
             booking.TotalAmount = CurrentBooking.TotalAmount;
             invoice.PaymentType = CurrentBooking.PaymentMethod == "Cash" ? "Cash" : "Credit card";
+            invoice.StaffId = CurrentBooking.StaffID!;
 
             await context.SaveChangesAsync();
 
