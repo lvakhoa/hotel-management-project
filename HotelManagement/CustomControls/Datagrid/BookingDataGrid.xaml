@@ -160,6 +160,8 @@
 
                     <DataGridTextColumn Header="Room ID" Binding="{Binding RoomItem.RoomID, ValidatesOnDataErrors=False}" />
 
+                    <DataGridTextColumn Header="Room Number" Binding="{Binding RoomNumber}" />
+                    
                     <DataGridTextColumn Header="Guest Quantity"
                                         Binding="{Binding GuestQuantity, ValidatesOnDataErrors=False}" />
 

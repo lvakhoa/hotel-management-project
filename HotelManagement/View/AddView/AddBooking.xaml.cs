@@ -62,12 +62,10 @@ namespace HotelManagement.View.AddView
         {
             if(CheckInBox.SelectedDate == null)
             {
-                CheckInBox.BlackoutDates.AddDatesInPast();
                 CheckInBox.SelectedDate = DateTime.Now;
             } 
             if(CheckOutBox.SelectedDate == null)
             {
-                CheckOutBox.BlackoutDates.AddDatesInPast();
                 CheckOutBox.SelectedDate = DateTime.Now.AddDays(1);
             }    
         }

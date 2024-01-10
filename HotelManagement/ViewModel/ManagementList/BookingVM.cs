@@ -65,6 +65,9 @@ public partial class BookingList : ObservableObject
                         where r.RoomId == item.RoomId
                         select rt.RoomTypeName).FirstOrDefault()
                 },
+                RoomNumber = (from r in context.Rooms
+                    where r.RoomId == item.RoomId
+                    select r.RoomNumber).FirstOrDefault(),
                 CustomerID = item.Invoice.CustomerId,
                 StaffID = item.Invoice.StaffId,
                 GuestQuantity = item.GuestQuantity.ToString(),
@@ -153,7 +156,6 @@ public partial class BookingList : ObservableObject
             CurrentBooking.InvoiceID = booking.InvoiceID;
             CurrentBooking.RoomItem.RoomID = booking.RoomItem!.RoomID;
             CurrentBooking.RoomItem.RoomType = booking.RoomItem.RoomType;
-
             CurrentBooking.CustomerID = booking.CustomerID;
             CurrentBooking.StaffID = booking.StaffID;
             CurrentBooking.GuestQuantity = booking.GuestQuantity;
@@ -571,6 +573,8 @@ public partial class BookingList : ObservableObject
             set => SetProperty(ref _staffID, value);
         }
 
+        [ObservableProperty] private string? _roomNumber;
+        
         // GuestQuantity
         private string? _guestQuantity;
 
