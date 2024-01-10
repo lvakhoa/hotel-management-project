@@ -131,6 +131,7 @@ public partial class HomeVM : ObservableObject
                 DataLabels = false,
                 LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})",
                 Fill = App.Current.Resources["AvailableColor"] as SolidColorBrush,
+                Stroke = App.Current.Resources["TertiaryBackgroundColor"] as SolidColorBrush
             },
             new PieSeries
             {
@@ -138,7 +139,8 @@ public partial class HomeVM : ObservableObject
                 Title = "Occupied",
                 DataLabels = false,
                 LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})",
-                Fill = App.Current.Resources["OccupiedColor"] as SolidColorBrush
+                Fill = App.Current.Resources["OccupiedColor"] as SolidColorBrush,
+                Stroke = App.Current.Resources["TertiaryBackgroundColor"] as SolidColorBrush
             },
             new PieSeries
             {
@@ -146,7 +148,8 @@ public partial class HomeVM : ObservableObject
                 Title = "Blocked",
                 DataLabels = false,
                 LabelPoint = chartpoint => $"{chartpoint.Y} ({chartpoint.Participation:P})",
-                Fill = App.Current.Resources["OutOfOrderColor"] as SolidColorBrush
+                Fill = App.Current.Resources["OutOfOrderColor"] as SolidColorBrush,
+                Stroke = App.Current.Resources["TertiaryBackgroundColor"] as SolidColorBrush
             },
         };
         OnPropertyChanged(nameof(Labels));

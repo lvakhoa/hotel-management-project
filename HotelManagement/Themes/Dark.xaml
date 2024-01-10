@@ -73,28 +73,28 @@
     <Color x:Key="ThemeButtonForeground">#C0C9EA</Color>
     <Color x:Key="ThemeButtonBorder">#C0C9EA</Color>
     
-    <SolidColorBrush x:Key="HomeRevenue" Color="#97b4f7"/>
-    <SolidColorBrush x:Key="HomeCheckin" Color="#fff382"/>
-    <SolidColorBrush x:Key="HomeCheckout" Color="#ff87bc"/>
-    <SolidColorBrush x:Key="HomeBooking" Color="#93fc83"/>
+    <SolidColorBrush x:Key="HomeRevenue" Color="#C7D5FB"/>
+    <SolidColorBrush x:Key="HomeCheckin" Color="#FFFD87"/>
+    <SolidColorBrush x:Key="HomeCheckout" Color="#FFC2C1"/>
+    <SolidColorBrush x:Key="HomeBooking" Color="#C1FEBF"/>
     
     <SolidColorBrush x:Key="ScrollBar" Color="#747474"/>
     
     <SolidColorBrush x:Key="ControlBar" Color="#202020"/>
     
-    <SolidColorBrush x:Key="AvailableColor" Color="#00BB6E" />
-    <SolidColorBrush x:Key="OccupiedColor" Color="#FFE651" />
-    <SolidColorBrush x:Key="OutOfOrderColor" Color="#F55473" />
+    <SolidColorBrush x:Key="AvailableColor" Color="#defedd" />
+    <SolidColorBrush x:Key="OccupiedColor" Color="#fffeb8" />
+    <SolidColorBrush x:Key="OutOfOrderColor" Color="#FFD7D6" />
     
-    <SolidColorBrush x:Key="AvailableTextColor" Color="#257151" />
-    <SolidColorBrush x:Key="OccupiedTextColor" Color="#B0A226" />
-    <SolidColorBrush x:Key="OutOfOrderTextColor" Color="#A0263E" />
+    <SolidColorBrush x:Key="AvailableTextColor" Color="#3AC291" />
+    <SolidColorBrush x:Key="OccupiedTextColor" Color="#E1E100" />
+    <SolidColorBrush x:Key="OutOfOrderTextColor" Color="#FF6A6A" />
     
     <SolidColorBrush x:Key="DatagridSelectColor" Color="#3B3B3B" />
     <SolidColorBrush x:Key="DatagridBtn" Color="#403f3f" />
     <SolidColorBrush x:Key="DatagridRow" Color="#3B3B3B" />
     <SolidColorBrush x:Key="DatagridHeader" Color="#FFF" />
 
-    <SolidColorBrush x:Key="ColumnChart" Color="#00BB6E" />
+    <SolidColorBrush x:Key="ColumnChart" Color="#AEE4CF" />
 
 </ResourceDictionary>
